@@ -1,0 +1,45 @@
+spring:
+  redis:
+    database: 1
+    host: 127.0.0.1
+    port: 6379
+  datasource:
+    url: jdbc:mysql://localhost:3306/Rent
+    username: root
+    password: root
+    driverClassName: com.mysql.cj.jdbc.Driver
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  thymeleaf:
+    cache: true
+  security:
+    user:
+      name: jeff
+      password: 123456
+server:
+  port: 8888
+  fileLocation: C:\user\text
+
+scp:
+  hostname: 10.201.188.22
+  port: 22
+  username: sehrsscfileadmin
+  password: turwob-tyfpyN-0qyzdy
+  targetPath: /home/sehrsscfileadmin/file/
+file: C:\Users\jeffjliu\Documents\worke\test\
+contractFile: C:\Users\jeffjliu\Documents\worke\test\doc
+mybatis-plus:
+  type-enums-package: com.example.demo.dto.*
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+

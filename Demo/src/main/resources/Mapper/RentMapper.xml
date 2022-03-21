@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.ins.mapper.RentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.demo.ins.entity.Rent">
+        <id column="id" property="id" />
+        <result column="rcode" property="rcode" />
+        <result column="vname" property="vname" />
+        <result column="title" property="title" />
+        <result column="area" property="area" />
+        <result column="community" property="community" />
+        <result column="pay" property="pay" />
+        <result column="content" property="content" />
+        <result column="contacts" property="contacts" />
+        <result column="phone" property="phone" />
+        <result column="sys_user_id" property="sysUserId" />
+        <result column="mode" property="mode" />
+        <result column="storey" property="storey" />
+        <result column="orientation" property="orientation" />
+        <result column="elevator" property="elevator" />
+        <result column="is_rent" property="is_rent"/>
+        <collection property="list" ofType="string" javaType="java.util.ArrayList" column="id" select="file">
+            <result column="url"></result>
+        </collection>
+    </resultMap>
+    <resultMap id="includeList" type="com.example.demo.ins.entity.Rent">
+        <id column="id" property="id" />
+        <result column="rcode" property="rcode" />
+        <result column="vname" property="vname" />
+        <result column="title" property="title" />
+        <result column="area" property="area" />
+        <result column="community" property="community" />
+        <result column="pay" property="pay" />
+        <result column="content" property="content" />
+        <result column="contacts" property="contacts" />
+        <result column="phone" property="phone" />
+        <result column="sys_user_id" property="sysUserId" />
+        <result column="is_rent" property="is_rent"/>
+        <result column="mode" property="mode" />
+        <result column="storey" property="storey" />
+        <result column="orientation" property="orientation"  jdbcType="VARCHAR"/>
+        <result column="elevator" property="elevator" />
+        <collection property="list" ofType="string" javaType="java.util.ArrayList" column="id"   select="file">
+
+        </collection>
+<!--        <association property="list" >-->
+<!--            <result column="url" jdbcType="VARCHAR"></result>-->
+<!--        </association>-->
+    </resultMap>
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into rent
+        values #{rent}
+    </insert>
+    <select id="selectPageVo" resultType="com.example.demo.ins.entity.Rent" resultMap="includeList">
+        select * from rent
+    </select>
+    <select id="file" resultType="string">
+        select url from documentfile
+        where rent_id=#{id}
+    </select>
+    <select id="selectPageCondition" resultType="com.example.demo.ins.entity.Rent"  resultMap="includeList" >
+        select * from rent r
+        <where>
+            <if test="condition.address !=null and condition.address!='' ">
+                 r.area like #{condition.address}
+            </if>
+
+            <if test="condition.minPrice !=null and condition.minPrice !=''">
+                and r.pay &gt;= #{condition.minPrice}
+            </if>
+            <if test="condition.maxPrice != null and condition.maxPrice!=''">
+                and r.pay &lt;= #{condition.maxPrice}
+            </if>
+            <if test="condition.mode != null ">
+                and r.mode = #{condition.mode}
+            </if>
+            <if test="condition.storey != null ">
+                and r.storey = #{condition.storey}
+            </if>
+            <if test="condition.orientation != null ">
+                and r.orientation = #{condition.orientation}
+            </if>
+            <if test="condition.elevator != null ">
+                and r.elevator = #{condition.elevator}
+            </if>
+            <if test="condition.is_rent != null ">
+                and r.is_rent = #{condition.is_rent}
+            </if>
+        </where>
+    </select>
+
+</mapper>

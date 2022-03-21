@@ -1,0 +1,131 @@
+package com.example.demo.User.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+/**
+ * <p>
+ * 权限表
+ * </p>
+ *
+ * @author jiangFly
+ * @since 2022-01-21
+ */
+@TableName("sys_permission")
+@ApiModel(value = "Permission对象", description = "权限表")
+public class Permission implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty("主键")
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
+
+    @ApiModelProperty("权限ID（自定义）可设置唯一索引UNIQUE")
+    private String permissionId;
+
+    @ApiModelProperty("权限名称")
+    private String permissionName;
+
+    @ApiModelProperty("描述说明")
+    private String description;
+
+    @ApiModelProperty("创建人")
+    private String createUser;
+
+    @ApiModelProperty("创建时间")
+    private LocalDateTime createTime;
+
+    @ApiModelProperty("修改人")
+    private String updateUser;
+
+    @ApiModelProperty("修改时间")
+    private LocalDateTime updateTime;
+
+    @ApiModelProperty("是否删除（0：正常/1：删除）")
+    private Integer isDeleted;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    public String getPermissionId() {
+        return permissionId;
+    }
+
+    public void setPermissionId(String permissionId) {
+        this.permissionId = permissionId;
+    }
+    public String getPermissionName() {
+        return permissionName;
+    }
+
+    public void setPermissionName(String permissionName) {
+        this.permissionName = permissionName;
+    }
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+    public String getUpdateUser() {
+        return updateUser;
+    }
+
+    public void setUpdateUser(String updateUser) {
+        this.updateUser = updateUser;
+    }
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
+    }
+    public Integer getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    @Override
+    public String toString() {
+        return "Permission{" +
+            "id=" + id +
+            ", permissionId=" + permissionId +
+            ", permissionName=" + permissionName +
+            ", description=" + description +
+            ", createUser=" + createUser +
+            ", createTime=" + createTime +
+            ", updateUser=" + updateUser +
+            ", updateTime=" + updateTime +
+            ", isDeleted=" + isDeleted +
+        "}";
+    }
+}

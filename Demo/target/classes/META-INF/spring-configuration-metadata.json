@@ -1,0 +1,22 @@
+{
+  "groups": [
+    {
+      "name": "pkslow.jwt",
+      "type": "com.example.demo.ins.configer.jwt.JwtProperties",
+      "sourceType": "com.example.demo.ins.configer.jwt.JwtProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "pkslow.jwt.secret-key",
+      "type": "java.lang.String",
+      "sourceType": "com.example.demo.ins.configer.jwt.JwtProperties"
+    },
+    {
+      "name": "pkslow.jwt.validity-in-ms",
+      "type": "java.lang.Long",
+      "sourceType": "com.example.demo.ins.configer.jwt.JwtProperties"
+    }
+  ],
+  "hints": []
+}
