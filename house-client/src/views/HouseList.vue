@@ -129,11 +129,7 @@ export default {
             let pojo = {pageSize:10, pageNum:1}
             houseApi.getAllHouseList(pojo).then(res =>{
                 this.allTableData=res.data.data;
-                console.log(res.msg);
-
-                    this.allTableData = res.data.records;
                     // 设置分页数据
-                    console.log(this.allTableData);
                     this.setPaginations();
                 // else{
                 //     this.$message({
@@ -147,20 +143,26 @@ export default {
             let pojo;
             if(this.search_data.search_status == "全部"){
                 pojo = {
-                address:this.search_data.search_address,
-                status:''
+                basepage:{
+                  size:this.paginations.page_size,
+                  current:this.paginations.page_index
+                }
                 }
             }else{
                 pojo = {
-                address:this.search_data.search_address,
-                status:this.search_data.search_status
+                  condition:{
+                    address:this.search_data.search_address
+                  },
+                  basepage:{
+                    size:this.paginations.page_size,
+                    current:this.paginations.page_index
+                  }
                 }
             }
 
 
-
             houseApi.getHouseListByCondition(pojo).then(res =>{
-                if(res.data.flag == true){
+                if(res.data.code == '0'){
                     this.$message({
                     message: '筛选成功',
                     type: 'success'
@@ -221,33 +223,24 @@ export default {
                 title:"添加房屋出租信息"
             };
         },
-        handleCurrentChange(page) {
+        handleCurrentChange(current) {
             // 当前页
-            let sortnum = this.paginations.page_size * (page - 1);
-            let table = this.allTableData.filter((item, index) => {
-                return index >= sortnum;
-            });
-            // 设置默认分页数据
-            this.tableData = table.filter((item, index) => {
-                return index < this.paginations.page_size;
-            });
 
+            this.paginations.page_index=current,
+            this.handleSearch();
         },
         handleSizeChange(page_size) {
             // 切换size
             this.paginations.page_index = 1;
             this.paginations.page_size = page_size;
-            this.tableData = this.allTableData.filter((item, index) => {
-                return index < page_size;
-            });
+            this.handleSearch();
          },
         setPaginations() {
             // 总页数
-            this.paginations.total = this.allTableData.length;
+            this.paginations.total = this.allTableData.total;
             this.paginations.page_index = 1;
-            this.paginations.page_size = 5;
             // 设置默认分页数据
-            this.tableData = this.allTableData.filter((item, index) => {
+            this.tableData = this.allTableData.records.filter((item, index) => {
                 return index < this.paginations.page_size;
             });
         }

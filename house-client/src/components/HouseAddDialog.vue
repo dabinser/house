@@ -21,6 +21,26 @@
                             <el-option v-for="(formStatus,index) in format_status_list" :key="index" :label="formStatus" :value="formStatus"></el-option>
                         </el-select>
                     </el-form-item>
+                  <el-form-item label="出租方式：" prop="mode">
+                    <el-select v-model="formData.mode">
+                      <el-option v-for="(formMode,index) in format_mode_list" :key="index" :label="formMode" :value="formMode"></el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item label="楼层高度：" prop="storey">
+                    <el-select v-model="formData.storey">
+                      <el-option v-for="(formStorey,index) in format_storey_list" :key="index" :label="formStorey" :value="formStorey"></el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item label="电梯：" prop="elevator">
+                    <el-select v-model="formData.elevator">
+                      <el-option v-for="(formElevator,index) in format_elevator_list" :key="index" :label="formElevator" :value="formElevator"></el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item label="房屋朝向：" prop="orientation">
+                    <el-select v-model="formData.orientation">
+                      <el-option v-for="(formOrientation,index) in format_orientation_list" :key="index" :label="formOrientation" :value="formOrientation"></el-option>
+                    </el-select>
+                  </el-form-item>
                     <el-form-item label="详情：" prop="detail">
                         <el-input v-model="formData.detail" type="textarea" :rows="4"></el-input>
                     </el-form-item>
@@ -54,10 +74,26 @@ export default {
                 price:'',
                 status:'',
                 detail:'',
-                renter:''
+                renter:'',
+                mode:'',
+                storey:'',
+                elevator:'',
+                orientation:''
             },
             format_status_list:[
                 "已出租","未出租"
+            ],
+            format_mode_list:[
+                "合租","整租","不限"
+            ],
+            format_storey_list:[
+                '低','中','高'
+            ],
+            format_elevator_list:[
+                '有','无'
+            ],
+            format_orientation_list:[
+               '东','南','西','北'
             ],
             format_renterName_list:[
             ],
@@ -72,6 +108,18 @@ export default {
                 ],
                 status:[
                     { required: true, message: '请选择状态', trigger: 'blur' }
+                ],
+                mode: [
+                    {required: true,message: '请选择出租方式', triangle: 'blur'}
+                ],
+                storey: [
+                  {required: true,message: '请选择楼层高度', triangle: 'blur'}
+                ],
+                elevator: [
+                  {required: true,message: '请选择有无电梯', triangle: 'blur'}
+                ],
+                orientation: [
+                  {required: true,message: '请选择房屋朝向', triangle: 'blur'}
                 ],
                 detail:[
                     { required: true, message: '请输入详情', trigger: 'blur' }
@@ -125,6 +173,10 @@ export default {
                         pay:this.formData.price,
                         is_rent:this.formData.status,
                         content:this.formData.detail,
+                        mode:this.formData.mode,
+                        storey:this.formData.storey,
+                        elevator:this.formData.elevator,
+                        orientation:this.formData.orientation,
                         userlist_Id:null,
                         userlist_Name:null
                         };
