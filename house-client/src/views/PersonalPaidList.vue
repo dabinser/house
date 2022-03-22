@@ -37,7 +37,7 @@
 
         </div>
     </div>
-        
+
 </template>
 
 <script>
@@ -48,7 +48,7 @@ export default {
     },
     data () {
         return {
-           
+
             //需要给分页组件传的信息
             paginations: {
                 page_index: 1, // 当前位于哪页
@@ -57,10 +57,10 @@ export default {
                 page_sizes: [5, 10, 15, 20], //每页显示多少条
                 layout: "total, sizes, prev, pager, next, jumper" // 翻页属性
             },
-            
+
            tableData:[],
            allTableData: [],
-           
+
         };
     },
     created () {
@@ -70,12 +70,16 @@ export default {
         getProfile(){
 
             let pojo = {
-                    userlist_id:this.$store.getters.user.jti            
+                    status:'已出租',
+                    basepage:{
+                      size:this.paginations.page_size,
+                      current:this.paginations.page_index
+                    }
                 }
-            
+
             paidApi.getPaidListByCondition(pojo).then(res =>{
-                if(res.data.flag == true){
-                    
+                if(res.data.code == '0'){
+
                     this.allTableData = res.data.data;
                     // 设置分页数据
                     this.setPaginations();
@@ -87,8 +91,8 @@ export default {
                 }
             })
         },
-        
-        
+
+
         handleAdd(){
             this.dialog1={
                 show:true,
@@ -97,42 +101,42 @@ export default {
         },
         handleCurrentChange(page) {
             // 当前页
-            let sortnum = this.paginations.page_size * (page - 1);
-            let table = this.allTableData.filter((item, index) => {
-                return index >= sortnum;
-            });
+            // let sortnum = this.paginations.page_size * (page - 1);
+            // let table = this.allTableData.filter((item, index) => {
+            //     return index >= sortnum;
+            // });
+            this.getProfile()
             // 设置默认分页数据
-            this.tableData = table.filter((item, index) => {
-                return index < this.paginations.page_size;
-            });
-            
+            // this.tableData = table.filter((item, index) => {
+            //     return index < this.paginations.page_size;
+            // });
+
         },
         handleSizeChange(page_size) {
             // 切换size
-            this.paginations.page_index = 1;
-            this.paginations.page_size = page_size;
-            this.tableData = this.allTableData.filter((item, index) => {
+            this.paginations.page_size=page_size;
+            this.paginations.page_index=1;
+            this.getProfile();
+            this.tableData = this.allTableData.records.filter((item, index) => {
                 return index < page_size;
             });
          },
         setPaginations() {
             // 总页数
-            this.paginations.total = this.allTableData.length;
-            this.paginations.page_index = 1;
-            this.paginations.page_size = 5;
+            this.paginations.total = this.allTableData.total;
             // 设置默认分页数据
-            this.tableData = this.allTableData.filter((item, index) => {
+            this.tableData = this.allTableData.records.filter((item, index) => {
                 return index < this.paginations.page_size;
             });
         },
-        dateFormat:function(row, column) { 
-            var date = row[column.property]; 
-            if (date == undefined) { 
-            return ""; 
-            } 
-            return this.$moment(date).format("YYYY年MM月DD日"); 
-        } 
-      
+        dateFormat:function(row, column) {
+            var date = row[column.property];
+            if (date == undefined) {
+            return "";
+            }
+            return this.$moment(date).format("YYYY年MM月DD日");
+        }
+
 
 
     }

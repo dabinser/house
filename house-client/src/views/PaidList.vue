@@ -74,7 +74,7 @@
         <PaidAddDialog :dialog1="dialog1" @update="getProfile"></PaidAddDialog>
         <PaidEditDialog :dialog2="dialog2" @update="getProfile" :formData="Data"></PaidEditDialog>
     </div>
-        
+
 </template>
 
 <script>
@@ -103,7 +103,7 @@ export default {
                 page_sizes: [5, 10, 15, 20], //每页显示多少条
                 layout: "total, sizes, prev, pager, next, jumper" // 翻页属性
             },
-            
+
            tableData:[],
            allTableData: [],
            dialog1:{
@@ -136,7 +136,7 @@ export default {
             this.search_data.search_status = "全部"
 
             paidApi.getAllPaidList().then(res =>{
-                if(res.data.flag == true){
+                if(res.data.code == '0'){
                     this.allTableData = res.data.data;
                     // 设置分页数据
                     this.setPaginations();
@@ -153,21 +153,29 @@ export default {
             if(this.search_data.search_status == "全部"){
                 pojo = {
                     name:this.search_data.search_name,
-                    address:this.search_data.search_address,  
-                    status:''             
+                    address:this.search_data.search_address,
+                    status:'1',
+                    basepage:{
+                      size:this.paginations.page_size,
+                      current:this.paginations.page_index
+                    }
                 }
             }else{
                 pojo = {
                     name:this.search_data.search_name,
-                    address:this.search_data.search_address,  
-                    status:this.search_data.search_status             
+                    address:this.search_data.search_address,
+                    status:'1',
+                    basepage: {
+                      size:this.paginations.page_size,
+                      current:this.paginations.page_index
+                    }
                 }
             }
-            
-            
-            
+
+
+
             paidApi.getPaidListByCondition(pojo).then(res =>{
-                if(res.data.flag == true){
+                if(res.data.code == '0'){
                     this.$message({
                     message: '筛选成功',
                     type: 'success'
@@ -219,7 +227,7 @@ export default {
                         });
                     }
                 })
-            })  
+            })
         },
         handleAdd(){
             this.dialog1={
@@ -237,7 +245,7 @@ export default {
             this.tableData = table.filter((item, index) => {
                 return index < this.paginations.page_size;
             });
-            
+
         },
         handleSizeChange(page_size) {
             // 切换size
@@ -249,22 +257,21 @@ export default {
          },
         setPaginations() {
             // 总页数
-            this.paginations.total = this.allTableData.length;
+            this.paginations.total = this.allTableData.total;
             this.paginations.page_index = 1;
-            this.paginations.page_size = 5;
             // 设置默认分页数据
-            this.tableData = this.allTableData.filter((item, index) => {
+            this.tableData = this.allTableData.reco.filter((item, index) => {
                 return index < this.paginations.page_size;
             });
         },
-        dateFormat:function(row, column) { 
-            var date = row[column.property]; 
-            if (date == undefined) { 
-            return ""; 
-            } 
-            return this.$moment(date).format("YYYY年MM月DD日"); 
-        } 
-      
+        dateFormat:function(row, column) {
+            var date = row[column.property];
+            if (date == undefined) {
+            return "";
+            }
+            return this.$moment(date).format("YYYY年MM月DD日");
+        }
+
 
 
     }

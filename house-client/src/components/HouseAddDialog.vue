@@ -1,7 +1,7 @@
 <template>
     <div class="dialog1">
-        <el-dialog 
-            :title="dialog1.title" 
+        <el-dialog
+            :title="dialog1.title"
             :visible.sync="dialog1.show"
             :close-on-click-modal='false'
             :close-on-press-escape='false'
@@ -23,7 +23,7 @@
                     </el-form-item>
                     <el-form-item label="详情：" prop="detail">
                         <el-input v-model="formData.detail" type="textarea" :rows="4"></el-input>
-                    </el-form-item>                   
+                    </el-form-item>
                     <el-form-item label="租客：" prop="renter">
                         <el-select v-model="formData.renter" filterable>
                             <el-option v-for="(formStatus,index) in format_renterName_list" :key="index" :label="formStatus" :value="index"></el-option>
@@ -76,9 +76,9 @@ export default {
                 detail:[
                     { required: true, message: '请输入详情', trigger: 'blur' }
                 ],
-                
-            } 
-        
+
+            }
+
         }
     },
     created () {
@@ -89,18 +89,18 @@ export default {
             this.formData.status = "未出租";
             this.formData.renter = 0;
             userApi.getAllUserList().then(res =>{
-                if(res.data.flag == true){
+                if(res.data.code == '0'){
                     var userName = new Array();
                     userName[0] = "无"
                     var userId = new Array();
                     userId[0] = 0
-                    for(var i = 0;i < res.data.data.length;i++){
+                    for(var i = 0;i < res.data.data.size;i++){
                         userName[i+1] = res.data.data[i].name;
                         userId[i+1] = res.data.data[i].id;
                     }
                     this.format_renterName_list = userName;
                     this.format_renterId_list = userId
-                }else{                    
+                }else{
                     this.$message({
                     message: '获取租客列表失败',
                     type: 'warning'
@@ -116,17 +116,17 @@ export default {
         },
         onSubmit(form){
             this.$refs[form].validate(valid => {
-                
+
                 if (valid) {
                     let pojo
                     if(this.formData.renter == 0){
                         pojo = {
-                        address:this.formData.address,
-                        price:this.formData.price,
-                        status:this.formData.status,
-                        detail:this.formData.detail,
+                        area:this.formData.address,
+                        pay:this.formData.price,
+                        is_rent:this.formData.status,
+                        content:this.formData.detail,
                         userlist_Id:null,
-                        userlist_Name:null             
+                        userlist_Name:null
                         };
                     }else{
                         pojo = {
@@ -135,13 +135,13 @@ export default {
                         status:this.formData.status,
                         detail:this.formData.detail,
                         userlist_Id:this.format_renterId_list[this.formData.renter],
-                        userlist_Name:this.format_renterName_list[this.formData.renter]                
+                        userlist_Name:this.format_renterName_list[this.formData.renter]
                         };
-                    }               
-                    
+                    }
+
                     houseApi.addHouse(pojo).then(res =>{
                         //添加成功之后的处理
-                        if(res.data.flag){
+                        if(res.data.code='0'){
                             this.$message({
                             message: "添加成功",
                             type: "success"
@@ -157,19 +157,19 @@ export default {
                             message: "添加失败",
                             type: "warning"
                             });
-                            
+
                         }
-                        
+
                     });
-                    
-                    
+
+
                 }
             });
         },
-        closeDialog(done){ 
+        closeDialog(done){
             if (this.$refs['form'] !== undefined) {
                         this.$refs['form'].resetFields();
-                    } 
+                    }
             done();
         },
     }

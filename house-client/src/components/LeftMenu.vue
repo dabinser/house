@@ -54,7 +54,10 @@ export default {
     },
     methods: {
         getInfo(){
-            if(this.$store.getters.user.roles == 'admin'){
+          //  console.log();
+          // this.$store.getters.user.roles.includes('admin');
+            if(this.$store.getters.user.roles.includes('admin')){
+
                 this.items = [
                 {
                     icon: 'el-icon-share',

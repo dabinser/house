@@ -16,6 +16,7 @@ export default{
     },
     addPaid(pojo){
         return request({
+            url:`/${api_name}/add`,
             method:'post',
             data:pojo
         })
