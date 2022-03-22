@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.paid.mapper.PaidMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.demo.paid.entity.Paid">
+        <id column="id" property="id" />
+        <result column="address" property="address" />
+        <result column="price" property="price" />
+        <result column="date" property="date" />
+        <result column="paydate" property="paydate" />
+        <result column="name" property="name" />
+        <result column="owner" property="owner" />
+        <result column="status" property="status" />
+        <result column="house_id" property="houseId" />
+    </resultMap>
+
+</mapper>

@@ -12,11 +12,9 @@ import com.example.demo.tool.Baseseach.Basepage;
 import com.example.demo.tool.result.CodeMsg;
 import com.example.demo.tool.result.Result;
 import com.sun.istack.internal.NotNull;
-import io.swagger.annotations.ApiModelProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,16 +56,16 @@ public class RentController {
      * @param principal
      * @return
      */
-    @PostMapping("/add")
-    @ApiModelProperty
-    public Result add(@RequestBody @NotNull Rent rent, Principal principal, HttpServletRequest httpServletRequest){
+    @PostMapping("/addHouse")
+    public Result add(@RequestBody @NotNull Rent rent, Principal principal){
         if (null!=rent) {
             SysUser user = userService.getOne(new QueryWrapper<SysUser>().eq("user_name", principal.getName()));
             rent.setSysUserId(user.getId());
-            Integer RentId = rentService.Save(rent);
-            return Result.success(RentId);
+
+            boolean save = rentService.save(rent);
+            return Result.success(save);
         }
-        else return Result.error("信息不完善");
+        else return Result.error(CodeMsg.DATA_ERROR);
     }
 
     /**
