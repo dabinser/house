@@ -79,8 +79,9 @@ export default {
                     }
                     
                     solveApi.updateSolve(pojo).then(res =>{
+
                         //修改成功之后的处理
-                        if(res.data.flag){
+                        if(res.data.code == '0'){
                             this.$message({
                             message: "修改成功",
                             type: "success"

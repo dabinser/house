@@ -11,10 +11,10 @@ import com.example.demo.ins.service.IRentService;
 import com.example.demo.tool.Baseseach.Basepage;
 import com.example.demo.tool.result.CodeMsg;
 import com.example.demo.tool.result.Result;
-import com.sun.istack.internal.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,9 +75,8 @@ public class RentController {
      */
     @PostMapping
     public Result amend(@RequestBody Rent rent){
-        rentService.updateById(rent);
-        Rent  amendRent= rentService.getById(rent.getId());
-        return Result.success(amendRent);
+        boolean b = rentService.updateById(rent);
+        return Result.success(b);
     }
     @DeleteMapping("/{Id}")
     public  Result delet(@PathVariable int Id){
@@ -109,8 +108,7 @@ public class RentController {
 
     /**
      * 条件分页查询
-     * @param condition
-     * @param basepage
+     * @param searchDto
      * @return
      */
     @PostMapping("/ConditionQuery")
@@ -147,8 +145,14 @@ public class RentController {
             Basepage page = rentService.pages(basepage);
             return Result.success(page);
         }*/
-        Basepage basepage1 = rentService.pagesCondition(searchDto.getBasepage(), searchDto.getCondition());
-        return Result.success(basepage1);
+        if (null==searchDto.getCondition()){
+            Result pageRent = this.getPageRent(searchDto.getBasepage());
+            return pageRent;
+        }
+        else {
+            Basepage basepage1 = rentService.pagesCondition(searchDto.getBasepage(), searchDto.getCondition());
+            return Result.success(basepage1);
+        }
     }
     @GetMapping("/Collection")
     public Result findAttention(Principal principal) {

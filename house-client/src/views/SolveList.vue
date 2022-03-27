@@ -20,7 +20,7 @@
         </div>
         <div class="table_container">
             <el-table v-if="tableData.length > 0" :data="tableData" style="width: 100%" max-height="450" border >
-                <el-table-column type="index" label="序号" align="center" width="150">
+                <el-table-column type="index" label="序号" align="center" width="80">
                 </el-table-column>
                 <el-table-column prop="name" label="姓名" align="center" width="150">
                 </el-table-column>
@@ -30,7 +30,7 @@
                 </el-table-column>
                 <el-table-column prop="detail" label="详情" align="center" width="350">
                 </el-table-column>
-                <el-table-column prop="status" label="状态" align="center" width="200">
+                <el-table-column prop="status" label="状态" align="center" width="100">
                 </el-table-column>
                 
                 <el-table-column label="操作" prop="operation" align="center" >
@@ -121,10 +121,10 @@ export default {
     },
     methods: {
         getProfile(){
-            this.search_data.search_status = "全部"
-
-            solveApi.getAllSolveList().then(res =>{
-                if(res.data.flag == true){
+            this.search_data.search_status = "全部";
+            let pojo = {size:this.paginations.page_size, current:this.paginations.page_index};
+            solveApi.getAllSolveList(pojo).then(res =>{
+                if(res.data.code == '0'){
                     this.allTableData = res.data.data;
                     // 设置分页数据
                     this.setPaginations();
@@ -140,22 +140,34 @@ export default {
             let pojo;
             if(this.search_data.search_status == "全部"){
                 pojo = {
-                name:this.search_data.search_name,
-                address:this.search_data.search_address,  
-                status:''             
+                    solve:{
+                      name:this.search_data.search_name,
+                      address:this.search_data.search_address,
+                      status:''
+                      },
+                    basepage:{
+                      size:this.paginations.page_size,
+                      current:this.paginations.page_index
+                    }
                 }
             }else{
                 pojo = {
-                name:this.search_data.search_name,
-                address:this.search_data.search_address,  
-                status:this.search_data.search_status             
+                solve: {
+                  name: this.search_data.search_name,
+                  address: this.search_data.search_address,
+                  status: this.search_data.search_status
+                },
+                basepage:{
+                  size:this.paginations.page_size,
+                  current:this.paginations.page_index
+                }
                 }
             }
             
             
             
             solveApi.getSolveListByCondition(pojo).then(res =>{
-                if(res.data.flag == true){
+                if(res.data.code == '0'){
                     this.$message({
                     message: '筛选成功',
                     type: 'success'
@@ -210,31 +222,22 @@ export default {
         },
         handleCurrentChange(page) {
             // 当前页
-            let sortnum = this.paginations.page_size * (page - 1);
-            let table = this.allTableData.filter((item, index) => {
-                return index >= sortnum;
-            });
-            // 设置默认分页数据
-            this.tableData = table.filter((item, index) => {
-                return index < this.paginations.page_size;
-            });
+            this.paginations.page_index=page;
+            this.getProfile();
             
         },
         handleSizeChange(page_size) {
             // 切换size
             this.paginations.page_index = 1;
             this.paginations.page_size = page_size;
-            this.tableData = this.allTableData.filter((item, index) => {
-                return index < page_size;
-            });
+            this.getProfile();
          },
         setPaginations() {
             // 总页数
-            this.paginations.total = this.allTableData.length;
-            this.paginations.page_index = 1;
-            this.paginations.page_size = 5;
+            this.paginations.total = this.allTableData.total;
+
             // 设置默认分页数据
-            this.tableData = this.allTableData.filter((item, index) => {
+            this.tableData = this.allTableData.records.filter((item, index) => {
                 return index < this.paginations.page_size;
             });
         },

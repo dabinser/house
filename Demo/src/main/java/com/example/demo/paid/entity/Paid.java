@@ -40,9 +40,6 @@ public class Paid implements Serializable {
     @ApiModelProperty("租客")
     private String name;
 
-    @ApiModelProperty("出租人")
-    private Integer owner;
-
     @ApiModelProperty("状态")
     private Status status;
 
@@ -90,13 +87,7 @@ public class Paid implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    public Integer getOwner() {
-        return owner;
-    }
 
-    public void setOwner(Integer owner) {
-        this.owner = owner;
-    }
 
     @Override
     public String toString() {
@@ -107,7 +98,6 @@ public class Paid implements Serializable {
                 ", date=" + date +
                 ", paydate=" + paydate +
                 ", name='" + name + '\'' +
-                ", owner=" + owner +
                 ", status=" + status +
                 ", houseId=" + houseId +
                 '}';

@@ -90,13 +90,13 @@ export default {
                 
                 if (valid) {
                     let pojo = {
-                        time:this.formData.time,
+                        time:'4',
                         content:this.formData.content,           
                         };
     
                     scheduleApi.addSchedule(pojo).then(res =>{
                         //添加成功之后的处理
-                        if(res.data.flag){
+                        if(res.data.data ==true){
                             this.$message({
                             message: "添加成功",
                             type: "success"

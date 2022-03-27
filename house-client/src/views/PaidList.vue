@@ -23,17 +23,17 @@
         </div>
         <div class="table_container">
             <el-table v-if="tableData.length > 0" :data="tableData" style="width: 100%" max-height="450" border >
-                <el-table-column type="index" label="序号" align="center" width="150">
+                <el-table-column type="index" label="序号" align="center" width="80">
                 </el-table-column>
                 <el-table-column prop="name" label="姓名" align="center" width="150">
                 </el-table-column>
                 <el-table-column prop="address" label="地址" align="center" width="400">
                 </el-table-column>
-                <el-table-column prop="price" label="金额" align="center" width="150">
+                <el-table-column prop="price" label="金额" align="center" width="100">
                 </el-table-column>
                 <el-table-column prop="date" label="应缴纳日期" align="center" width="200" :formatter="dateFormat">
                 </el-table-column>
-                <el-table-column prop="payDate" label="实际缴纳日期" align="center" width="200" :formatter="dateFormat">
+                <el-table-column prop="paydate" label="实际缴纳日期" align="center" width="200" :formatter="dateFormat">
                 </el-table-column>
                 <el-table-column prop="status" label="状态" align="center" width="150">
                 </el-table-column>
@@ -258,9 +258,8 @@ export default {
         setPaginations() {
             // 总页数
             this.paginations.total = this.allTableData.total;
-            this.paginations.page_index = 1;
             // 设置默认分页数据
-            this.tableData = this.allTableData.reco.filter((item, index) => {
+            this.tableData = this.allTableData.records.filter((item, index) => {
                 return index < this.paginations.page_size;
             });
         },
