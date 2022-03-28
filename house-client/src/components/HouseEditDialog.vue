@@ -10,8 +10,8 @@
             width="30%">
             <div class="form">
                 <el-form ref="form" :model="formData" :rules="form_rules" label-width="120px" style="margin:10px;width:auto;">
-                    <el-form-item label="地址：" prop="address">
-                        <el-input v-model="formData.address" type="address"></el-input>
+                    <el-form-item label="地址：" prop="area">
+                        <el-input v-model="formData.area" type="address"></el-input>
                     </el-form-item>
                     <el-form-item label="价格：" prop="price">
                         <el-input v-model="formData.price"></el-input>
@@ -22,8 +22,8 @@
                             <el-option v-for="(formStatus,index) in format_status_list" :key="index" :label="formStatus" :value="formStatus" ></el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="详情：" prop="detail" >
-                        <el-input v-model="formData.detail" type="textarea" :rows="4"></el-input>
+                    <el-form-item label="详情：" prop="content" >
+                        <el-input v-model="formData.content" type="textarea" :rows="4"></el-input>
                     </el-form-item>
                     <el-form-item label="租客：" prop="renter">
                         <el-select v-model="formData.userlist_Name" filterable > 
@@ -116,11 +116,11 @@ export default {
                     if(isNaN(this.formData.userlist_Name)){
                         if(this.formData.userlist_Name == "无"){
                             pojo = {
-                            houseId:this.formData.id,
-                            address:this.formData.address,
-                            price:this.formData.price,
-                            status:this.formData.status,
-                            detail:this.formData.detail,
+                            id:this.formData.id,
+                            area:this.formData.address,
+                            pay:this.formData.price,
+                            is_rent:this.formData.status,
+                            content:this.formData.detail,
                             userlist_Id:null,
                             userlist_Name:null             
                         };
@@ -132,11 +132,11 @@ export default {
                                 }
                             }
                             pojo = {
-                            houseId:this.formData.id,
-                            address:this.formData.address,
-                            price:this.formData.price,
-                            status:this.formData.status,
-                            detail:this.formData.detail,
+                            id:this.formData.id,
+                            area:this.formData.address,
+                            pay:this.formData.price,
+                            is_rent:this.formData.status,
+                            content:this.formData.detail,
                             userlist_Id:this.format_renterId_list[this.index],
                             userlist_Name:this.format_renterName_list[this.index]                
                             };
@@ -144,21 +144,21 @@ export default {
                     }else{
                         if(this.formData.userlist_Name == 0){
                         pojo = {
-                        houseId:this.formData.id,
-                        address:this.formData.address,
-                        price:this.formData.price,
-                        status:this.formData.status,
-                        detail:this.formData.detail,
+                        id:this.formData.id,
+                        area:this.formData.address,
+                        pay:this.formData.price,
+                        is_rent:this.formData.status,
+                        content:this.formData.detail,
                         userlist_Id:null,
                         userlist_Name:null             
                         };
                     }else{
                         pojo = {
-                        houseId:this.formData.id,
-                        address:this.formData.address,
-                        price:this.formData.price,
-                        status:this.formData.status,
-                        detail:this.formData.detail,
+                        id:this.formData.id,
+                        area:this.formData.address,
+                        pay:this.formData.price,
+                        is_rent:this.formData.status,
+                        content:this.formData.detail,
                         userlist_Id:this.format_renterId_list[this.formData.userlist_Name],
                         userlist_Name:this.format_renterName_list[this.formData.userlist_Name]                
                         };
@@ -168,7 +168,7 @@ export default {
                     
                     houseApi.updateHouse(pojo).then(res =>{
                         //修改成功之后的处理
-                        if(res.data.flag){
+                        if(res.data.code='0'){
                             this.$message({
                             message: "修改成功",
                             type: "success"

@@ -26,7 +26,7 @@ export default{
     },
     updateHouse(pojo){
         return request({
-            url:`/${api_name}/updatehouse`,
+            url:`/${api_name}`,
             method:'post',
             data:pojo
         })

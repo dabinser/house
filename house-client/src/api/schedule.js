@@ -1,10 +1,11 @@
 import request from '@/utils/request'
 const api_name = 'schedule'
 export default{
-    getAllScheduleList(){
+    getAllScheduleList(pojo){
         return request({
-            url:`/${api_name}/getallschedulelist`,
-            method:'get'
+            url:`/${api_name}`,
+            method:'post',
+            data:pojo
         })
     },
     getScheduleListByCondition(pojo){
@@ -23,14 +24,14 @@ export default{
     },
     updateSchedule(pojo){
         return request({
-            url:`/${api_name}/updateschedule`,
-            method:'post',
+            url:`/${api_name}`,
+            method:'patch',
             data:pojo
         })
     },
     deleteSchedule(id){
         return request({
-            url:`/${api_name}/deleteschedule?scheduleId=`+id,
+            url:`/${api_name}/`+id,
             method:'delete',
         })
     },

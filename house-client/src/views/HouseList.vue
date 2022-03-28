@@ -22,11 +22,11 @@
             <el-table v-if="tableData.length > 0" :data="tableData" style="width: 100%" max-height="450" border >
                 <el-table-column type="index" label="序号" align="center" width="150">
                 </el-table-column>
-                <el-table-column prop="address" label="地址" align="center" width="400">
+                <el-table-column prop="area" label="地址" align="center" width="400">
                 </el-table-column>
                 <el-table-column prop="pay" label="价格" align="center" width="200">
                 </el-table-column>
-                <el-table-column prop="status" label="状态" align="center" width="200">
+                <el-table-column prop="is_rent" label="状态" align="center" width="200">
                 </el-table-column>
                 <el-table-column prop="vname" label="租客" align="center" width="200">
                 </el-table-column>
@@ -148,9 +148,10 @@ export default {
                   current:this.paginations.page_index
                 }
                 }
-            }else{
+            }else if (this.search_data.search_address!==''){
                 pojo = {
                   condition:{
+
                     address:this.search_data.search_address
                   },
                   basepage:{
@@ -158,6 +159,12 @@ export default {
                     current:this.paginations.page_index
                   }
                 }
+            }
+            else {
+              this.$message({
+                message:'筛选地址不能为空',
+                type:"warning"
+              })
             }
 
 
@@ -238,7 +245,6 @@ export default {
         setPaginations() {
             // 总页数
             this.paginations.total = this.allTableData.total;
-            this.paginations.page_index = 1;
             // 设置默认分页数据
             this.tableData = this.allTableData.records.filter((item, index) => {
                 return index < this.paginations.page_size;
