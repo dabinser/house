@@ -43,9 +43,14 @@ public class SolveController {
 
     @PostMapping("/condition")
     public Result conditionQuery(@RequestBody SolveDto solveDto){
-        Solve solve = solveDto.getSolve();
         Basepage basepage = solveDto.getBasepage();
+        if (null==solveDto.getSolve()){
+            Basepage page = solveService.page(basepage);
+            return Result.success(page);
+        }
+        Solve solve = solveDto.getSolve();
         QueryWrapper<Solve> solveQueryWrapper = new QueryWrapper<>();
+
         if (null!=solve.getAddress()){
             solveQueryWrapper.like("address", solve.getAddress());
         }

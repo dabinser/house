@@ -17,7 +17,7 @@ export default{
     },
     addSchedule(pojo){
         return request({
-            url:`/${api_name}/addschedule`,
+            url:`/${api_name}/addSchedule`,
             method:'post',
             data:pojo
         })
