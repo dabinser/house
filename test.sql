@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80028
 File Encoding         : 65001
 
-Date: 2022-03-28 09:02:18
+Date: 2022-04-06 08:42:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -322,18 +322,17 @@ INSERT INTO `role_menu` VALUES ('cbe8356d64a8433cb5dad5c7fccf8dce', 'e85b2fb3e6e
 -- ----------------------------
 DROP TABLE IF EXISTS `schedule`;
 CREATE TABLE `schedule` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `time` varchar(6) DEFAULT NULL COMMENT '持续时间',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `time` varchar(255) NOT NULL,
+  `date` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `content` varchar(20) DEFAULT NULL,
-  `date` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=1778507786 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of schedule
 -- ----------------------------
-INSERT INTO `schedule` VALUES ('2', '4', '调试', '2022-03-27 23:30:52');
-INSERT INTO `schedule` VALUES ('3', '2', 'test', '2022-03-30 16:51:01');
+INSERT INTO `schedule` VALUES ('1778507785', '23', '2022-03-29 22:39:09', '酷酷酷');
 
 -- ----------------------------
 -- Table structure for solve
@@ -347,16 +346,18 @@ CREATE TABLE `solve` (
   `detail` varchar(50) DEFAULT NULL COMMENT '详情',
   `status` tinyint DEFAULT NULL COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of solve
 -- ----------------------------
-INSERT INTO `solve` VALUES ('3', '重庆', '2022-04-01 19:29:54', '见见', '水管堡', '1');
+INSERT INTO `solve` VALUES ('3', '重庆', '2022-03-28 20:43:23', '见见', '水管堡', '0');
 INSERT INTO `solve` VALUES ('4', '重庆', '2022-04-01 19:29:54', '见见', '水管堡', '1');
 INSERT INTO `solve` VALUES ('5', '重庆', '2022-04-01 19:29:54', '见见', '水管堡', '1');
 INSERT INTO `solve` VALUES ('6', '重庆', '2022-04-01 19:29:54', '见见', '水管堡', '1');
 INSERT INTO `solve` VALUES ('7', '广州', '2022-03-30 20:16:20', '卡卡', '电灯', '0');
+INSERT INTO `solve` VALUES ('8', '杭州', '2022-03-22 21:40:52', '卡卡', '解决', '1');
+INSERT INTO `solve` VALUES ('9', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -508,7 +509,7 @@ CREATE TABLE `sys_user` (
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '是否删除（0：正常/1：删除）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='用户表';
 
 -- ----------------------------
 -- Records of sys_user
@@ -517,6 +518,8 @@ INSERT INTO `sys_user` VALUES ('1', '88888888', '超级管理员', '123456', '88
 INSERT INTO `sys_user` VALUES ('2', '80000001', '张三', '$2a$10$kZT9t57ahsVVWQ/dUVAiQuga7SgvevnWzudJjQhBVUKrEK8DWpzpy', '88888888', '2021-03-23 15:51:27', null, null, '0');
 INSERT INTO `sys_user` VALUES ('3', '80000002', '李四', '123456', '88888888', '2021-03-23 15:51:27', null, null, '0');
 INSERT INTO `sys_user` VALUES ('4', '80000003', '王五', '123456', '88888888', '2021-03-23 15:51:27', null, null, '0');
+INSERT INTO `sys_user` VALUES ('8', null, '小红', '$2a$10$8G90ywa3A7M5TmXLuGym1OkUKa3sQjLN/hN4LgYSi9TuTZ7DyFY2q', '张三', '2022-03-29 21:38:27', null, null, '0');
+INSERT INTO `sys_user` VALUES ('9', '5657f9716b6e4eb19a9c5d7a2a19c0b4', '小就', '$2a$10$919sAP9SO8blNz4osmFnu.3ZJ9AeXaSmMDMxL.0p5nixK8OJgI6vi', '张三', '2022-03-29 22:06:09', null, null, '0');
 
 -- ----------------------------
 -- Table structure for sys_user_role
