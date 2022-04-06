@@ -18,7 +18,10 @@
                     </el-form-item>
                     <el-form-item label="电话号码：" prop="phone">
                         <el-input v-model="formData.phone"></el-input>
-                    </el-form-item>                   
+                    </el-form-item>
+                    <el-form-item label="密码" prop="password">
+                        <el-input v-model="formData.password"></el-input>
+                    </el-form-item>
                     <el-form-item label="系统角色：" prop="type">
                         <el-select v-model="formData.type">
                             <el-option v-for="(formsystemRole,index) in format_systemRole_list" :key="index" :label="formsystemRole" :value="formsystemRole"></el-option>
@@ -46,6 +49,7 @@ export default {
             formData:{
                 name:'',
                 idCard:'',
+                password:'',
                 phone:'',
                 type:'',
             },
@@ -61,6 +65,9 @@ export default {
                 ],
                 phone:[
                     { required: true, message: '请输入电话号码', trigger: 'blur' }
+                ],
+                password: [
+                    { required: true, message: '请输入密码', trigger: 'blur'}
                 ],
                 type:[
                     { required: true, message: '请选择系统角色', trigger: 'blur' }
@@ -83,15 +90,16 @@ export default {
                 if (valid) {
                     
                     let pojo = {
-                    name:this.formData.name,
+                    userName:this.formData.name,
                     idCard:this.formData.idCard,
                     phone:this.formData.phone,
+                    password:this.formData.password,
                     type:this.formData.type=="管理员"?1:2,                   
                     };
 
                     userApi.addUser(pojo).then(res =>{
                         //添加成功之后的处理
-                        if(res.data.flag){
+                        if(res.data.code='0'){
                             this.$message({
                             message: "添加成功",
                             type: "success"

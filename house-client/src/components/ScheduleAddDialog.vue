@@ -90,7 +90,7 @@ export default {
                 
                 if (valid) {
                     let pojo = {
-                        time:'4',
+                        time:'',
                         content:this.formData.content,           
                         };
     

@@ -8,15 +8,16 @@ export default{
             data:pojo
         })
     },
-    getAllUserList(){
+    getAllUserList(pojo){
         return request({
-            url:`/${api_name}/getalluserlist`,
-            method:'get'
+            url:`/${api_name}/condition`,
+            method:'post',
+            data:pojo
         })
     },
     getUserListByCondition(pojo){
         return request({
-            url:`/${api_name}/getuserlistbycondition`,
+            url:`/${api_name}/condition`,
             method:'post',
             data:pojo
         })
@@ -29,7 +30,7 @@ export default{
     },
     addUser(pojo){
         return request({
-            url:`/${api_name}/adduser`,
+            url:`/${api_name}/addition`,
             method:'post',
             data:pojo
         })
