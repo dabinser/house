@@ -6,10 +6,11 @@ import com.example.demo.tool.Baseseach.Basepage;
 import com.example.demo.tool.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
+
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 /**
  * <p>
@@ -22,6 +23,7 @@ import javax.validation.constraints.NotNull;
 @RestController
 @RequestMapping("/schedule")
 public class ScheduleController {
+
     @Autowired
     private IScheduleService scheduleService;
 
@@ -37,6 +39,7 @@ public class ScheduleController {
     }
     @PostMapping("/addSchedule")
     public Result addSchedule(@RequestBody @NotNull Schedule schedule){
+        schedule.setDate(new Date());
         boolean save = scheduleService.save(schedule);
         return Result.success(save);
     }

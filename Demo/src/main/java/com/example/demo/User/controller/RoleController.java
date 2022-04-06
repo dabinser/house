@@ -4,6 +4,7 @@ package com.example.demo.User.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Controller;
  * @author jiangFly
  * @since 2022-01-21
  */
-@Controller
+@RestController
 @RequestMapping("/User/role")
 public class RoleController {
 

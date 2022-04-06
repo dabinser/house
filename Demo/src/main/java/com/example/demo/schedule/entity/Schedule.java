@@ -2,6 +2,10 @@ package com.example.demo.schedule.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -17,7 +21,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class Schedule implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     @ApiModelProperty("持续时间")
@@ -26,7 +30,7 @@ public class Schedule implements Serializable {
     private String content;
 
     @ApiModelProperty("时间")
-    private LocalDateTime date;
+    private Date date;
 
     public Integer getId() {
         return id;
@@ -49,11 +53,12 @@ public class Schedule implements Serializable {
     public void setContent(String content) {
         this.content = content;
     }
-    public LocalDateTime getDate() {
+
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
