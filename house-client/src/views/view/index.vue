@@ -49,9 +49,10 @@
           </el-row>
           <el-row style="margin-top: 20px;">
             <el-col :span="24">
-              <el-tabs v-model="activeName" @tab-click="handleClick">
-                <el-tab-pane label="综合排序" name="first">
-                  <el-row>
+              <el-tabs v-model="activeName" @tab-click="Synthesize">
+                <el-tab-pane label="综合排序" name="first"  >
+
+                  <el-row v-model="tableData" v-for="item in tableData">
                     <el-col :span="3" style="height: 180px;margin-right:20px;border: 1px red solid"></el-col>
                     <el-col
                       :span="10"
@@ -63,12 +64,11 @@
                           :underline="false"
                           style="font-size: 18px;font-weight: bold"
                         >
-                          整租>开阳里七区
-                          1室厅 东/西
+                          {{item.vname}}
                         </el-link>
                       </el-row>
                       <el-row style="height: 40px;">
-                        <el-link :underline="false">整租>开阳里七区 1室厅 东/西</el-link>
+                        <el-link :underline="false">{{item.vname}}</el-link>
                       </el-row>
                       <el-row style="height: 60px;line-height: 60px;">
                         <el-link :underline="false">
@@ -96,6 +96,8 @@
                       </span>
                     </el-col>
                   </el-row>
+                  <div v-model="totals" @click="AddDate" v-if="tableData.length>0&&tableData.length!==totals" >点击加载更多</div>
+                  <div v-model="totals" v-if="tableData.length==totals">暂无更多数据</div>
                 </el-tab-pane>
                 <el-tab-pane label="最新上架" name="second">
                   <el-row>
@@ -266,6 +268,7 @@
 <script>
 import cheader from "@/components/cheader";
 import cfooter from "@/components/cfooter";
+import houseApi from "@/api/house";
 
 export default {
   name: "index",
@@ -276,6 +279,18 @@ export default {
   },
   data() {
     return {
+
+      paginations: {
+        page_index: 1, // 当前位于哪页
+        total: 0, // 总数
+        page_size: 20, // 1页显示多少条
+        page_sizes: [5, 10, 15, 20], //每页显示多少条
+        layout: "total, sizes, prev, pager, next, jumper" // 翻页属性
+      },
+
+      tableData:[],
+      allTableData: [],
+      totals:'',
       input: "",
       radioResult: "",
       activeName: "first",
@@ -292,12 +307,73 @@ export default {
       }
     };
   },
+  created () {
+    this.Synthesize();
+    window.mydata=this;
+  },
   methods: {
     handleClick(tab, event) {
-      console.log(tab, event);
+      // console.log(tab, event);
     },
     info(id) {
       this.$router.push({ path: "/info/" + id });
+    },
+    Synthesize(){
+      let pojo = {
+        basepage: {
+          size: 20,
+          current: 1
+        }
+      }
+      houseApi.getHouseListByCondition(pojo).then(res =>{
+        if(res.data.code == '0'){
+          this.$message({
+            type: 'success',
+          });
+            this.allTableData = res.data.data.records;
+            this.totals = res.data.data.total;
+            this.setPaginations();
+        }else{
+          this.$message({
+            message: '按条件获取房屋信息列表失败',
+            type: 'warning'
+          });
+        }
+      })
+    },
+
+      AddDate(){
+        let pojo = {
+          basepage: {
+            size: this.paginations.page_size,
+            current: this.paginations.page_index+1
+          }
+        }
+        this.paginations.page_index=this.paginations.page_index+1
+        houseApi.getHouseListByCondition(pojo).then(res =>{
+          if(res.data.code == '0'){
+            this.$message({
+              type: 'success',
+            });
+              this.allTableData=this.allTableData.concat(res.data.data.records)
+              this.setPaginations();
+          }else{
+            this.$message({
+              message: '按条件获取房屋信息列表失败',
+              type: 'warning'
+            });
+          }
+        })
+      },
+
+    setPaginations() {
+      // 总页数
+      this.paginations.total = this.allTableData.total;
+      // 设置默认分页数据
+      this.tableData = this.allTableData.map((item, index) => {
+        return item;
+      });
+      console.log(this.tableData)
     }
   }
 };
