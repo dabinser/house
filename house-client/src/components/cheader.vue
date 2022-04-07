@@ -6,7 +6,7 @@
 
           <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
             <el-menu-item index="/" ><i  class="el-input__icon el-icon-location-outline"></i>{{city}}</el-menu-item>
-            <el-menu-item index="/">首页</el-menu-item>
+            <el-menu-item index="/client">首页</el-menu-item>
             <el-menu-item index="2">整租</el-menu-item>
             <el-menu-item index="3">合租</el-menu-item>
             <el-menu-item index="/publish">发布房源</el-menu-item>
@@ -42,24 +42,24 @@
                 input:''
             };
         },
-        // mounted () {
-        //   this.ready();
-        //   this.activeIndex =  this.$route.path;
-        // },
-        // methods: {
-        //     handleSelect(key, keyPath) {
-        //         this.activeIndex = key;
-        //         this.$router.push({path: key})
-        //     },
-        //     ready() {
-        //         var geolocation = new BMap.Geolocation()
-        //         geolocation.getCurrentPosition((r) => {
-        //             console.log(r.address.city)
-        //             this.city = r.address.city;
-        //
-        //         }, {enableHighAccuracy: true})
-        //     }
-        // }
+        mounted () {
+          this.ready();
+          this.activeIndex =  this.$route.path;
+        },
+        methods: {
+            handleSelect(key, keyPath) {
+                this.activeIndex = key;
+                this.$router.push({path: key})
+            },
+            ready() {
+                var geolocation = new BMap.Geolocation()
+                geolocation.getCurrentPosition((r) => {
+                    console.log(r.address.city)
+                    this.city = r.address.city;
+
+                }, {enableHighAccuracy: true})
+            }
+        }
     }
 </script>
 

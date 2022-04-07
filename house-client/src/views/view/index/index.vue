@@ -14,10 +14,10 @@
             </span>
           </el-col>
           <el-col :span="1" :offset="2" style="cursor: pointer">
-            <span @click="send('/newHouse')">新房</span>
+            <span @click="send('/publish')">新房</span>
           </el-col>
           <el-col :span="1" style="cursor: pointer">
-            <span @click="send('/oldHouse')">二手房</span>
+            <span @click="send('/publish')">二手房</span>
           </el-col>
           <el-col :span="1" style="cursor: pointer">
             <span @click="send('/rentHouse')">租房</span>

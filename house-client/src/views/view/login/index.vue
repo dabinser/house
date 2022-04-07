@@ -64,7 +64,7 @@
 <script>
     import cheader from "@/components/cheader";
     import cfooter from "@/components/cfooter";
-    import userApi from "@/api/user";
+   import userApi from "@/api/user";
 
     export default {
         name: "login",

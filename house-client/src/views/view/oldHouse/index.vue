@@ -79,7 +79,7 @@
         <el-menu-item index="6">房屋面积</el-menu-item>
       </el-menu>
       <el-row>
-        <h2>共找到{{total}}套太原二手房</h2>
+        <h2>共找到{{this.total}}套太原二手房</h2>
       </el-row>
       <el-divider></el-divider>
       <el-row style="width:100%">
@@ -92,28 +92,28 @@
           @click.native="info(item.id)">
             <el-col :span="4" style="height: 100%;">
               <el-row style="height: 90%;">
-                <el-image :src="item.house_image[0]" style="height: 100%;"></el-image>
+                <el-image :src=this.testImage style="height: 100%;"></el-image>
               </el-row>
             </el-col>
             <el-col :span="16">
               <el-row>
-                <h2>{{item.house_title}}</h2>
+                <h2>{{item.title}}</h2>
               </el-row>
               <el-row class="crow">
-                <span>{{item.house_desc}}</span>
+                <span>{{item.contacts}}</span>
               </el-row>
               <el-row class="crow">
-                <span>{{item.house_type}}|</span>
+                <span>{{item.mode}}|</span>
                 <span>{{item.area}}|</span>
                 <span>{{item.orientation}}|</span>
-                <span>{{item.floor}}|</span>
+                <span>{{item.storey}}|</span>
               </el-row>
               <el-row class="crow">
                 <span>0关注</span>
               </el-row>
             </el-col>
             <el-col :span="4" style="height: 100%;">
-              <span style="color:red;font-weight: bold;font-size: 28px">{{item.house_price}}万</span>
+              <span style="color:red;font-weight: bold;font-size: 28px">{{item.pay}}万</span>
               <br />
               <span style="line-height: 30px">单价：暂无</span>
             </el-col>
@@ -140,7 +140,7 @@
 <script>
 import newheader from "@/components/newheader";
 import cfooter from "@/components/cfooter";
-import oldhouseApi from "@/api/oldhouse";
+import oldhouseApi from "../../../api/oldhouse";
 export default {
   name: "index",
   components: {
@@ -150,7 +150,7 @@ export default {
   data() {
     return {
       testImage:
-        "http://117.51.142.27:9003/5eb404d9-76d8-4048-ad69-24ef1243fa67.jpg",
+      "https://cn.bing.com/images/search?q=%E5%9B%BE%E7%89%87&FORM=IQFRBA&id=88463071E709B55893152D7EA115335FC3DE7167",
       activeIndex: "1",
       searchContent: "",
       list: [],
@@ -183,11 +183,20 @@ export default {
       //alert(keyPath);
     },
     fetchData() {
+      let pojo={
+        basepage:{
+          current:this.currentPage,
+          size:this.pageSize,
+        },
+        condition:this.searchMap
+      }
       oldhouseApi
-        .search(this.currentPage, this.pageSize, this.searchMap)
+        .search(pojo)
         .then(response => {
-          this.list = response.data.rows;
-          this.total = response.data.total;
+          this.list = response.data.data.records;
+          console.log(this.list);
+          this.total = response.data.data.total;
+
         });
     },
     info(id) {

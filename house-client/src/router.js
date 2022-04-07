@@ -15,19 +15,19 @@ import PersonalHouseList from './views/PersonalHouseList.vue'
 import PersonalScheduleList from './views/PersonalScheduleList.vue'
 import PersonalSolveList from './views/PersonalSolveList.vue'
 import ChatOnline from "./views/ChatOnline";
-import index1 from "@/views/view/index.vue";
-import cheader from "@/components/cheader";
-import newheader from "@/components/newheader";
-import cfooter from "@/components/cfooter";
-import oldHouse from "@/views/view/oldHouse/index"
-import info from "@/views/view/oldHouse/info";
-import rentHouse from "@/views/view/rentHouse/index"
-import publish from "@/views/view/publish/index"
-import rentInfo from "@/views/view/rentHouse/info"
-import tool from "@/views/view/tool/index"
-import centHouse from "@/views/view/center/house"
-import housePrice from "@/views/view/housePrice/index"
-import Center from "@/views/view/center/index"
+import index1 from "./views/view/index.vue";
+import cheader from "./components/cheader";
+import newheader from "./components/newheader";
+import cfooter from "./components/cfooter";
+import oldHouse from "./views/view/oldHouse/index"
+import info from "./views/view/oldHouse/info";
+import rentHouse from "./views/view/rentHouse/index"
+import publish from "./views/view/publish/index"
+import rentInfo from "./views/view/rentHouse/info"
+import tool from "./views/view/tool/index"
+import centHouse from "./views/view/center/house"
+import housePrice from "./views/view/housePrice/index"
+import Center from "./views/view/center/index"
 
 Vue.use(Router)
 
@@ -120,7 +120,7 @@ const router = new Router({
     },{
       path: '/logon',
       name: 'logon',
-      component: ()=>import('@/views/view/login/index')
+      component: ()=>import('./views/view/login/index')
     },
     //导航头部
     {
@@ -133,14 +133,14 @@ const router = new Router({
     {
       path: '/newheader',
       name: 'newheader',
-      component: ()=>import('@/components/newheader'),
+      component: ()=>import('./components/newheader'),
       hidden: true
     },
     //版权尾部
     {
       path: '/cfooter',
       name: 'cfooter',
-      component: ()=>import('@/components/cfooter'),
+      component: ()=>import('./components/cfooter'),
       hidden: true
     },
 
@@ -191,7 +191,7 @@ const router = new Router({
     //-------------------------------------------
     //工具
     {
-      path: '/tool/',
+      path: '/tool',
       name: 'index',
       component: tool,
       hidden: true
@@ -202,7 +202,7 @@ const router = new Router({
     {
       path: '/agent/',
       name: 'index',
-      component: ()=>import('@/views/view/agent/index'),
+      component: ()=>import('./views/view/agent/index'),
       hidden: true
     },
 
@@ -211,7 +211,7 @@ const router = new Router({
     {
       path: '/businessHouse/',
       name: 'index',
-      component: ()=>import('@/views/view/businessHouse/index'),
+      component: ()=>import('./views/view/businessHouse/index'),
       hidden: true
     },
     //-------------------------------------------
@@ -227,7 +227,7 @@ const router = new Router({
     {
       path: '/center/',
       name: 'index',
-      component: ()=>import('@/views/view/center/index'),
+      component: ()=>import('./views/view/center/index'),
       hidden: true
     },
     {

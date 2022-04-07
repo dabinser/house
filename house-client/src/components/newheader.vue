@@ -6,7 +6,7 @@
           <!--<el-row type="flex" justify="center" >
             <el-col :span="16">-->
               <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" style="padding-left: 20%;padding-right: 20%">
-                <el-menu-item index="/">首页</el-menu-item>
+                <el-menu-item index="/index">首页</el-menu-item>
                 <el-menu-item index="/oldHouse">二手房</el-menu-item>
                 <el-menu-item index="/newHouse">新房</el-menu-item>
                 <el-menu-item index="/rentHouse">租房</el-menu-item>
@@ -60,51 +60,51 @@
                 logoutFlag: false
             };
         },
-        // created() {
-        //   if(getToken()) {
-        //       store.dispatch('GetInfo').then(res => { // 拉取用户信息
-        //           this.loginOrRegis = this.name
-        //           this.logoutFlag = true
-        //       }).catch((err) => {
-        //           alert("获取用户信息失败")
-        //       })
-        //   }else{
-        //
-        //   }
-        // },
+        created() {
+          if(getToken()) {
+              store.dispatch('GetInfo').then(res => { // 拉取用户信息
+                  this.loginOrRegis = this.name
+                  this.logoutFlag = true
+              }).catch((err) => {
+                  alert("获取用户信息失败")
+              })
+          }else{
+
+          }
+        },
         mounted () {
 
           this.activeIndex =  this.$route.path;
         },
-        // methods: {
-        //     handleSelect(key, keyPath) {
-        //         this.activeIndex = key;
-        //         this.$router.push({path: key})
-        //     },
-        //   ready() {
-        //     var geolocation = new BMap.Geolocation()
-        //     geolocation.getCurrentPosition((r) => {
-        //       console.log(r.address.city)
-        //       this.city = r.address.city;
-        //
-        //     }, {enableHighAccuracy: true})
-        //   },
-        //   download(){
-        //       window.open('https://www.lianjia.com/client/');
-        //   },
-        //   logout(){
-        //       this.$store.dispatch('LogOut').then(() => {
-        //           location.reload() // 为了重新实例化vue-router对象 避免bug
-        //       })
-        //   },
-        //     center() {
-        //         if (this.loginOrRegis === '登录注册') {
-        //             this.$router.push({path:'/login'})
-        //         }else{
-        //             this.$router.push({path:'/center/house'})
-        //         }
-        //     }
-        // }
+        methods: {
+            handleSelect(key, keyPath) {
+                this.activeIndex = key;
+                this.$router.push({path: key})
+            },
+          ready() {
+            var geolocation = new BMap.Geolocation()
+            geolocation.getCurrentPosition((r) => {
+              console.log(r.address.city)
+              this.city = r.address.city;
+
+            }, {enableHighAccuracy: true})
+          },
+          download(){
+              window.open('https://www.lianjia.com/client/');
+          },
+          logout(){
+              this.$store.dispatch('LogOut').then(() => {
+                  location.reload() // 为了重新实例化vue-router对象 避免bug
+              })
+          },
+            center() {
+                if (this.loginOrRegis === '登录注册') {
+                    this.$router.push({path:'/logon'})
+                }else{
+                    this.$router.push({path:'/center/house'})
+                }
+            }
+        }
     }
 </script>
 

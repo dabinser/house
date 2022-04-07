@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-const group_name = 'rent'
+const group_name = 'te/rent'
 const api_name = 'oldhouse'
 export default {
   getList() {
@@ -8,11 +8,11 @@ export default {
       method: 'get'
     })
   },
-  search(page, size, searchMap) {
+  search(pojo) {
     return request({
-      url: `/${group_name}/${api_name}/search/${page}/${size}`,
+      url: `/${group_name}/ConditionQuery`,
       method: 'post',
-      data: searchMap
+      data: pojo
     })
   },
   save(pojo) {
