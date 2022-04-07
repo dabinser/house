@@ -129,6 +129,7 @@ export default {
             let pojo = {pageSize:10, pageNum:1}
             houseApi.getAllHouseList(pojo).then(res =>{
                 this.allTableData=res.data.data;
+                console.log(this.allTableData);
                     // 设置分页数据
                     this.setPaginations();
                 // else{
@@ -176,6 +177,7 @@ export default {
                     });
                     this.allTableData = res.data.data;
                     // 设置分页数据
+                  console.log(this.allTableData);
                     this.setPaginations();
                 }else{
                     this.$message({
