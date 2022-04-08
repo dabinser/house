@@ -266,7 +266,7 @@
 </template>
 
 <script>
-import cheader from "@/components/cheader";
+import cheader from "../../components/cheader";
 import cfooter from "@/components/cfooter";
 import houseApi from "@/api/house";
 

@@ -208,13 +208,7 @@ const router = new Router({
     },
 
     //-------------------------------------------
-    //商业办公
-    {
-      path: '/businessHouse/',
-      name: 'index',
-      component: ()=>import('./views/view/businessHouse/index'),
-      hidden: true
-    },
+
     //-------------------------------------------
     //房价
     {

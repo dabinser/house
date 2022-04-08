@@ -11,9 +11,6 @@
               <h1>发布出售房源</h1>
               <span>8000+全国链家门店·10万+全国经纪人·链家倾情服务15年+</span>
             </el-col>
-            <el-col :span="5" style="text-align: right">
-              <span style="line-height: 70px">下载万径APP</span>
-            </el-col>
           </el-row>
 
         </div>

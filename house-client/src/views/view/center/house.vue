@@ -46,7 +46,14 @@
         },
         data() {
             return {
-                focusList:[],
+                focusList:[{
+                  id:1,
+                  title:'河北'
+                },
+                  {
+                    id:2,
+                    title: '重庆'
+                  }],
                 htype:'newhouse',
                 activeName: 'newhouse'
             }

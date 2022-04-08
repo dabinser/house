@@ -3,24 +3,7 @@
     <newheader></newheader>
     <div class="cheader">
       <div style="width: 60%;margin: 0 auto;line-height: 100px">
-        <el-row>
-          <el-col
-            :span="3"
-            style="font-size: 28px;cursor: pointer;color: #00ae66;font-weight: bold"
-          >万径房产</el-col>
-          <el-col :span="1" :offset="2" style="cursor: pointer">
-            <span @click="send('/newHouse')">在售</span>
-          </el-col>
-          <el-col :span="1" style="cursor: pointer">
-            <span @click="send('/rentHouse')">小区</span>
-          </el-col>
-          <el-col :span="2" style="cursor: pointer">
-            <span @click="send('/businessHouse')">地图找房</span>
-          </el-col>
-          <el-col :span="4" :offset="4" style="cursor: pointer;color: #00ae66;float: right;">
-            <span @click="send('/businessHouse')" style="color: #00ae66;">客服热线234242343</span>
-          </el-col>
-        </el-row>
+
       </div>
       <div style="padding-top: 30px">
         <el-row class="csearch" type="flex" justify="center">
@@ -78,9 +61,6 @@
         <el-menu-item index="5">房屋单价</el-menu-item>
         <el-menu-item index="6">房屋面积</el-menu-item>
       </el-menu>
-      <el-row>
-        <h2>共找到{{this.total}}套太原二手房</h2>
-      </el-row>
       <el-divider></el-divider>
       <el-row style="width:100%">
         <el-col style="width:85%;float:left">
@@ -118,9 +98,6 @@
               <span style="line-height: 30px">单价：暂无</span>
             </el-col>
           </el-row>
-        </el-col>
-        <el-col style="width:10%;float:right">
-          <el-button type="primary" class="cbtn">试试地图找房</el-button>
         </el-col>
       </el-row>
       <el-pagination

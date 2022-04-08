@@ -10,14 +10,12 @@
             <el-menu-item index="2">整租</el-menu-item>
             <el-menu-item index="3">合租</el-menu-item>
             <el-menu-item index="/publish">发布房源</el-menu-item>
-            <el-menu-item index="5">下载APP</el-menu-item>
 
             <el-menu-item index="/logout" style="float: right">退出</el-menu-item>
             <el-submenu index="person" style="float: right">
               <template slot="title">个人中心</template>
-              <el-menu-item index="/">我的关注</el-menu-item>
+              <el-menu-item index="/cent/house">我的关注</el-menu-item>
               <el-menu-item index="7-2">最近联系</el-menu-item>
-              <el-menu-item index="7-3">浏览记录</el-menu-item>
             </el-submenu>
             <el-menu-item index="/login" style="float: right">登录注册</el-menu-item>
 <!--            <el-menu-item index="10" style="float: right">注册</el-menu-item>-->
@@ -49,16 +47,10 @@
         methods: {
             handleSelect(key, keyPath) {
                 this.activeIndex = key;
+              console.log(key,keyPath);
                 this.$router.push({path: key})
             },
-            ready() {
-                var geolocation = new BMap.Geolocation()
-                geolocation.getCurrentPosition((r) => {
-                    console.log(r.address.city)
-                    this.city = r.address.city;
 
-                }, {enableHighAccuracy: true})
-            }
         }
     }
 </script>

@@ -4,12 +4,6 @@
     <div style="height: 180px;background: #f5f5f6;width: 100%">
       <div style="width: 60%;margin:  0 auto;">
         <el-row>
-          <el-col :span="5" style="padding-left:15px;">
-            <h2 style="color: #00ae66;">万径房产</h2>
-          </el-col>
-          <el-col :span="19" style="text-align: right">
-            <span style="line-height: 70px">下载万径APP</span>
-          </el-col>
         </el-row>
         <el-row>
           <el-col :span="14" style="padding-top: 10px;padding-left:15px;">
@@ -307,12 +301,6 @@
             this.onbeforeunload()
         },
         methods: {
-            handler({BMap, map}) {
-                console.log(BMap, map)
-                this.center.lng = 116.404
-                this.center.lat = 39.915
-                this.zoom = 15
-            },
             ready() {
                 oldHouseApi.findById(this.$route.params.id).then(response => {
                     this.pojo = response.data

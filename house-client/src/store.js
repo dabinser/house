@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import {login} from './api/user'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
@@ -43,7 +44,61 @@ const actions = {
   clearCurrentState: ({ commit }) => {
     commit(types.SET_IS_AUTNENTIATED, false)
     commit(types.SET_USER, null)
-  }
+  },
+  ToggleSideBar: ({ commit }) => {
+    commit('TOGGLE_SIDEBAR')
+  },
+  Login({ commit }, userInfo) {
+    return new Promise((resolve, reject) => {
+      console.log("++++++++++++")
+      let form=new FormData;
+      form.append("username",userInfo.username.trim());
+      form.append("password",userInfo.password)
+
+      login(form).then(response => {
+        console.log('_____________')
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  // 注册
+  Register({ commit }, userInfo) {
+    const username = userInfo.username.trim()
+    const password = userInfo.password.trim()
+    var userPojo = {
+      mobile: username,
+      usertype: "用户",
+      password: password
+    }
+    var jsonData = JSON.stringify(userPojo)
+    return new Promise((resolve, reject) => {
+      register(jsonData).then(response => {
+        alert(response.data)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  // 获取用户信息
+  GetInfo({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      getInfo(state.token).then(response => {
+        const data = response.data
+        commit('SET_ROLES', data.roles)
+        commit('SET_UID', data.uid)
+        commit('SET_NAME', data.name)
+        commit('SET_MOBILE', data.mobile)
+        commit('SET_AVATAR', data.avatar)
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
 }
 
 export default new Vuex.Store({
