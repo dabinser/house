@@ -92,7 +92,7 @@
           @click.native="info(item.id)">
             <el-col :span="4" style="height: 100%;">
               <el-row style="height: 90%;">
-                <el-image :src=this.testImage style="height: 100%;"></el-image>
+                <el-image :src="1" style="height: 100%;"></el-image>
               </el-row>
             </el-col>
             <el-col :span="16">
@@ -150,7 +150,7 @@ export default {
   data() {
     return {
       testImage:
-      "https://cn.bing.com/images/search?q=%E5%9B%BE%E7%89%87&FORM=IQFRBA&id=88463071E709B55893152D7EA115335FC3DE7167",
+      "src/assets/newhouse/c7151ad70651832b9352de793b503e0a.jpg.185x185.jpg",
       activeIndex: "1",
       searchContent: "",
       list: [],

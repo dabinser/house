@@ -17,12 +17,12 @@
 
                 <el-menu-item @click="logout" style="float: right" v-show="logoutFlag">退出</el-menu-item>
                 <el-menu-item @click="center" style="float: right" v-show="logoutFlag">个人中心</el-menu-item>
-                <!--<el-submenu index="person" style="float: right" v-show="logoutFlag">
+                <el-submenu index="person" style="float: right" v-show="logoutFlag">
                   <template slot="title">个人中心</template>
                   <el-menu-item @click="center">我的关注</el-menu-item>
                   <el-menu-item @click="center">最近联系</el-menu-item>
                   <el-menu-item @click="center">浏览记录</el-menu-item>
-                </el-submenu>-->
+                </el-submenu>
                 <el-menu-item @click="center" style="float: right">{{loginOrRegis}}</el-menu-item>
                 <!--            <el-menu-item index="10" style="float: right">注册</el-menu-item>-->
               </el-menu>
@@ -56,7 +56,7 @@
                 activeIndex: '1',
                 activeIndex2: '1',
                 input:'',
-                loginOrRegis:'登录注册',
+                loginOrRegis:'',
                 logoutFlag: false
             };
         },
@@ -101,7 +101,7 @@
                 if (this.loginOrRegis === '登录注册') {
                     this.$router.push({path:'/logon'})
                 }else{
-                    this.$router.push({path:'/center/house'})
+                    this.$router.push({path:'/center'})
                 }
             }
         }

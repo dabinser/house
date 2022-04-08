@@ -25,13 +25,17 @@
                 <el-form label-width="180px" >
                   <el-form-item label="图片">
                     <el-upload
-                      action="http://localhost:9001/rent/upload"
+                      action="api/document/batch/1"
                       list-type="picture-card"
                       :on-preview="handlePictureCardPreview"
                       :on-remove="handleRemove"
                       :on-success="handleUploadSuccess"
                       :limit="limitImageCount"
                       :on-exceed="handleExceed"
+
+                      :auto-upload="true"
+                      :multiple="true"
+
                       :file-list="fileList"
                     >
                       <i class="el-icon-plus"></i>
@@ -45,13 +49,13 @@
 
                   </el-form-item>
                   <el-form-item label="详细地址">
-                    <el-input v-model="pojo.address"></el-input>
+                    <el-input v-model="pojo.area"></el-input>
                   </el-form-item>
                   <el-form-item label="租房方式">
-                    <el-input v-model="pojo.rent_way"></el-input>
+                    <el-input v-model="pojo.mode"></el-input>
                   </el-form-item>
                   <el-form-item label="租金">
-                    <el-input v-model="pojo.rent"></el-input>
+                    <el-input v-model="pojo.pay"></el-input>
                   </el-form-item>
                   <el-form-item label="房屋朝向">
                     <el-input v-model="pojo.orientation"></el-input>
@@ -60,14 +64,14 @@
                     <el-input v-model="pojo.type"></el-input>
                   </el-form-item>
                   <el-form-item label="委托人">
-                    <el-input v-model="pojo.bailor"></el-input>
+                    <el-input v-model="pojo.contacts"></el-input>
                   </el-form-item>
 
                   <el-form-item label="房屋面积">
                     <el-input v-model="pojo.square"></el-input>
                   </el-form-item>
                   <el-form-item label="房屋所在楼层">
-                    <el-input v-model="pojo.floor"></el-input>
+                    <el-input v-model="pojo.storey"></el-input>
                   </el-form-item>
 
                   <el-form-item label="配套设施">
@@ -136,6 +140,7 @@
                 console.log('submit!');
             },
             handleSave() {
+                ;
                 if (this.pojo.id != null) {
 
                     for (var i = 0; i < this.uploadPicture.length; i++) {
@@ -151,10 +156,12 @@
                 this.pojo.image = im
                 resourceApi.update(this.id, this.pojo).then(response => {
                     this.$message({
-                        message: response.message,
-                        type: (response.flag ? 'success' : 'error')
+                        message: response.data.msg,
+                        type: (response.data.data ? 'success' : 'error')
                     })
-                    if (response.flag) { // 如果成功
+                    if (response.data.data) { // 如果成功
+
+                      console.log('+++++++')
                         this.fetchData() // 刷新列表
                         this.fileList = [];
                     }
@@ -172,6 +179,9 @@
             handleUploadSuccess(response, file, fileList) {
                 var total = 0;
                 console.log(this.pojo)
+              console.log(fileList);
+              console.log('++++++++')
+              console.log(file);
                 if (this.pojo.image != null ) {
                     total =  fileList.length+this.pojo.image.length;
 
@@ -195,7 +205,7 @@
                     this.uploadPicture = [];
                     for (var i = 0; i < fileList.length; i++) {
                         console.log(fileList.length)
-                        this.uploadPicture.push("https://1321654.oss-cn-beijing.aliyuncs.com/"+fileList[i].response.src);
+                        this.uploadPicture.push("api/document/batch/1"+fileList[i].response.src);
                     }
                 }
             },

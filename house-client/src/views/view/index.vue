@@ -53,10 +53,10 @@
                 <el-tab-pane label="综合排序" name="first"  >
 
                   <el-row v-model="tableData" v-for="item in tableData">
-                    <el-col :span="3" style="height: 180px;margin-right:20px;border: 1px red solid"></el-col>
+                    <el-col :span="3" style="height: 180px;margin-right:20px;border: 1px gray solid"></el-col>
                     <el-col
                       :span="10"
-                      style="height: 180px;margin-right:20px;border: 1px red solid"
+                      style="height: 180px;margin-right:20px;border: 1px gainsboro solid"
                     >
                       <el-row style="height: 40px;">
                         <el-link
@@ -64,11 +64,11 @@
                           :underline="false"
                           style="font-size: 18px;font-weight: bold"
                         >
-                          {{item.vname}}
+                          {{item.area}}
                         </el-link>
                       </el-row>
                       <el-row style="height: 40px;">
-                        <el-link :underline="false">{{item.vname}}</el-link>
+                        <el-link :underline="false">{{item.mode}}</el-link>
                       </el-row>
                       <el-row style="height: 60px;line-height: 60px;">
                         <el-link :underline="false">
@@ -89,9 +89,9 @@
                         <span style="font-weight: normal;font-size: 12px;color: #333333">23天前维护</span>
                       </el-row>
                     </el-col>
-                    <el-col :span="5" style="height: 180px;border: 1px red solid">
+                    <el-col :span="5" style="height: 180px;border: 1px gainsboro solid">
                       <span style="font-size:28px;color: darkgreen">
-                        5000
+                        {{ item.pay }}
                         <span>元/月</span>
                       </span>
                     </el-col>
@@ -124,7 +124,7 @@
                       </el-row>
                     </el-col>
                     <el-col :span="5" style="height: 180px;border: 1px red solid">
-                      <span style="font-size:28px;color: darkgreen">
+                      <span style="font-size:28px;color: darkgreen ;margin: 0 auto">
                         5000
                         <span>元/月</span>
                       </span>

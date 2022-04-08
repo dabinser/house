@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-const group_name = 'rent'
+const group_name = 'te/rent'
 const api_name = 'resource'
 export default {
   getList() {
@@ -17,7 +17,7 @@ export default {
   },
   save(pojo) {
     return request({
-      url: `/${group_name}/${api_name}`,
+      url: `/${group_name}/addHouse`,
       method: 'post',
       data: pojo
     })
@@ -33,8 +33,8 @@ export default {
       return this.save(pojo)
     }
     return request({
-      url: `/${group_name}/${api_name}/${id}`,
-      method: 'put',
+      url: `/${group_name}`,
+      method: 'post',
       data: pojo
     })
   },

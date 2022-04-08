@@ -28,6 +28,7 @@ import tool from "./views/view/tool/index"
 import centHouse from "./views/view/center/house"
 import housePrice from "./views/view/housePrice/index"
 import Center from "./views/view/center/index"
+import houseInfo from "./views/view/info/info"
 
 Vue.use(Router)
 
@@ -165,7 +166,7 @@ const router = new Router({
       hidden: true
     },
     {
-      path: '/oldHouse/info/:id',
+      path: '/info/:id',
       name: 'info',
       component: info,
       hidden: true
@@ -238,6 +239,11 @@ const router = new Router({
         { path: 'house', name: 'house', component: centHouse}
       ]
     },
+    {
+      path: 'info',
+      name:"info",
+      component:houseInfo
+    }
 
   ]
 });

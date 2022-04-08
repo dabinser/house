@@ -177,9 +177,9 @@
               <el-col :span="8">
                 <el-card shadow="never">
                   <el-row>
-                    <el-col :span="6">
-                      <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" style="width: 100px;height: 170px;">
-                    </el-col>
+<!--                    <el-col :span="6">-->
+<!--                      <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" style="width: 100px;height: 170px;">-->
+<!--                    </el-col>-->
                     <el-col :span="12">
                       <span>张惠铭</span><br>
                       <span>评分:4.5 | 20次评价</span>
@@ -224,7 +224,7 @@
 
 <script type="text/javascript">
   import cheader from "@/components/cheader";
-  import BMap from 'BMap'
+
     export default {
         name: "info",
         data () {
@@ -234,12 +234,7 @@
             }
         },
         methods :{
-            handler ({BMap, map}) {
-                console.log(BMap, map)
-                this.center.lng = 116.404
-                this.center.lat = 39.915
-                this.zoom = 15
-            }
+
         },
         components:{
             cheader
