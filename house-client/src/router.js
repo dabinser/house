@@ -24,6 +24,7 @@ import centHouse from "./views/view/center/house"
 import Center from "./views/view/center/index"
 import agent from "./views/view/agent/index"
 import house from "./views/view/house/index"
+import chat from "./views/view/login/index1"
 
 Vue.use(Router)
 
@@ -37,7 +38,6 @@ const router = new Router({
     },
     {
       path: '/index',
-      name: 'index',
       component: Index,
       children:[
         {
@@ -186,6 +186,11 @@ const router = new Router({
       path:'/agent',
       name: 'agent',
       component:agent
+    },
+    {
+      path:'/chat',
+      name:'cc',
+      component: chat
     }
 
   ]

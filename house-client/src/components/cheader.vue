@@ -41,8 +41,8 @@
             };
         },
         mounted () {
-          this.ready();
           this.activeIndex =  this.$route.path;
+          console.log(this.activeIndex);
         },
         methods: {
             handleSelect(key, keyPath) {

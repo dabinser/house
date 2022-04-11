@@ -34,7 +34,7 @@
               <div style="width:100%;height:400px;">
                 <el-row>
                   <el-col>
-                    <span style="font-weight: bold;font-size: 30px;color: red">{{pojo.pay}}万</span>
+                    <span style="font-weight: bold;font-size: 30px;color: lavender">{{pojo.pay}}万</span>
                   </el-col>
                 </el-row>
                 <el-row style="margin-top: 20px">
@@ -70,7 +70,7 @@
                 </el-row>
                 <el-row>
                   <el-col :span="24">
-                    <el-button type="success" style="margin: 10px;" size="medium" @click="sendMessage(agent.id)">在线咨询
+                    <el-button type="success" style="margin: 10px;" size="medium" @click="sendMessage()">在线咨询
                     </el-button>
                   </el-col>
                 </el-row>
@@ -122,9 +122,9 @@
           <el-row>
             <h2>房源照片</h2>
             <el-row style="margin-bottom: 20px;" :gutter="50">
-              <el-col :span="8" style="line-height: 28px" v-for="item in pojo.house_image" :key="item.id">
-                <el-image :src="item" style="width: 100%;height: 100%"></el-image>
-              </el-col>
+<!--              <el-col :span="8" style="line-height: 28px" v-for="item in pojo.house_image" :key="item.id">-->
+<!--                <el-image :src="item" style="width: 100%;height: 100%"></el-image>-->
+<!--              </el-col>-->
             </el-row>
           </el-row>
           <el-row style="margin-bottom: 20px">
@@ -160,7 +160,7 @@
                       <span>{{item.bname}}</span><br>
                       <span>评分:{{item.grade}} | 20次评价</span>
                       <span>{{item.contact}}</span>
-                      <span><el-button type="success" size="mini" @click="sendMessage(item.id)">在线咨询</el-button></span>
+                      <span><el-button type="success" size="mini" @click="sendMessage(item.id) ,centerDialogVisible=true">在线咨询</el-button></span>
                     </el-col>
                   </el-row>
                 </el-card>
@@ -241,50 +241,51 @@
 
     export default {
         name: "info",
-        data() {
-            return {
-                center: {lng: 0, lat: 0},
-                zoom: 3,
-                pojo: {},
-                agent: {},
-                agents: [],
-                activeIndex: '/oldHouse/info',
-                centerDialogVisible: false,
-                messageAgent: {},
-                messagePojo: {
-                    toId: '',
-                    msg: ''
-                },
-                websocket: null,
-                data: '',
-                content: '',
-                requestHouseFlag: false,
-                request:{
-                    house_id:""
-                },
+        data(){
+          return{
+            center: {lng: 0, lat: 0},
+            zoom: 3,
+            pojo: {},
+            agent: {},
+            agents: [],
+            activeIndex: '/oldHouse/info',
+            centerDialogVisible: false,
+            messageAgent: {},
+            messagePojo: {
+              toId: '',
+              msg: ''
+            },
+            websocket: null,
+            data: '',
+            content: '',
+            requestHouseFlag: false,
+            request:{
+              house_id:""
+            },
 
-                loginRules: {
-                    bname: [
-                        {required: true, message: '请输入联系人姓名', trigger: 'blur'}
+            loginRules: {
+              bname: [
+                {required: true, message: '请输入联系人姓名', trigger: 'blur'}
 
-                    ],
-                    mobile: [
-                        {required: true, message: '请输入手机号', trigger: 'blur'},
-                        {min: 11, max: 11, message: '请输入长度为11位的手机号', trigger: 'blur'}
-                    ],
-                    request_date: [
-                        {required: true, message: '请输入看房时间', trigger: 'blur'}
+              ],
+              mobile: [
+                {required: true, message: '请输入手机号', trigger: 'blur'},
+                {min: 11, max: 11, message: '请输入长度为11位的手机号', trigger: 'blur'}
+              ],
+              request_date: [
+                {required: true, message: '请输入看房时间', trigger: 'blur'}
 
-                    ],
-                },
+              ],
             }
+          };
         },
+
         mounted() {
-            console.log(this.$route.params.id);
+            console.log(this.$route.params.id+'++++++++++++++');
             this.ready()
             if ('WebSocket' in window) {
-                this.websocket = new WebSocket('ws://localhost:8888/websocket/server/' + this.uid)
-                this.initWebSocket()
+                this.websocket = new WebSocket('ws://localhost:8888/websocket/server/' + 'zs');
+
             } else {
                 alert('当前浏览器 Not support websocket')
             }
@@ -303,18 +304,17 @@
                 })
 
             },
-            sendMessage(id) {
-                console.log(this.uid + 'dsfgadfgasd')
-                if (this.uid) {
-                    informationApi.findById(id).then(response => {
-                        this.messageAgent = response.data
-                    })
+            sendMessage() {
+                if (true) {
+                    // informationApi.findById(1).then(response => {
+                    //     this.messageAgent = response.data
+                    // })
                     this.content = ''
-                    this.centerDialogVisible = true
+                    this.centerDialogVisible = true;
+                    console.log(this.centerDialogVisible)
                 } else {
                     this.$router.push({path: '/login'})
                 }
-
 
             },
             initWebSocket() {
@@ -342,8 +342,9 @@
             setOnmessageMessage(event) {
                 //this.data = '服务端返回：' + event.data;
                 var temp = JSON.parse(event.data)
+                console.log(temp)
                 this.content += "<el-row>\n" +
-                    "            <span style=\"padding: 10px\">" + this.messageAgent.bname + "【万径经纪人】</span><br>\n" +
+                    "            <span style=\"padding: 10px\">" + '老k'+ "【万径经纪人】</span><br>\n" +
                     "            <span style=\"line-height: 30px;display: block;background: #fff;width: 45%;border-radius: 5px;margin: 10px;padding:5px\">" + temp.msg + "</span>\n" +
                     "          </el-row>"
             },
@@ -357,11 +358,12 @@
             //websocket发送消息
             send() {
                 this.messagePojo.toId = this.messageAgent.id
-                this.websocket.send(JSON.stringify(this.messagePojo))
+                this.websocket.send(JSON.stringify(this.messagePojo.msg))
                 this.content += "<div style='width: 100%;height: auto'><div style=\"text-align: right;line-height: 10px;margin: 10px\">\n" +
                     "            <div style=\"padding: 10px;\">" + this.uid + "</div>\n" +
                     "            <div style=\"line-height: 30px;background: #fff;margin-left:55%;width: 45%;border-radius: 5px;padding:5px\">" + this.messagePojo.msg + "</div>\n" +
                     "          </div></div>"
+                console.log(this.messagePojo.msg)
                 this.messagePojo.msg = ''
 
             },
@@ -393,7 +395,7 @@
         },
 
 
-    }
+    };
 </script>
 
 <style scoped>

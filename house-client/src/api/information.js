@@ -24,7 +24,7 @@ export default {
   },
   findById(id) {
     return request({
-      url: `/${group_name}/${api_name}/${id}`,
+      url: `/${group_name}/${id}`,
       method: 'get'
     })
   },
