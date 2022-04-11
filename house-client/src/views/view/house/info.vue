@@ -42,7 +42,7 @@
                     <el-tag size="mini">近地铁</el-tag>
                   </el-col>
                 </el-row>
-                <el-divider></el-divider>
+
                 <el-row>
                   <el-col>
                     <span style="color: #606266;line-height: 26px;">房型：<span>{{pojo.house_type}}</span></span>
@@ -58,10 +58,9 @@
                     <span style="color: #606266;line-height: 26px;">所在区域：<span>{{pojo.area}}</span></span>
                   </el-col>
                 </el-row>
-                <el-divider></el-divider>
+
                 <el-row>
                   <el-col :span="6">
-                    <el-image style="width: 80px;height: 80px;border-radius: 50%" :src="agent.photograph"></el-image>
                   </el-col>
                   <el-col :span="12">
                     <el-row><h3>{{agent.bname}}</h3></el-row>
@@ -154,7 +153,7 @@
                 <el-card shadow="never">
                   <el-row>
                     <el-col :span="10">
-                      <el-image :src="item.photograph"></el-image>
+<!--                      <el-image :src="item.photograph"></el-image>-->
                     </el-col>
                     <el-col :span="12">
                       <span>{{item.bname}}</span><br>
@@ -170,8 +169,7 @@
             <el-row>
               <h2>地址和交通</h2>
               <el-row>
-                <baidu-map style="width: 100%;height: 300px" :center="center" :zoom="zoom" @ready="handler">
-                </baidu-map>
+
               </el-row>
             </el-row>
           </el-row>
@@ -180,6 +178,7 @@
       </el-container>
       <el-dialog
         title="在线咨询"
+
         :visible.sync="centerDialogVisible"
         width="30%"
         center>
@@ -197,7 +196,6 @@
             v-model="messagePojo.msg">
           </el-input>
         </div>
-
         <span slot="footer" class="dialog-footer">
     <el-button @click="centerDialogVisible = false">关闭</el-button>
     <el-button type="success" @click="send">发送</el-button>
@@ -233,7 +231,7 @@
 
 </template>
 
-<script type="text/javascript">
+<script >
     import cheader from "@/components/cheader";
     import oldHouseApi from "@/api/oldhouse";
     import informationApi from "@/api/information";
@@ -241,12 +239,12 @@
 
     export default {
         name: "info",
-        data(){
+        data() {
           return{
             center: {lng: 0, lat: 0},
             zoom: 3,
             pojo: {},
-            agent: {},
+            agent: {'ppppp':123},
             agents: [],
             activeIndex: '/oldHouse/info',
             centerDialogVisible: false,
@@ -282,28 +280,27 @@
 
         mounted() {
             console.log(this.$route.params.id+'++++++++++++++');
-            this.ready()
+
             if ('WebSocket' in window) {
+
                 this.websocket = new WebSocket('ws://localhost:8888/websocket/server/' + 'zs');
 
             } else {
                 alert('当前浏览器 Not support websocket')
+
             }
         },
         beforeDestroy() {
             this.onbeforeunload()
         },
-        methods: {
-            ready() {
-                oldHouseApi.findById(this.$route.params.id).then(response => {
-                    this.pojo = response.data.data
-                })
-                informationApi.getList().then(response => {
-                    this.agent = response.data[0]
-                    this.agents = response.data
-                })
 
+      methods: {
+            change(){
+                console.log(this.centerDialogVisible);
+                this.centerDialogVisible=false;
+              console.log(this.centerDialogVisible);
             },
+
             sendMessage() {
                 if (true) {
                     // informationApi.findById(1).then(response => {
@@ -311,7 +308,6 @@
                     // })
                     this.content = ''
                     this.centerDialogVisible = true;
-                    console.log(this.centerDialogVisible)
                 } else {
                     this.$router.push({path: '/login'})
                 }

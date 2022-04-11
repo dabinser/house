@@ -101,6 +101,19 @@ const router = new Router({
       ]
     },
     {
+      path: '/cheader',
+      name: 'cheader',
+      component: cheader,
+      hidden: true
+    },
+    //版权尾部
+    {
+      path: '/cfooter',
+      name: 'cfooter',
+      component: ()=>import('./components/cfooter'),
+      hidden: true
+    },
+    {
       path: '*',
       name: '/404',
       component:NotFound
@@ -122,19 +135,7 @@ const router = new Router({
       component: ()=>import('./views/view/login/index')
     },
     //导航头部
-    {
-      path: '/cheader',
-      name: 'cheader',
-      component: cheader,
-      hidden: true
-    },
-    //版权尾部
-    {
-      path: '/cfooter',
-      name: 'cfooter',
-      component: ()=>import('./components/cfooter'),
-      hidden: true
-    },
+
 
 
     //-------------------------------------------
@@ -160,22 +161,22 @@ const router = new Router({
     //经纪人
     {
       path: '/agent/',
-      name: 'index',
+      name: 'index3',
       component: ()=>import('./views/view/agent/index'),
       hidden: true
     },
 
-    //-------------------------------------------
+    //-------------------------------------------f
     //个人中心
     {
-      path: '/center/',
-      name: 'index',
+      path: '/centerIndex',
+      name: 'index1',
       component: ()=>import('./views/view/center/index'),
       hidden: true
     },
     {
-      path: '/center',
-      name: 'index',
+      path: '/centerHouse',
+      name: 'index2',
       component: Center,
       children: [
         { path: 'house', name: 'house', component: centHouse}

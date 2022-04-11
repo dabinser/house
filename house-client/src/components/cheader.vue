@@ -49,6 +49,7 @@
                 this.activeIndex = key;
                 console.log(key,keyPath);
                 this.$router.push({path: key})
+
             },
 
         }

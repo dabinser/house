@@ -61,7 +61,7 @@
         <el-menu-item index="5">房屋单价</el-menu-item>
         <el-menu-item index="6">房屋面积</el-menu-item>
       </el-menu>
-      <el-divider></el-divider>
+
       <el-row style="width:100%">
         <el-col style="width:85%;float:left">
           <el-row
@@ -72,7 +72,7 @@
           @click.native="info(item.id)">
             <el-col :span="4" style="height: 100%;">
               <el-row style="height: 90%;">
-                <el-image :src="1" style="height: 100%;"></el-image>
+<!--                <el-image :src="1" style="height: 100%;"></el-image>-->
               </el-row>
             </el-col>
             <el-col :span="16">
@@ -138,11 +138,6 @@ export default {
     };
   },
   created() {
-      if(this.$route.params.content){
-          this.searchMap = {
-              "house_title":this.$route.params.content
-          }
-      }
       this.fetchData();
   },
     mounted() {
