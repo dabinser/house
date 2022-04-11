@@ -1,6 +1,6 @@
 <template>
   <div>
-    <newheader></newheader>
+    <cheader></cheader>
     <div class="cheader">
       <div style="width: 60%;margin: 0 auto;line-height: 100px">
 
@@ -83,8 +83,8 @@
                 <span>{{item.contacts}}</span>
               </el-row>
               <el-row class="crow">
-                <span>{{item.mode}}|</span>
                 <span>{{item.area}}|</span>
+                <span>{{item.mode}}|</span>
                 <span>{{item.orientation}}|</span>
                 <span>{{item.storey}}|</span>
               </el-row>
@@ -115,13 +115,13 @@
 </template>
 
 <script>
-import newheader from "@/components/newheader";
+import cheader from "@/components/cheader";
 import cfooter from "@/components/cfooter";
 import oldhouseApi from "../../../api/oldhouse";
 export default {
   name: "index",
   components: {
-    newheader: newheader,
+    cheader: cheader,
     cfooter: cfooter
   },
   data() {
@@ -177,7 +177,7 @@ export default {
         });
     },
     info(id) {
-        this.$router.push('/oldHouse/info/'+id)
+        this.$router.push('/info/'+id)
     },
       searchHouse(){
           this.searchMap = {

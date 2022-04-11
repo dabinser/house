@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-const group_name = 'rent'
+const group_name = 'te/rent'
 const api_name = 'report'
 export default {
   getList() {

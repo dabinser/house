@@ -1,46 +1,40 @@
 <template>
-    <div>
-      <cheader></cheader>
-      <div style="height: 180px;background: #f5f5f6;width: 100%">
-        <div style="width: 60%;margin:  0 auto;">
-          <el-row>
-            <el-col :span="5" style="padding-left:15px;">
-              <h2 style="color: #00ae66;">万径房产</h2>
-            </el-col>
-            <el-col :span="19" style="text-align: right">
-              <span style="line-height: 70px">下载万径APP</span>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="14" style="padding-top: 10px;padding-left:15px;">
-              <h2>{{pojo.house_title}}</h2>
-            </el-col>
+  <div>
+    <cheader></cheader>
+    <div style="height: 180px;background: #f5f5f6;width: 100%">
+      <div style="width: 60%;margin:  0 auto;">
+        <el-row>
+        </el-row>
+        <el-row>
+          <el-col :span="14" style="padding-top: 10px;padding-left:15px;">
+            <h2>{{pojo.title}}</h2>
+          </el-col>
 
-          </el-row>
+        </el-row>
 
-        </div>
       </div>
-      <div style="width: 60%;margin: 0 auto;">
+    </div>
+    <div style="width: 60%;margin: 0 auto;">
       <el-container>
-        <el-main >
+        <el-main>
           <el-row>
-<!--            <h1>{{pojo.house_title}}</h1>-->
+            <!--            <h1>{{pojo.house_title}}</h1>-->
           </el-row>
           <el-row>
-            <span style="color:#606266;line-height: 30px;">房源维护时间：{{pojo.bailor_time}} </span><br>
+            <span style="color:#606266;line-height: 30px;">房源维护时间：{{pojo.hang_time}} </span><br>
             <span style="color:#606266">房源编号：{{pojo.id}} </span>
           </el-row>
           <el-row style="margin-top: 20px;" :gutter="50">
-            <el-col :span="14" >
+            <el-col :span="14">
               <div style="width:100%;height:400px;">
-                <el-image :src="pojo.image[0]" style="width: 100%;height: 100%"></el-image>
+<!--                <el-image :src="pojo.house_image[2]" style="width: 100%;height: 100%"></el-image>-->
               </div>
             </el-col>
-            <el-col :span="10" >
-              <div style ="width:100%;height:400px;">
+            <el-col :span="10">
+              <div style="width:100%;height:400px;">
                 <el-row>
                   <el-col>
-                    <span style="font-weight: bold;font-size: 30px;color: red">{{pojo.rent}}元/月</span>
+                    <span style="font-weight: bold;font-size: 30px;color: red">{{pojo.pay}}万</span>
                   </el-col>
                 </el-row>
                 <el-row style="margin-top: 20px">
@@ -51,21 +45,21 @@
                 <el-divider></el-divider>
                 <el-row>
                   <el-col>
-                    <span style="color: #606266;line-height: 26px;">房型：<span>{{pojo.type}}</span></span>
+                    <span style="color: #606266;line-height: 26px;">房型：<span>{{pojo.house_type}}</span></span>
                   </el-col>
                 </el-row>
                 <el-row>
                   <el-col>
-                    <span style="color: #606266;line-height: 26px;">所在楼层：<span>{{pojo.floor}}</span></span>
+                    <span style="color: #606266;line-height: 26px;">小区名称：<span>{{pojo.estate}}</span></span>
                   </el-col>
                 </el-row>
                 <el-row>
                   <el-col>
-                    <span style="color: #606266;line-height: 26px;">房屋朝向：<span>{{pojo.orientation}}</span></span>
+                    <span style="color: #606266;line-height: 26px;">所在区域：<span>{{pojo.area}}</span></span>
                   </el-col>
                 </el-row>
                 <el-divider></el-divider>
-                <el-row >
+                <el-row>
                   <el-col :span="6">
                     <el-image style="width: 80px;height: 80px;border-radius: 50%" :src="agent.photograph"></el-image>
                   </el-col>
@@ -76,16 +70,11 @@
                 </el-row>
                 <el-row>
                   <el-col :span="24">
-                    <el-button type="success" style="margin: 10px;" size="medium" @click="sendMessage(agent.id)">在线咨询</el-button>
+                    <el-button type="success" style="margin: 10px;" size="medium" @click="sendMessage(agent.id)">在线咨询
+                    </el-button>
                   </el-col>
                 </el-row>
               </div>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="10">真实存在，真实在租，真实价格，假一赔百</el-col>
-            <el-col :span="6" style="text-align: right">
-              <span @click="reportFlag = true" style="cursor: pointer">我要举报</span>
             </el-col>
           </el-row>
           <el-row>
@@ -95,20 +84,20 @@
                 <span>基本信息</span>
               </el-col>
               <el-col :span="6">
-                <el-row style="line-height: 30px;">房屋户型：{{pojo.type}}</el-row>
-                <el-row style="line-height: 30px;">租房方式：{{pojo.rent_way}}</el-row>
-                <el-row style="line-height: 30px;">委托人：{{pojo.bailor}}</el-row>
+                <el-row style="line-height: 30px;">房屋户型：{{pojo.house_type}}</el-row>
+                <el-row style="line-height: 30px;">建筑面积：{{pojo.area}}</el-row>
+                <el-row style="line-height: 30px;">套内面积：{{pojo.area}}</el-row>
                 <el-row style="line-height: 30px;">房屋朝向：{{pojo.orientation}}</el-row>
-                <el-row style="line-height: 30px;">房屋面积：{{pojo.square}}</el-row>
+                <el-row style="line-height: 30px;">装修情况：{{pojo.fitment}}</el-row>
                 <el-row style="line-height: 30px;">配套电梯：{{pojo.elevator}}</el-row>
 
               </el-col>
               <el-col :span="6">
                 <el-row style="line-height: 30px;">所在楼层：{{pojo.floor}}</el-row>
-                <el-row style="line-height: 30px;">租期：{{pojo.tenancy}}</el-row>
-                <el-row style="line-height: 30px;">取暖：{{pojo.heater}}</el-row>
-                <el-row style="line-height: 30px;">燃气：{{pojo.gas}}</el-row>
-                <el-row style="line-height: 30px;">用电：{{pojo.electricity}}</el-row>
+                <el-row style="line-height: 30px;">户型结构：暂无数据</el-row>
+                <el-row style="line-height: 30px;">建筑类型：板楼</el-row>
+                <el-row style="line-height: 30px;">建筑结构：砖混结构</el-row>
+                <el-row style="line-height: 30px;">梯户比例：{{pojo.door}}</el-row>
               </el-col>
             </el-row>
             <el-row style="margin-top: 20px">
@@ -133,7 +122,7 @@
           <el-row>
             <h2>房源照片</h2>
             <el-row style="margin-bottom: 20px;" :gutter="50">
-              <el-col :span="8" style="line-height: 28px" v-for="item in pojo.image" :key="item.id">
+              <el-col :span="8" style="line-height: 28px" v-for="item in pojo.house_image" :key="item.id">
                 <el-image :src="item" style="width: 100%;height: 100%"></el-image>
               </el-col>
             </el-row>
@@ -189,115 +178,91 @@
         </el-main>
 
       </el-container>
-        <el-dialog
-          title="在线咨询"
-          :visible.sync="centerDialogVisible"
-          width="30%"
-          center>
-          <div style="background: #f2f2f2;height: 400px;overflow: auto;padding: 10px" >
-            <el-row>
-              <h3>{{data}}</h3>
-            </el-row>
-            <div v-html="content"></div>
-          </div>
-          <div style="margin-top: 20px">
-            <el-input
-              type="textarea"
-              autosize
-              placeholder="请输入内容"
-              v-model="messagePojo.msg">
-            </el-input>
-          </div>
+      <el-dialog
+        title="在线咨询"
+        :visible.sync="centerDialogVisible"
+        width="30%"
+        center>
+        <div style="background: #f2f2f2;height: 400px;overflow: auto;padding: 10px">
+          <el-row>
+            <h3>{{data}}</h3>
+          </el-row>
+          <div v-html="content"></div>
+        </div>
+        <div style="margin-top: 20px">
+          <el-input
+            type="textarea"
+            autosize
+            placeholder="请输入内容"
+            v-model="messagePojo.msg">
+          </el-input>
+        </div>
 
-          <span slot="footer" class="dialog-footer">
+        <span slot="footer" class="dialog-footer">
     <el-button @click="centerDialogVisible = false">关闭</el-button>
     <el-button type="success" @click="send">发送</el-button>
   </span>
-        </el-dialog>
-        <el-dialog
-          title="预约看房"
-          :visible.sync="requestHouseFlag"
-          width="30%"
-          center>
-          <div style="background: #fff;height: 400px;overflow: auto;padding: 10px">
-            <el-form label-width="80px" :model="request" :rules="loginRules" ref="loginForm">
-              <el-form-item label="姓名" prop="bname">
-                <el-input v-model="request.bname"></el-input>
-              </el-form-item>
-              <el-form-item label="手机号" prop="mobile">
-                <el-input v-model="request.mobile"></el-input>
-              </el-form-item>
-              <el-form-item label="预约时间" prop="request_date">
-                <el-date-picker v-model="request.request_date" value-format="yyyy-MM-dd"></el-date-picker>
-              </el-form-item>
-              <el-form-item>
-                <el-button type="primary" @click.native.prevent="submitRequest">提交</el-button>
-                <el-button @click="requestHouseFlag = false">关闭</el-button>
-              </el-form-item>
+      </el-dialog>
+      <el-dialog
+        title="预约看房"
+        :visible.sync="requestHouseFlag"
+        width="30%"
+        center>
+        <div style="background: #fff;height: 400px;overflow: auto;padding: 10px">
+          <el-form label-width="80px" :model="request" :rules="loginRules" ref="loginForm">
+            <el-form-item label="姓名" prop="bname">
+              <el-input v-model="request.bname"></el-input>
+            </el-form-item>
+            <el-form-item label="手机号" prop="mobile">
+              <el-input v-model="request.mobile"></el-input>
+            </el-form-item>
+            <el-form-item label="预约时间" prop="request_date">
+              <el-date-picker v-model="request.request_date" value-format="yyyy-MM-dd"></el-date-picker>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click.native.prevent="submitRequest">提交</el-button>
+              <el-button @click="requestHouseFlag = false">关闭</el-button>
+            </el-form-item>
 
-            </el-form>
-          </div>
-        </el-dialog>
-        <el-dialog
-          title="房源举报"
-          :visible.sync="reportFlag"
-          width="30%"
-          center>
-          <div style="background: #fff;height: 400px;overflow: auto;padding: 10px">
-            <el-form label-width="80px" :model="request" :rules="loginRules" ref="loginForm">
-              <el-form-item label="举报说明">
-                <el-input v-model="report.report_content"></el-input>
-              </el-form-item>
-              <el-form-item>
-                <el-button type="primary" @click="submitReport">提交</el-button>
-                <el-button @click="reportFlag = false">关闭</el-button>
-              </el-form-item>
-
-            </el-form>
-          </div>
-        </el-dialog>
-      </div>
+          </el-form>
+        </div>
+      </el-dialog>
     </div>
+  </div>
 
 
 </template>
 
 <script type="text/javascript">
-  import cheader from "@/components/newheader";
-  import resourceApi from "@/api/resource";
-  import reportApi from "@/api/report";
-  import informationApi from "@/api/information";
-  import requestApi from "@/api/request";
-  import { mapGetters } from 'vuex'
+    import cheader from "@/components/cheader";
+    import oldHouseApi from "@/api/oldhouse";
+    import informationApi from "@/api/information";
+    import requestApi from "@/api/request";
+
     export default {
         name: "info",
-        computed: {
-            ...mapGetters([
-                'name',
-                'uid'
-            ])
-
-        },
-        data () {
+        data() {
             return {
                 center: {lng: 0, lat: 0},
                 zoom: 3,
                 pojo: {},
-                agent:{},
-                agents:[],
-                activeIndex:'/oldHouse/info',
+                agent: {},
+                agents: [],
+                activeIndex: '/oldHouse/info',
                 centerDialogVisible: false,
-                messageAgent:{},
-                messagePojo:{
-                    toId:'',
-                    msg:''
+                messageAgent: {},
+                messagePojo: {
+                    toId: '',
+                    msg: ''
                 },
                 websocket: null,
-                data:'',
-                content:'',
+                data: '',
+                content: '',
                 requestHouseFlag: false,
-                request:{},
-                report:{},
+                request:{
+                    house_id:""
+                },
+
                 loginRules: {
                     bname: [
                         {required: true, message: '请输入联系人姓名', trigger: 'blur'}
@@ -312,14 +277,13 @@
 
                     ],
                 },
-                reportFlag: false
             }
         },
         mounted() {
-            console.log(this.$route.params.id)
+            console.log(this.$route.params.id);
             this.ready()
             if ('WebSocket' in window) {
-                this.websocket = new WebSocket('ws://cyichen.mynatapp.cc/rent/ws/'+this.uid)
+                this.websocket = new WebSocket('ws://localhost:8888/websocket/server/' + this.uid)
                 this.initWebSocket()
             } else {
                 alert('当前浏览器 Not support websocket')
@@ -328,24 +292,19 @@
         beforeDestroy() {
             this.onbeforeunload()
         },
-        methods :{
-            handler ({BMap, map}) {
-                console.log(BMap, map)
-                this.center.lng = 116.404
-                this.center.lat = 39.915
-                this.zoom = 15
-            },
+        methods: {
             ready() {
-                resourceApi.findById(this.$route.params.id).then(response=>{
-                    this.pojo = response.data
+                oldHouseApi.findById(this.$route.params.id).then(response => {
+                    this.pojo = response.data.data
                 })
-                informationApi.getList().then(response=>{
+                informationApi.getList().then(response => {
                     this.agent = response.data[0]
                     this.agents = response.data
                 })
 
             },
             sendMessage(id) {
+                console.log(this.uid + 'dsfgadfgasd')
                 if (this.uid) {
                     informationApi.findById(id).then(response => {
                         this.messageAgent = response.data
@@ -383,9 +342,9 @@
             setOnmessageMessage(event) {
                 //this.data = '服务端返回：' + event.data;
                 var temp = JSON.parse(event.data)
-                this.content+="<el-row>\n" +
-                    "            <span style=\"padding: 10px\">"+this.messageAgent.bname+"【万径经纪人】</span><br>\n" +
-                    "            <span style=\"line-height: 30px;display: block;background: #fff;width: 45%;border-radius: 5px;margin: 10px;padding:5px\">"+temp.msg+"</span>\n" +
+                this.content += "<el-row>\n" +
+                    "            <span style=\"padding: 10px\">" + this.messageAgent.bname + "【万径经纪人】</span><br>\n" +
+                    "            <span style=\"line-height: 30px;display: block;background: #fff;width: 45%;border-radius: 5px;margin: 10px;padding:5px\">" + temp.msg + "</span>\n" +
                     "          </el-row>"
             },
             setOncloseMessage() {
@@ -399,9 +358,9 @@
             send() {
                 this.messagePojo.toId = this.messageAgent.id
                 this.websocket.send(JSON.stringify(this.messagePojo))
-                this.content+="<div style='width: 100%;height: auto'><div style=\"text-align: right;line-height: 10px;margin: 10px\">\n" +
-                    "            <div style=\"padding: 10px;\">"+this.uid+"</div>\n" +
-                    "            <div style=\"line-height: 30px;background: #fff;margin-left:55%;width: 45%;border-radius: 5px;padding:5px\">"+this.messagePojo.msg+"</div>\n" +
+                this.content += "<div style='width: 100%;height: auto'><div style=\"text-align: right;line-height: 10px;margin: 10px\">\n" +
+                    "            <div style=\"padding: 10px;\">" + this.uid + "</div>\n" +
+                    "            <div style=\"line-height: 30px;background: #fff;margin-left:55%;width: 45%;border-radius: 5px;padding:5px\">" + this.messagePojo.msg + "</div>\n" +
                     "          </div></div>"
                 this.messagePojo.msg = ''
 
@@ -411,6 +370,7 @@
             },
             submitRequest() {
                 console.log(this.request)
+                this.request.house_id = this.$route.params.id
                 this.$refs.loginForm.validate(valid => {
                     if (valid) {
                         requestApi.save(this.request).then(response=>{
@@ -426,24 +386,9 @@
                     }
                 })
 
-            },
-            submitReport(){
-                if (this.uid) {
-                    this.report.house_id = this.$route.params.id
-                    this.report.user_id = this.uid
-                    reportApi.save(this.report).then(response=>{
-                        this.$message({
-                            message: response.message,
-                            type: (response.flag ? 'success' : 'error')
-                        })
-                        this.reportFlag = false
-                    })
-                } else {
-                    this.$router.push({path: '/login'})
-                }
             }
         },
-        components:{
+        components: {
             cheader
         },
 
@@ -452,7 +397,7 @@
 </script>
 
 <style scoped>
- span{
-   color: #606266;
- }
+  span {
+    color: #606266;
+  }
 </style>

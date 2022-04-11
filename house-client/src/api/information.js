@@ -1,10 +1,10 @@
 import request from '@/utils/request'
-const group_name = 'rent'
+const group_name = 'te/rent'
 const api_name = 'information'
 export default {
   getList() {
     return request({
-      url: `/${group_name}/${api_name}`,
+      url: `/${group_name}/1`,
       method: 'get'
     })
   },

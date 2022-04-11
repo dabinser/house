@@ -1,21 +1,6 @@
 <template>
     <div>
-      <newheader></newheader>
-      <div style="height: 220px;background: #f5f5f6;width: 100%">
-        <div style="width: 60%;margin:  0 auto;">
-          <el-row>
-            <el-col :span="5">
-              <h2 style="color: #00ae66;">万径房产</h2>
-            </el-col>
-            <el-col :span="14" style="text-align: center;padding-top: 70px">
-              <h1>发布出售房源</h1>
-              <span>8000+全国链家门店·10万+全国经纪人·链家倾情服务15年+</span>
-            </el-col>
-          </el-row>
-
-        </div>
-
-      </div>
+      <cheader></cheader>
       <div style="width: 50%;margin:  0 auto;padding-top: 30px">
             <el-row style="padding-top: 20px" :gutter="40">
               <el-col :span="24">
@@ -100,13 +85,13 @@
 </template>
 
 <script>
-    import newheader from "@/components/newheader";
+    import cheader from "@/components/cheader";
     import cfooter from "@/components/cfooter";
     import resourceApi from "@/api/resource";
     export default {
         name: "index",
         components :{
-            newheader,
+            cheader,
             cfooter
         },
         data() {

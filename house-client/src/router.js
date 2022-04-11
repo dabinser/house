@@ -15,20 +15,15 @@ import PersonalHouseList from './views/PersonalHouseList.vue'
 import PersonalScheduleList from './views/PersonalScheduleList.vue'
 import PersonalSolveList from './views/PersonalSolveList.vue'
 import ChatOnline from "./views/ChatOnline";
-import index1 from "./views/view/index.vue";
 import cheader from "./components/cheader";
-import newheader from "./components/newheader";
 import cfooter from "./components/cfooter";
-import oldHouse from "./views/view/oldHouse/index"
-import info from "./views/view/oldHouse/info";
-import rentHouse from "./views/view/rentHouse/index"
+import oldHouse from "./views/view/house/index"
+import info from "./views/view/house/info";
 import publish from "./views/view/publish/index"
-import rentInfo from "./views/view/rentHouse/info"
-import tool from "./views/view/tool/index"
 import centHouse from "./views/view/center/house"
-import housePrice from "./views/view/housePrice/index"
 import Center from "./views/view/center/index"
-import houseInfo from "./views/view/info/info"
+import agent from "./views/view/agent/index"
+import house from "./views/view/house/index"
 
 Vue.use(Router)
 
@@ -114,11 +109,14 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component:Login
-    },{
-      path: '/client',
-      name: 'client',
-      component: index1
-    },{
+    },
+    {
+      path: '/rent',
+      name: 'rent',
+      component: house
+    },
+
+    {
       path: '/logon',
       name: 'logon',
       component: ()=>import('./views/view/login/index')
@@ -128,13 +126,6 @@ const router = new Router({
       path: '/cheader',
       name: 'cheader',
       component: cheader,
-      hidden: true
-    },
-    //导航头部
-    {
-      path: '/newheader',
-      name: 'newheader',
-      component: ()=>import('./components/newheader'),
       hidden: true
     },
     //版权尾部
@@ -160,44 +151,11 @@ const router = new Router({
     //-------------------------------------------
     //二手房
     {
-      path: '/oldHouse/:content?',
-      name: 'index',
-      component: oldHouse,
-      hidden: true
-    },
-    {
       path: '/info/:id',
       name: 'info',
       component: info,
-      hidden: true
-    },
-    //-------------------------------------------
-    //租房
-    {
-      path: '/rentHouse/:content?',
-      name: 'index',
-      component: rentHouse,
-      hidden: true
-    },
-    {
-      path: '/rentHouse/info/:id',
-      name: 'info',
-      component: rentInfo,
-      hidden: true
-    },
 
-    //-------------------------------------------
-    //新房
-
-    //-------------------------------------------
-    //工具
-    {
-      path: '/tool',
-      name: 'index',
-      component: tool,
-      hidden: true
     },
-
     //-------------------------------------------
     //经纪人
     {
@@ -207,16 +165,6 @@ const router = new Router({
       hidden: true
     },
 
-    //-------------------------------------------
-
-    //-------------------------------------------
-    //房价
-    {
-      path: '/housePrice/',
-      name: 'index',
-      component: housePrice,
-      hidden: true
-    },
     //-------------------------------------------
     //个人中心
     {
@@ -233,10 +181,11 @@ const router = new Router({
         { path: 'house', name: 'house', component: centHouse}
       ]
     },
+
     {
-      path: 'info',
-      name:"info",
-      component:houseInfo
+      path:'/agent',
+      name: 'agent',
+      component:agent
     }
 
   ]

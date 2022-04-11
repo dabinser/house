@@ -1,6 +1,6 @@
 <template>
   <div>
-    <newheader></newheader>
+    <cheader></cheader>
     <div style="overflow: auto;">
       <div style="width: 60%;margin: 0 auto">
         <el-container style="border: 1px #f2f2f2 solid">
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-  import newheader from '@/components/newheader';
+  import cheader from "@/components/cheader";
   import cfooter from "@/components/cfooter";
   import { mapGetters } from 'vuex'
   export default {
@@ -41,7 +41,7 @@
 
     },
     components: {
-      newheader: newheader,
+      cheader: cheader,
       cfooter: cfooter
     },
       methods: {

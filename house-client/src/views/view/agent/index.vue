@@ -1,6 +1,6 @@
 <template>
   <div>
-    <newheader></newheader>
+    <cheader></cheader>
     <div style="height: 80px;"></div>
     <div style="width: 100%;background: #f1f1f1;padding-bottom: 40px">
       <div style="width: 60%;height: 40px"></div>
@@ -135,14 +135,14 @@
 </template>
 
 <script>
-import newheader from "@/components/newheader";
+import cheader from "@/components/cheader";
 import cfooter from "@/components/cfooter";
 import informationApi from "@/api/information";
 
 export default {
   name: "index",
   components: {
-    newheader: newheader,
+    cheader: cheader,
     cfooter: cfooter
   },
   data() {
