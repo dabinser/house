@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "element-ui": "^2.6.3",
+    "element-ui": "^2.15.6",
     "js-cookie": "^2.2.0",
     "jwt-decode": "^2.2.0",
     "less-loader": "^6.0.0",

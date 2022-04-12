@@ -9,7 +9,6 @@
           <el-col :span="14" style="padding-top: 10px;padding-left:15px;">
             <h2>{{pojo.title}}</h2>
           </el-col>
-
         </el-row>
 
       </div>
@@ -17,6 +16,7 @@
     <div style="width: 60%;margin: 0 auto;">
       <el-container>
         <el-main>
+
           <el-row>
             <!--            <h1>{{pojo.house_title}}</h1>-->
           </el-row>
@@ -27,7 +27,7 @@
           <el-row style="margin-top: 20px;" :gutter="50">
             <el-col :span="14">
               <div style="width:100%;height:400px;">
-<!--                <el-image :src="pojo.house_image[2]" style="width: 100%;height: 100%"></el-image>-->
+
               </div>
             </el-col>
             <el-col :span="10">
@@ -154,6 +154,7 @@
                   <el-row>
                     <el-col :span="10">
 <!--                      <el-image :src="item.photograph"></el-image>-->
+
                     </el-col>
                     <el-col :span="12">
                       <span>{{item.bname}}</span><br>
@@ -166,6 +167,7 @@
               </el-col>
 
             </el-row>
+
             <el-row>
               <h2>地址和交通</h2>
               <el-row>
@@ -225,6 +227,8 @@
           </el-form>
         </div>
       </el-dialog>
+      <el-image :src="img" style="width: 100px; height: 100px"
+      ></el-image>
     </div>
   </div>
 
@@ -243,8 +247,10 @@
           return{
             center: {lng: 0, lat: 0},
             zoom: 3,
-            pojo: {},
-            agent: {'ppppp':123},
+            img:'http://localhost:8888/document/download/th.jpg',
+            imgs:"src/assets/img/banner.jpg",
+            pojo: {file: 'api/document/download/2022022318062371235983.xlsx'},
+            agent: {'ppppp':789},
             agents: [],
             activeIndex: '/oldHouse/info',
             centerDialogVisible: false,
