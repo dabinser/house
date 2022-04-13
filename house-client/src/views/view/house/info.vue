@@ -18,7 +18,7 @@
         <el-main>
 
           <el-row>
-            <!--            <h1>{{pojo.house_title}}</h1>-->
+                        <h1>{{pojo.title}}</h1>
           </el-row>
           <el-row>
             <span style="color:#606266;line-height: 30px;">房源维护时间：{{pojo.hang_time}} </span><br>
@@ -26,8 +26,23 @@
           </el-row>
           <el-row style="margin-top: 20px;" :gutter="50">
             <el-col :span="14">
-              <div style="width:100%;height:400px;">
-
+              <div style="width:100%;height:400px;" class="soul">
+                <div class="dvtleft">
+                  <img :src="url+imgList[banner]">
+                </div>
+                <!-- 下方小图列表 -->
+                <div class="dvtleftbt">
+                  <i class="el-icon-arrow-left icleft" @click="rollLeft"></i>
+                  <div class="dvtleftbt_allpic" style="" ref="roll">
+<!--                    <img v-for="(im,ix) in productinfo.images" :key="ix" @click="currbanner(ix)" :src="im" />-->
+<!--                    <el-col :span="10" style="line-height: 28px" v-for="item in imgList" :key="item.id" @click="currbanner(item.id)">-->
+<!--                      <el-image :src="url+item" style="width: 100%;height: 100%"></el-image>-->
+<!--                    </el-col>-->
+                    <el-image :src="url+item" v-for="(item,key) in imgList" :key="key" @click="currbanner(key)" fit="fill" :preview-src-list="imgList" style="width: 40px ;height: 60px;line-height: 28px"></el-image>
+                    <div class="clear"></div>
+                  </div>
+                  <i class="el-icon-arrow-right icright" @click="rollRight"></i>
+                </div>
               </div>
             </el-col>
             <el-col :span="10">
@@ -121,9 +136,9 @@
           <el-row>
             <h2>房源照片</h2>
             <el-row style="margin-bottom: 20px;" :gutter="50">
-<!--              <el-col :span="8" style="line-height: 28px" v-for="item in pojo.house_image" :key="item.id">-->
-<!--                <el-image :src="item" style="width: 100%;height: 100%"></el-image>-->
-<!--              </el-col>-->
+              <el-col :span="8" style="line-height: 28px" v-for="item in imgList" :key="item.id">
+                <el-image :src="url+item" style="width: 100%;height: 100%"></el-image>
+              </el-col>
             </el-row>
           </el-row>
           <el-row style="margin-bottom: 20px">
@@ -227,8 +242,8 @@
           </el-form>
         </div>
       </el-dialog>
-      <el-image :src="img" style="width: 100px; height: 100px"
-      ></el-image>
+<!--      <el-image :src="img" style="width: 100px; height: 100px"-->
+<!--      ></el-image>-->
     </div>
   </div>
 
@@ -238,18 +253,22 @@
 <script >
     import cheader from "@/components/cheader";
     import oldHouseApi from "@/api/oldhouse";
-    import informationApi from "@/api/information";
+   // import informationApi from "@/api/information";
     import requestApi from "@/api/request";
 
     export default {
         name: "info",
         data() {
           return{
+            rolling:0,
+            banner: 0,
+            img:'',
             center: {lng: 0, lat: 0},
             zoom: 3,
-            img:'http://localhost:8888/document/download/th.jpg',
-            imgs:"src/assets/img/banner.jpg",
-            pojo: {file: 'api/document/download/2022022318062371235983.xlsx'},
+            url:'http://localhost:8888/document/download/',
+            URL:[],
+            imgList:[],
+            pojo: {},
             agent: {'ppppp':789},
             agents: [],
             activeIndex: '/oldHouse/info',
@@ -283,14 +302,27 @@
             }
           };
         },
+        computed:{
+          fix(array){
 
-        mounted() {
+            let a=array.map(i=>{
+              return this.url+i;
+            })
+            return this.URL=a;
+          }
+        },
+        created() {
+          this.getInfo(this.$route.params.id)
+          this.fix(this.imgList);
+          console.log(this.URL)
+        },
+      mounted() {
             console.log(this.$route.params.id+'++++++++++++++');
 
             if ('WebSocket' in window) {
 
                 this.websocket = new WebSocket('ws://localhost:8888/websocket/server/' + 'zs');
-
+                this.initWebSocket()
             } else {
                 alert('当前浏览器 Not support websocket')
 
@@ -306,8 +338,66 @@
                 this.centerDialogVisible=false;
               console.log(this.centerDialogVisible);
             },
+            getUrl(list){
+               let map=list.map(item=>{
+                 return this.url+item
+               })
+              this.URL=map
+              console.log("url"+this.URL+'====')
+            },
 
-            sendMessage() {
+            getInfo(id){
+              oldHouseApi.findById(id).then(res=>{
+                if (res.data.code=='0'){
+                  this.pojo=res.data.data;
+                  this.imgList=this.pojo.list;
+                  console.log(this.imgList);
+
+
+                }
+              })
+            },
+        // 更换大图
+        currbanner(im) {
+          this.banner = parseInt(im)
+        },
+      // 左滑
+        rollLeft() {
+          // 每次偏移量
+          this.rolling += 60
+          // 大图根据下标显示
+          this.banner -= 1
+          if (this.rolling > 0) {
+            this.rolling = 0
+          } else {
+            this.$refs.roll.style.left = this.rolling + 'px'
+          }
+          if(this.banner < 0){
+            this.banner = 0
+          }
+          if(this.banner <= 0){
+            this.$message.warning('已经是第一张了')
+          }
+        },
+      // 右滑
+        rollRight() {
+          this.rolling -= 60
+          this.banner += 1
+          if (this.rolling < -this.allroll) {
+            this.rolling = -this.allroll
+          } else {
+            this.$refs.roll.style.left = this.rolling + 'px'
+          }
+          if(this.banner > this.imgList.length - 1){
+            this.banner = this.imgList.length - 1
+          }
+          if(this.banner >= this.imgList.length - 1){
+            this.$message.warning('已经是最后一张了')
+          }
+        },
+
+
+        sendMessage() {
                 if (true) {
                     // informationApi.findById(1).then(response => {
                     //     this.messageAgent = response.data
