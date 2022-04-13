@@ -1,4 +1,5 @@
 package com.example.demo.file.controller;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.demo.User.entity.SysUser;
 import com.example.demo.User.service.IUserService;
@@ -15,9 +16,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import sun.misc.BASE64Encoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotNull;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.security.Principal;
@@ -126,13 +129,30 @@ public Result handleFileUpload(HttpServletRequest request,@PathVariable("id") In
      * @return
      */
 
-    @GetMapping("/download")
-    public String downloadFile(ArrayList idList, HttpServletRequest request, HttpServletResponse response) {
-        List<Documentfile> documentFiles = fileService.listByIds(idList);
-        for (Documentfile documentFile : documentFiles) {
+    @GetMapping("/download/{fileName}")
+    public String downloadFile(@PathVariable("fileName") @NotNull String fileName, HttpServletRequest request, HttpServletResponse response) {
+        QueryWrapper<Documentfile> documentfileQueryWrapper = new QueryWrapper<>();
+        documentfileQueryWrapper.eq("url",fileName);
+        Documentfile documentfile = fileService.getOne(documentfileQueryWrapper);
 
 
-            String fileName = filePath +documentFile;// 文件名
+        if (null==documentfile){
+            return "KONG";
+        }
+        else {
+            String url = documentfile.getUrl();
+            String fileType = url.substring(url.lastIndexOf(".")+1);
+            fileName=filePath+url;
+            //类型
+            if("jpg,jepg,gif,png".contains(fileType)){//图片类型
+                response.setContentType("image/"+fileType);
+            }else if("pdf".contains(fileType)){//pdf类型
+                response.setContentType("application/pdf");
+            }else{//自动判断下载文件类型
+                response.setContentType("multipart/form-data");
+            }
+
+
             if (fileName != null) {
                 //设置文件路径
                 File file = new File(fileName);
@@ -144,11 +164,13 @@ public Result handleFileUpload(HttpServletRequest request,@PathVariable("id") In
                     os.flush();
                     os.close();        图片返回
                     return "success";*/
-                    response.setContentType("application/force-download");// 设置强制下载不打开
-                    response.addHeader("Content-Disposition", "attachment;fileName=" + documentFile);// 设置文件名
+                 //   response.setContentType("application/force-download");// 设置强制下载不打开
+                    response.addHeader("Content-Disposition", "attachment;fileName=" + url);// 设置文件名
+
                     byte[] buffer = new byte[1024];
                     FileInputStream fis = null;
                     BufferedInputStream bis = null;
+
                     try {
                         fis = new FileInputStream(file);
                         bis = new BufferedInputStream(fis);
@@ -158,7 +180,12 @@ public Result handleFileUpload(HttpServletRequest request,@PathVariable("id") In
                             os.write(buffer, 0, i);
                             i = bis.read(buffer);
                         }
-                        return "下载成功";
+                        BASE64Encoder base64Encoder = new BASE64Encoder();
+                        String encode = base64Encoder.encode(buffer);
+
+                        return "encode";
+
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     } finally {
@@ -179,8 +206,13 @@ public Result handleFileUpload(HttpServletRequest request,@PathVariable("id") In
                     }
                 }
             }
-            LOG.info(documentFile+"下载失败");
         }
-        return "下载失败";
+
+
+            // 文件名
+
+        LOG.info(documentfile+"下载失败");
+
+        return "WEI";
     }
 }

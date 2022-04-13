@@ -24,6 +24,5 @@ public interface RentMapper extends BaseMapper<Rent> {
     IPage<Rent> selectPageCondition( IPage<?> page,Condition condition);
 
 
-
-
+    Rent findById(int id);
 }

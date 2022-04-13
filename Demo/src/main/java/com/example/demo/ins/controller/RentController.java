@@ -40,7 +40,7 @@ public class RentController {
 
     @GetMapping("/{Id}")
     public Result get(@PathVariable int Id){
-        Rent rent = rentService.getById(Id);
+        Rent rent = rentService.findById(Id);
         return Result.success(rent);
     }
     @PostMapping("/page")

@@ -16,5 +16,6 @@ public interface IRentService extends IService<Rent> {
     Integer Save(Rent rent);
     <E extends IPage<Rent>> E pages(E page);
     <E extends IPage<Rent>> E pagesCondition(E page, Condition condition);
+    Rent findById(int id);
 
 }

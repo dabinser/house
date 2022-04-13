@@ -44,9 +44,28 @@
         <collection property="list" ofType="string" javaType="java.util.ArrayList" column="id"   select="file">
 
         </collection>
+
 <!--        <association property="list" >-->
 <!--            <result column="url" jdbcType="VARCHAR"></result>-->
 <!--        </association>-->
+    </resultMap>
+    <resultMap id="ResultMapNotList" type="com.example.demo.ins.entity.Rent">
+        <id column="id" property="id" />
+        <result column="rcode" property="rcode" />
+        <result column="vname" property="vname" />
+        <result column="title" property="title" />
+        <result column="area" property="area" />
+        <result column="community" property="community" />
+        <result column="pay" property="pay" />
+        <result column="content" property="content" />
+        <result column="contacts" property="contacts" />
+        <result column="phone" property="phone" />
+        <result column="sys_user_id" property="sysUserId" />
+        <result column="mode" property="mode" />
+        <result column="storey" property="storey" />
+        <result column="orientation" property="orientation" />
+        <result column="elevator" property="elevator" />
+        <result column="is_rent" property="is_rent"/>
     </resultMap>
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         insert into rent
@@ -88,6 +107,10 @@
                 and r.is_rent = #{condition.is_rent}
             </if>
         </where>
+    </select>
+    <select id="findById" resultMap="includeList">
+        select * from rent
+        where rent.id=#{id}
     </select>
 
 </mapper>
