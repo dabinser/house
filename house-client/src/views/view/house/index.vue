@@ -56,10 +56,10 @@
         @select="handleSelect"
       >
         <el-menu-item index="1">默认排序</el-menu-item>
-        <el-menu-item index="3">最新发布</el-menu-item>
-        <el-menu-item index="4">房屋总价</el-menu-item>
-        <el-menu-item index="5">房屋单价</el-menu-item>
-        <el-menu-item index="6">房屋面积</el-menu-item>
+        <el-menu-item index="2">最新发布</el-menu-item>
+        <el-menu-item index="3">房屋总价</el-menu-item>
+        <el-menu-item index="4">房屋单价</el-menu-item>
+        <el-menu-item index="5">房屋面积</el-menu-item>
       </el-menu>
 
       <el-row style="width:100%">
@@ -72,7 +72,7 @@
           @click.native="info(item.id)">
             <el-col :span="4" style="height: 100%;">
               <el-row style="height: 90%;">
-<!--                <el-image :src="1" style="height: 100%;"></el-image>-->
+                <el-image :src="url+item.list[0]" style="height: 100%; width: 100px"></el-image>
               </el-row>
             </el-col>
             <el-col :span="16">
@@ -126,8 +126,8 @@ export default {
   },
   data() {
     return {
-      testImage:
-      "src/assets/newhouse/c7151ad70651832b9352de793b503e0a.jpg.185x185.jpg",
+      Image:[],
+      url:'http://localhost:8888/document/download/',
       activeIndex: "1",
       searchContent: "",
       list: [],
@@ -141,7 +141,6 @@ export default {
       this.fetchData();
   },
     mounted() {
-        console.log(this.$route.params.content)
         if(this.$route.params.content){
           this.searchMap = {
               "house_title":this.$route.params.content
@@ -152,7 +151,10 @@ export default {
     },
   methods: {
     handleSelect(key, keyPath) {
-      //alert(keyPath);
+      alert(keyPath);
+      if (key==1){
+
+      }
     },
     fetchData() {
       let pojo={
@@ -165,10 +167,8 @@ export default {
       oldhouseApi
         .search(pojo)
         .then(response => {
-          this.list = response.data.data.records;
-          console.log(this.list);
+          this.list = response.data.data.records
           this.total = response.data.data.total;
-
         });
     },
     info(id) {

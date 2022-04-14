@@ -38,7 +38,7 @@
 <!--                    <el-col :span="10" style="line-height: 28px" v-for="item in imgList" :key="item.id" @click="currbanner(item.id)">-->
 <!--                      <el-image :src="url+item" style="width: 100%;height: 100%"></el-image>-->
 <!--                    </el-col>-->
-                    <el-image :src="url+item" v-for="(item,key) in imgList" :key="key" @click="currbanner(key)" fit="fill" :preview-src-list="imgList" style="width: 40px ;height: 60px;line-height: 28px"></el-image>
+                    <el-image :src="url+item" v-for="(item,key) in imgList" :key="key" @click="currbanner(key)" fit="fill" :preview-src-list="URL" style="width: 40px ;height: 60px;line-height: 28px"></el-image>
                     <div class="clear"></div>
                   </div>
                   <i class="el-icon-arrow-right icright" @click="rollRight"></i>
@@ -303,18 +303,20 @@
           };
         },
         computed:{
-          fix(array){
-
-            let a=array.map(i=>{
-              return this.url+i;
-            })
-            return this.URL=a;
-          }
+          // fix(array){
+          //
+          //   let a=array.map(i=>{
+          //     return this.url+i;
+          //   })
+          //   return this.URL=a;
+          // }
         },
         created() {
           this.getInfo(this.$route.params.id)
-          this.fix(this.imgList);
-          console.log(this.URL)
+          //this.fix(this.imgList);
+         // console.log(this.URL)
+         //  this.getUrl(this.imgList)
+          console.log('++++++++'+this.URL)
         },
       mounted() {
             console.log(this.$route.params.id+'++++++++++++++');
@@ -338,22 +340,16 @@
                 this.centerDialogVisible=false;
               console.log(this.centerDialogVisible);
             },
-            getUrl(list){
-               let map=list.map(item=>{
-                 return this.url+item
-               })
-              this.URL=map
-              console.log("url"+this.URL+'====')
-            },
 
             getInfo(id){
               oldHouseApi.findById(id).then(res=>{
                 if (res.data.code=='0'){
                   this.pojo=res.data.data;
                   this.imgList=this.pojo.list;
-                  console.log(this.imgList);
-
-
+                  let array=this.imgList.map(i=>{
+                    return this.url+i
+                  })
+                  this.URL=array
                 }
               })
             },
