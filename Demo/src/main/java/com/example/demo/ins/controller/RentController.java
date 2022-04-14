@@ -49,6 +49,18 @@ public class RentController {
 //        Basepage page = rentService.page(basepage);
         return Result.success(page);
     }
+    @PostMapping("/pageQuery")
+    public Result query(@RequestBody Basepage basepage){
+//        QueryWrapper<Rent> rentQueryWrapper = new QueryWrapper<>();
+//       rentQueryWrapper.inSql("url","select url from documentfile where rent_id=#{id}");
+//        rentQueryWrapper.orderByDesc(basepage.getSort());
+//        Basepage page = rentService.page(basepage, rentQueryWrapper);
+//        return Result.success(page);
+        QueryWrapper<Rent> rentQueryWrapper = new QueryWrapper<>();
+        rentQueryWrapper.orderByDesc("pay");
+        Basepage order = rentService.order(basepage, rentQueryWrapper);
+        return Result.success(order);
+    }
 
     /**
      * 新增租赁信息

@@ -73,6 +73,9 @@
     </insert>
     <select id="selectPageVo" resultType="com.example.demo.ins.entity.Rent" resultMap="includeList">
         select * from rent
+        <if test="param1.sort !=null and param1.sort!=''">
+            order by #{param1.sort} desc
+        </if>
     </select>
     <select id="file" resultType="string">
         select url from documentfile
@@ -111,6 +114,9 @@
     <select id="findById" resultMap="includeList">
         select * from rent
         where rent.id=#{id}
+    </select>
+    <select id="pageOrder" resultType="com.example.demo.ins.entity.Rent" resultMap="includeList">
+        SELECT * FROM rent
     </select>
 
 </mapper>

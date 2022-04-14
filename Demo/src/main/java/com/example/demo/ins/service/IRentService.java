@@ -1,4 +1,5 @@
 package com.example.demo.ins.service;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.demo.dto.Condition;
@@ -17,5 +18,6 @@ public interface IRentService extends IService<Rent> {
     <E extends IPage<Rent>> E pages(E page);
     <E extends IPage<Rent>> E pagesCondition(E page, Condition condition);
     Rent findById(int id);
+    <E extends IPage<Rent>> E order(E page, Wrapper<Rent> queryWrapper);
 
 }
