@@ -55,6 +55,8 @@ public class Rent implements Serializable {
 
     @ApiModelProperty("联系电话")
     private String phone;
+    @ApiModelProperty("户型")
+    private String apartmentType;
     @ApiModelProperty("出租方式")
     private RentalMode mode;
     @ApiModelProperty("楼层高度")
@@ -189,6 +191,7 @@ public class Rent implements Serializable {
                 ", content='" + content + '\'' +
                 ", contacts='" + contacts + '\'' +
                 ", phone='" + phone + '\'' +
+                ", apartmentType='" + apartmentType + '\'' +
                 ", mode=" + mode +
                 ", storey=" + storey +
                 ", elevator=" + elevator +
@@ -197,4 +200,13 @@ public class Rent implements Serializable {
                 ", list=" + list +
                 '}';
     }
+
+    public String getApartmentType() {
+        return apartmentType;
+    }
+
+    public void setApartmentType(String apartmentType) {
+        this.apartmentType = apartmentType;
+    }
+
 }

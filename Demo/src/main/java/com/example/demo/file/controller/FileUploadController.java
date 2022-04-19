@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import sun.misc.BASE64Encoder;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -180,8 +180,8 @@ public Result handleFileUpload(HttpServletRequest request,@PathVariable("id") In
                             os.write(buffer, 0, i);
                             i = bis.read(buffer);
                         }
-                        BASE64Encoder base64Encoder = new BASE64Encoder();
-                        String encode = base64Encoder.encode(buffer);
+//                        BASE64Encoder base64Encoder = new BASE64Encoder();
+//                        String encode = base64Encoder.encode(buffer);
 
                         return "encode";
 

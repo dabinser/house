@@ -34,7 +34,8 @@ scp:
   username: sehrsscfileadmin
   password: turwob-tyfpyN-0qyzdy
   targetPath: /home/sehrsscfileadmin/file/
-file: C:\Users\jeffjliu\Documents\worke\test\
+#file: C:\Users\jeffjliu\Documents\worke\test\
+file: C:\Users\fly\Pictures\Saved Pictures\
 contractFile: C:\Users\jeffjliu\Documents\worke\test\doc
 mybatis-plus:
   type-enums-package: com.example.demo.dto.*
