@@ -282,7 +282,7 @@ export default {
 
 <style scoped>
 .cbody {
-  background-image: url("../../assets/img/bannerV2.jpg");
+  background-image: url("../../../assets/img/bannerV2.jpg");
   width: 100%;
   height: 700px;
   background-size: 100% 100%;
@@ -304,7 +304,7 @@ export default {
 .capp {
   width: 100%;
   height: 600px;
-  background-image: url("../../assets/img/bg-app.jpg");
+  background-image: url("../../../assets/img/bg-app.jpg");
   background-repeat: no-repeat;
 }
 .cbtn-bg {
@@ -318,7 +318,7 @@ export default {
 .cefooter {
   width: 100%;
   height: 260px;
-  background-image: url("../../assets/img/truth-bgV2.jpg");
+  background-image: url("../../../assets/img/truth-bgV2.jpg");
 }
 
 .input >>> .el-input__inner {
@@ -327,7 +327,8 @@ export default {
 }
 
 .crow {
-  padding: 10px 0px;
+  padding: 10px 10px;
+  margin: 10px 0px;
 }
 
 .citem{

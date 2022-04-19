@@ -25,7 +25,7 @@ import Center from "./views/view/center/index"
 import agent from "./views/view/agent/index"
 import house from "./views/view/house/index"
 import chat from "./views/view/login/index1"
-import image from "./views/image";
+
 
 Vue.use(Router)
 
@@ -194,12 +194,7 @@ const router = new Router({
       name:'cc',
       component: chat
     },
-    {
-      path:'/image',
-      name:'im',
-      component:image
 
-    }
 
   ]
 });

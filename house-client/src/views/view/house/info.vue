@@ -4,8 +4,6 @@
     <div style="height: 180px;background: #f5f5f6;width: 100%">
       <div style="width: 60%;margin:  0 auto;">
         <el-row>
-        </el-row>
-        <el-row>
           <el-col :span="14" style="padding-top: 10px;padding-left:15px;">
             <h2>{{pojo.title}}</h2>
           </el-col>
@@ -22,26 +20,27 @@
           </el-row>
           <el-row>
             <span style="color:#606266;line-height: 30px;">房源维护时间：{{pojo.hang_time}} </span><br>
-            <span style="color:#606266">房源编号：{{pojo.id}} </span>
+            <span style="color:#606266">房源编号：{{pojo.rcode}} </span>
           </el-row>
           <el-row style="margin-top: 20px;" :gutter="50">
             <el-col :span="14">
               <div style="width:100%;height:400px;" class="soul">
                 <div class="dvtleft">
-                  <img :src="url+imgList[banner]">
+                  <img :src="url+imgList[banner]" sizes="100px" width="300px" height="300px">
                 </div>
                 <!-- 下方小图列表 -->
-                <div class="dvtleftbt">
-                  <i class="el-icon-arrow-left icleft" @click="rollLeft"></i>
-                  <div class="dvtleftbt_allpic" style="" ref="roll">
+
+                <div class="dvtleftbt" style="display: flex">
+                  <span class="el-icon-arrow-left icleft" @click="rollLeft" style="display: "></span>
+                  <div class="dvtleftbt_allpic" style="left: 5px" ref="roll">
 <!--                    <img v-for="(im,ix) in productinfo.images" :key="ix" @click="currbanner(ix)" :src="im" />-->
 <!--                    <el-col :span="10" style="line-height: 28px" v-for="item in imgList" :key="item.id" @click="currbanner(item.id)">-->
 <!--                      <el-image :src="url+item" style="width: 100%;height: 100%"></el-image>-->
 <!--                    </el-col>-->
-                    <el-image :src="url+item" v-for="(item,key) in imgList" :key="key" @click="currbanner(key)" fit="fill" :preview-src-list="URL" style="width: 40px ;height: 60px;line-height: 28px"></el-image>
+                    <el-image :src="url+item" v-for="(item,key) in imgList" :key="key" @click="currbanner(key)" fit="fill" :preview-src-list="URL" z-index="200px" style="width: 40px ;height: 60px;line-height: 28px"></el-image>
                     <div class="clear"></div>
                   </div>
-                  <i class="el-icon-arrow-right icright" @click="rollRight"></i>
+                  <span class="el-icon-arrow-right icright" @click="rollRight"></span>
                 </div>
               </div>
             </el-col>

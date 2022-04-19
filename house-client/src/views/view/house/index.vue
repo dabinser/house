@@ -1,11 +1,12 @@
 <template>
   <div>
+<!--    <scroll-top :scroll-param="scroll"></scroll-top>-->
     <cheader></cheader>
     <div class="cheader">
       <div style="width: 60%;margin: 0 auto;line-height: 100px">
 
       </div>
-      <div style="padding-top: 30px">
+      <div style="padding-top: 30px" >
         <el-row class="csearch" type="flex" justify="center">
           <el-col :span="8">
             <el-input
@@ -22,7 +23,7 @@
 
     <div style="width: 60%;margin: 0 auto;padding: 20px">
       <el-row class="crow">
-        <label>售价</label>
+        <label class="label-fade-enter">售价</label>
         <el-checkbox label="200万以下" true-label="1" false-label="0"></el-checkbox>
         <el-checkbox label="200-250" true-label="1" false-label="0"></el-checkbox>
         <el-checkbox label="250-300" true-label="1" false-label="0"></el-checkbox>
@@ -30,7 +31,7 @@
         <el-checkbox label="400-500" true-label="1" false-label="0"></el-checkbox>
       </el-row>
       <el-row class="crow">
-        <label>房型</label>
+        <label class="label-fade-enter">房型</label>
         <el-checkbox label="一室" true-label="1" false-label="0"></el-checkbox>
         <el-checkbox label="二室" true-label="1" false-label="0"></el-checkbox>
         <el-checkbox label="三室" true-label="1" false-label="0"></el-checkbox>
@@ -38,7 +39,7 @@
         <el-checkbox label="五室及以上" true-label="1" false-label="0"></el-checkbox>
       </el-row>
       <el-row class="crow">
-        <label>面积</label>
+        <label class="label-fade-enter">面积</label>
         <el-checkbox label="50㎡以下" true-label="1" false-label="0"></el-checkbox>
         <el-checkbox label="50㎡-70㎡" true-label="1" false-label="0"></el-checkbox>
         <el-checkbox label="70㎡-90㎡" true-label="1" false-label="0"></el-checkbox>
@@ -72,30 +73,29 @@
           @click.native="info(item.id)">
             <el-col :span="4" style="height: 100%;">
               <el-row style="height: 90%;">
-                <el-image :src="url+item.list[0]" style="height: 100%; width: 100px"></el-image>
+                <el-image :src="url+item.list[0]" style="height: 100%; width: 150px; border-radius: 10px" aria-placeholder="img.png"></el-image>
               </el-row>
             </el-col>
             <el-col :span="16">
-              <el-row>
-                <h2>{{item.title}}</h2>
+              <el-row class="crow" id="address">
+                <h2 style="font-family: HiraginoSansGB-W6 ;font-size: 20px;">{{item.area}}</h2>
               </el-row>
               <el-row class="crow">
-                <span>{{item.contacts}}</span>
+                <span>{{item.mode}} / </span>
+                <span>{{item.apartmentType}}</span>
               </el-row>
-              <el-row class="crow">
-                <span>{{item.area}}|</span>
-                <span>{{item.mode}}|</span>
-                <span>{{item.orientation}}|</span>
-                <span>{{item.storey}}|</span>
-              </el-row>
-              <el-row class="crow">
-                <span>0关注</span>
+
+              <el-row class="crow" >
+                <span>{{item.community}}/ </span>
+                <span>朝向 {{item.orientation}} / </span>
+                <span>电梯 {{item.elevator}} / </span>
+                <span>楼层 {{item.storey}} </span>
               </el-row>
             </el-col>
             <el-col :span="4" style="height: 100%;">
-              <span style="color:red;font-weight: bold;font-size: 28px">{{item.pay}}万</span>
+              <span style="color:red;font-weight: bold;font-size: 24px;display-inside: ruby">{{item.pay}} 元/月</span>
               <br />
-              <span style="line-height: 30px">单价：暂无</span>
+              <span style="line-height: 30px">：暂无</span>
             </el-col>
           </el-row>
         </el-col>
@@ -118,9 +118,11 @@
 import cheader from "@/components/cheader";
 import cfooter from "@/components/cfooter";
 import oldhouseApi from "../../../api/oldhouse";
+import ScrollTop from "@/components/scrollTop";
 export default {
   name: "index",
   components: {
+    // ScrollTop,
     cheader: cheader,
     cfooter: cfooter
   },
@@ -134,7 +136,21 @@ export default {
       total: 0, // 总记录数
       currentPage: 1, // 当前页
       pageSize: 10, // 每页大小
-      searchMap: {} // 查询条件
+      searchMap: {}, // 查询条件
+      scroll: {
+        // 回到顶部的方式 0 - 马上回到顶部，css实现（默认） 1 - 匀速回到顶部，js实现
+        way: 1,
+        // 滚动多少像素显示“回到顶部”图标
+        distance: 20,
+        // 向上滚动间隔
+        time: 600,
+        // 运动方式 Bounce
+        sportWay: 'Quad',
+        // 缓急方式 easeInOut
+        slowWay: 'easeIn',
+        // 回到顶部后回调方法
+        callback: this.onScollTop
+      }
     };
   },
   created() {
@@ -150,12 +166,25 @@ export default {
         }
     },
   methods: {
+
     handleSelect(key, keyPath) {
       alert(keyPath);
       if (key==1){
 
       }
     },
+
+    // 翻页后滚动条回到页面顶端
+    scrollTop(selector) {
+      let element = selector && document.querySelector(selector) || window;
+      element.scrollTo(0, 0);
+    },
+    // // 回到顶部后回调
+    // onScollTop () {
+    //   this.$message.info('到达页面顶部了')
+    // },
+
+
     fetchData() {
       let pojo={
         basepage:{
@@ -170,6 +199,7 @@ export default {
           this.list = response.data.data.records
           this.total = response.data.data.total;
         });
+      this.scrollTop("#list-center");
     },
     info(id) {
         this.$router.push('/info/'+id)
@@ -189,6 +219,7 @@ export default {
   width: 100%;
   height: 220px;
   background: #f5f5f6;
+  background-image: url("../../../assets/img/bannerV2.jpg");
 }
 span {
   color: #000;
@@ -199,10 +230,20 @@ span {
 .cbtn-bg {
   background: #00ae66;
   border: none;
-  border-radius: 0px;
+  border-radius: 2px;
+}
+.label-fade-enter{
+  margin: 0px 10px 0px 0px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #101d37;
 }
 .crow {
-  line-height: 30px;
+  line-height: 40px;
+  margin: 5px 15px;
+}
+#address:hover{
+  color: #00ae66;
 }
 
 .cbtn{
