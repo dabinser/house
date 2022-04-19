@@ -37,6 +37,13 @@ export default{
             method:'delete',
         })
     },
+    getCollection(){
+        return request({
+            url:`/${api_name}/Collection`,
+            method:'get'
+        })
+
+    }
 
 }
 

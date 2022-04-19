@@ -118,7 +118,7 @@
 import cheader from "@/components/cheader";
 import cfooter from "@/components/cfooter";
 import oldhouseApi from "../../../api/oldhouse";
-import ScrollTop from "@/components/scrollTop";
+
 export default {
   name: "index",
   components: {

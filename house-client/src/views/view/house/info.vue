@@ -31,16 +31,16 @@
                 <!-- 下方小图列表 -->
 
                 <div class="dvtleftbt" style="display: flex">
-                  <span class="el-icon-arrow-left icleft" @click="rollLeft" style="display: "></span>
+                  <span class="el-icon-arrow-left icleft" @click="rollLeft" style="position: relative;top: 25px;"></span>
                   <div class="dvtleftbt_allpic" style="left: 5px" ref="roll">
 <!--                    <img v-for="(im,ix) in productinfo.images" :key="ix" @click="currbanner(ix)" :src="im" />-->
 <!--                    <el-col :span="10" style="line-height: 28px" v-for="item in imgList" :key="item.id" @click="currbanner(item.id)">-->
 <!--                      <el-image :src="url+item" style="width: 100%;height: 100%"></el-image>-->
 <!--                    </el-col>-->
-                    <el-image :src="url+item" v-for="(item,key) in imgList" :key="key" @click="currbanner(key)" fit="fill" :preview-src-list="URL" z-index="200px" style="width: 40px ;height: 60px;line-height: 28px"></el-image>
+                    <el-image :src="url+item" v-for="(item,key) in imgList" :key="key" @click="currbanner(key)" fit="fill" :preview-src-list="URL" z-index="200px" style="width: 40px ;height: 60px;line-height: 28px;padding: 5px"></el-image>
                     <div class="clear"></div>
                   </div>
-                  <span class="el-icon-arrow-right icright" @click="rollRight"></span>
+                  <span class="el-icon-arrow-right icright" @click="rollRight" style="position: relative;top: 25px"></span>
                 </div>
               </div>
             </el-col>
@@ -488,5 +488,12 @@
 <style scoped>
   span {
     color: #606266;
+  }
+  .el-icon-arrow-left.el-icon-arrow-right:hover{
+    transform: scale(1.4);
+  }
+  .el-icon-arrow-left.el-icon-arrow-right{
+    cursor: pointer;
+    transition: all 0.6s;
   }
 </style>
