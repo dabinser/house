@@ -170,7 +170,7 @@ public class RentController {
     public Result findAttention(Principal principal) {
         if (null != principal) {
             SysUser user = userService.getOne(new QueryWrapper<SysUser>().eq("user_name", principal.getName()));
-            List<Collection> list = collectionService.list(new QueryWrapper<Collection>().eq("user_id", user.getId()).select("ren_id"));
+            List<Collection> list = collectionService.list(new QueryWrapper<Collection>().eq("user_id", user.getId()));
             ArrayList<Integer> arrayList = new ArrayList<>();
             for (Collection collection : list) {
                 arrayList.add(collection.getRentId());
