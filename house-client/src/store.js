@@ -54,7 +54,7 @@ const actions = {
       let form=new FormData;
       form.append("username",userInfo.username.trim());
       form.append("password",userInfo.password)
-
+      console.log(form)
       login(form).then(response => {
         console.log('_____________')
         resolve()

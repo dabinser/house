@@ -72,6 +72,8 @@
     import cfooter from "@/components/cfooter";
    import userApi from "@/api/user";
     import axios from "axios";
+    import {setUser} from "../../../utils/auth";
+    import jwt_decode from "jwt-decode";
 
     export default {
         name: "login",
@@ -110,13 +112,44 @@
             handleLogin() {
                 this.$refs.loginForm.validate(valid => {
                     if (valid) {
+                      console.log('验证成功')
                         this.loading = true;
-                        this.$store.dispatch('Login', this.loginForm).then(() => {
-                            this.loading = true;
+                        let pojo = {username:this.loginForm.username,password:this.loginForm.password}
+                        let formdata=new FormData
+                        formdata.append("username",this.loginForm.username)
+                        formdata.append("password",this.loginForm.password)
+                        userApi.login(formdata).then(res =>{
+                          if (res.data.code=='0'){
+                            this.loading=true;
                             location.reload()
-                        }).catch(() => {
-                            this.loading = false
+                            let systemRole = res.data.data.role
+                            let id = res.data.data.id
+                            let name = res.data.data.userName
+                            let token = res.headers.token
+                            //将用户信息存入cookie中
+                            setUser(systemRole,name,id,token)
+
+                            const decode = jwt_decode(token);
+
+                            // 存储数据
+                            this.$store.dispatch("setIsAutnenticated", !this.isEmpty(decode));
+                            this.$store.dispatch("setUser", decode);
+
+                            this.$message({
+                              message:"登录成功",
+                              type:"success"
+                            });
+                            this.$router.push("/rent")
+                          }
+                        }).catch(()=>{
+                          this.loading=false
                         })
+                        // this.$store.dispatch('Login', this.loginForm).then(() => {
+                        //     this.loading = true;
+                        //     location.reload()
+                        // }).catch(() => {
+                        //     this.loading = false
+                        // })
                     } else {
                         console.log('error submit!!');
                         return false
