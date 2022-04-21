@@ -15,7 +15,6 @@
         <result column="contacts" property="contacts" />
         <result column="phone" property="phone" />
         <result column="sys_user_id" property="sysUserId" />
-        <result column="apartmentType" property="apartmentType"/>
         <result column="mode" property="mode" />
         <result column="storey" property="storey" />
         <result column="orientation" property="orientation" />
@@ -37,7 +36,6 @@
         <result column="contacts" property="contacts" />
         <result column="phone" property="phone" />
         <result column="sys_user_id" property="sysUserId" />
-        <result column="apartmentType" property="apartmentType"/>
         <result column="is_rent" property="is_rent"/>
         <result column="mode" property="mode" />
         <result column="storey" property="storey" />
@@ -63,16 +61,15 @@
         <result column="contacts" property="contacts" />
         <result column="phone" property="phone" />
         <result column="sys_user_id" property="sysUserId" />
-        <result column="apartmentType" property="apartmentType"/>
         <result column="mode" property="mode" />
         <result column="storey" property="storey" />
         <result column="orientation" property="orientation" />
         <result column="elevator" property="elevator" />
         <result column="is_rent" property="is_rent"/>
     </resultMap>
-    <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        insert into rent
-        values #{rent}
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.example.demo.ins.entity.Rent">
+        insert into rent(rcode, vname, title, area, community, pay, content, contacts, phone, sys_user_id, mode, storey, orientation, elevator)
+        values (#{rcode},#{vname},#{title},#{area},#{community},#{pay},#{content},#{contacts},#{phone},#{sysUserId},#{mode},#{storey},#{orientation},#{elevator})
     </insert>
     <select id="selectPageVo" resultType="com.example.demo.ins.entity.Rent" resultMap="includeList">
         select * from rent

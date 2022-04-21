@@ -5,6 +5,7 @@ import com.example.demo.User.entity.SysUser;
 import com.example.demo.User.service.IUserService;
 import com.example.demo.dto.SearchDto;
 import com.example.demo.ins.entity.Collection;
+import com.example.demo.ins.entity.Enum.Status;
 import com.example.demo.ins.entity.Rent;
 import com.example.demo.ins.service.ICollectionService;
 import com.example.demo.ins.service.IRentService;
@@ -73,9 +74,11 @@ public class RentController {
         if (null!=rent) {
             SysUser user = userService.getOne(new QueryWrapper<SysUser>().eq("user_name", principal.getName()));
             rent.setSysUserId(user.getId());
-
-            boolean save = rentService.save(rent);
-            return Result.success(save);
+            rent.setVname(principal.getName());
+            rent.setRcode("666");
+            rent.setIs_rent(Status.No_Rent);
+            rentService.Save(rent);
+            return Result.success(rent.getId());
         }
         else return Result.error(CodeMsg.DATA_ERROR);
     }
