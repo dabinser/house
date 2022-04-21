@@ -7,17 +7,16 @@
                 <el-form label-width="180px" >
                   <el-form-item label="图片">
                     <el-upload
-                      action="api/document/batch/1"
+                      :action="url+houseId"
                       list-type="picture-card"
                       :on-preview="handlePictureCardPreview"
                       :on-remove="handleRemove"
                       :on-success="handleUploadSuccess"
                       :limit="limitImageCount"
                       :on-exceed="handleExceed"
-
-                      :auto-upload="true"
+                      :auto-upload="false"
                       :multiple="true"
-
+                       ref="upload"
                       :file-list="fileList"
                     >
                       <i class="el-icon-plus"></i>
@@ -43,10 +42,13 @@
                     <el-input v-model="pojo.orientation"></el-input>
                   </el-form-item>
                   <el-form-item label="房屋类型">
-                    <el-input v-model="pojo.type"></el-input>
+                    <el-input v-model="pojo.content"></el-input>
                   </el-form-item>
                   <el-form-item label="委托人">
                     <el-input v-model="pojo.contacts"></el-input>
+                  </el-form-item>
+                  <el-form-item label="联系电话" :rules="phoneRules.phone">
+                    <el-input v-model="pojo.phone" ></el-input>
                   </el-form-item>
 
                   <el-form-item label="房屋面积">
@@ -69,7 +71,7 @@
                     <el-input v-model="pojo.tenancy"></el-input>
                   </el-form-item>
                   <el-form-item label="房源标题">
-                    <el-input v-model="pojo.house_title"></el-input>
+                    <el-input v-model="pojo.title"></el-input>
                   </el-form-item>
 
                 </el-form>
@@ -88,6 +90,8 @@
     import cheader from "@/components/cheader";
     import cfooter from "@/components/cfooter";
     import resourceApi from "@/api/resource";
+    import house from "../../../api/house";
+
     export default {
         name: "index",
         components :{
@@ -95,26 +99,33 @@
             cfooter
         },
         data() {
-            return{
-
-                  name: '',
-                  region: '',
-                  date1: '',
-                  date2: '',
-                  delivery: false,
-                  type: [],
-                  resource: '',
-                  desc: '',
-                  code:'',
-                  pojo: {}, // 编辑表单绑定的实体对象
-                  cityList: [], // 城市列表
-                  dialogImageUrl: '',
-                  dialogVisible: false,
-                  uploadPicture: [],
-                  fileList:[],
-                  limitImageCount:6,
-                  id: '' // 当前用户编辑的ID
+            return {
+              url: 'api/document/batch/',
+              houseId: '',
+              name: '',
+              region: '',
+              date1: '',
+              date2: '',
+              delivery: false,
+              type: [],
+              resource: '',
+              desc: '',
+              code: '',
+              pojo: {}, // 编辑表单绑定的实体对象
+              cityList: [], // 城市列表
+              dialogImageUrl: '',
+              dialogVisible: false,
+              uploadPicture: [],
+              fileList: [],
+              limitImageCount: 6,
+              id: '',// 当前用户编辑的ID
+              phoneRules: {
+                phone: [
+                  {required: true, message: '请输入手机号', trigger: 'blur'},
+                  {min: 11, max: 11, message: '请输入长度为11位的手机号', trigger: 'blur'}
+                ],
               }
+            }
 
         },
         methods: {
@@ -122,32 +133,34 @@
                 console.log('submit!');
             },
             handleSave() {
-                ;
-                if (this.pojo.id != null) {
+                house.addHouse(this.pojo).then(res=>{
 
-                    for (var i = 0; i < this.uploadPicture.length; i++) {
-                        this.pojo.image.push(this.uploadPicture[i]);
-                    }
-                } else {
-                    this.pojo.image = [];
-                    for (var i = 0; i < this.uploadPicture.length; i++) {
-                        this.pojo.image.push(this.uploadPicture[i]);
-                    }
-                }
-                var im = JSON.stringify(this.pojo.image);
-                this.pojo.image = im
-                resourceApi.update(this.id, this.pojo).then(response => {
-                    this.$message({
-                        message: response.data.msg,
-                        type: (response.data.data ? 'success' : 'error')
-                    })
-                    if (response.data.data) { // 如果成功
+                  this.$message({
+                    message: res.data.msg,
+                    type:(res.data.data ? 'success' :'error')
+                  })
+                  if (res.data.code=='0'){
+                    this.houseId=res.data.data
+                    console.log(this.houseId)
+                    this.$refs.upload.submit()
+                    console.log('+++++++')
+                    this.fetchData() // 刷新列表
+                    this.fileList = [];
+                  }
 
-                      console.log('+++++++')
-                        this.fetchData() // 刷新列表
-                        this.fileList = [];
-                    }
                 })
+                // resourceApi.update(this.id, this.pojo).then(response => {
+                //     this.$message({
+                //         message: response.data.msg,
+                //         type: (response.data.data ? 'success' : 'error')
+                //     })
+                //     if (response.data.data) { // 如果成功
+                //         this.$refs.upload.submit()
+                //         console.log('+++++++')
+                //         this.fetchData() // 刷新列表
+                //         this.fileList = [];
+                //     }
+                // })
                 this.dialogFormVisible = false // 关闭窗口
             },
             handleRemove(file, fileList) {
@@ -161,9 +174,9 @@
             handleUploadSuccess(response, file, fileList) {
                 var total = 0;
                 console.log(this.pojo)
-              console.log(fileList);
-              console.log('++++++++')
-              console.log(file);
+                console.log(fileList);
+                console.log('++++++++')
+                console.log(file);
                 if (this.pojo.image != null ) {
                     total =  fileList.length+this.pojo.image.length;
 

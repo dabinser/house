@@ -38,7 +38,7 @@
         </el-row>
         <el-row v-show="!loginShow">
           <el-row>
-            <h2 style="color: #000">欢迎注册</h2>
+            <h2 style="color: #000;margin: 5px auto;padding: 10px;position: relative;left: 40%">欢迎注册</h2>
           </el-row>
           <el-form autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm">
             <el-form-item label="" prop="username">
@@ -70,8 +70,8 @@
 <script>
     import cheader from "@/components/cheader";
     import cfooter from "@/components/cfooter";
-   import userApi from "@/api/user";
-    import axios from "axios";
+    import userApi from "@/api/user";
+
     import {setUser} from "../../../utils/auth";
     import jwt_decode from "jwt-decode";
 
@@ -91,7 +91,7 @@
                     code:''
                 },
                 loginRules: {
-                    username: [
+                    userName: [
                         {required: true, message: '请输入手机号', trigger: 'blur'},
                         {min: 11, max: 11, message: '请输入长度为11位的手机号', trigger: 'blur'}
                     ],
@@ -109,6 +109,14 @@
             };
         },
         methods: {
+            isEmpty(value) {
+              return (
+                  value === undefined ||
+                  value === null ||
+                  (typeof value === "object" && Object.keys(value).length === 0) ||
+                  (typeof value === "string" && value.trim().length === 0)
+              );
+            },
             handleLogin() {
                 this.$refs.loginForm.validate(valid => {
                     if (valid) {
@@ -120,7 +128,9 @@
                         formdata.append("password",this.loginForm.password)
                         userApi.login(formdata).then(res =>{
                           if (res.data.code=='0'){
+                            console.log('登录')
                             this.loading=true;
+                            console.log('+++++++')
                             location.reload()
                             let systemRole = res.data.data.role
                             let id = res.data.data.id
@@ -160,12 +170,16 @@
                 this.$refs.loginForm.validate(valid => {
                     if (valid) {
                         this.loading = true;
-                        userApi.save(this.loginForm).then(response => {
+                        let user={
+                          userName:this.loginForm.username,
+                          password:this.loginForm.password
+                        }
+                        userApi.addUser(user).then(response => {
                             this.$message({
-                                message: response.message,
-                                type: (response.flag ? 'success' : 'error')
+                                message: response.data.msg,
+                                type: (!response.data.code ? 'success' : 'error')
                             });
-                            if (response.flag) { // 如果成功
+                            if (response.data.code=='0') { // 如果成功
                                 this.$router.push({path: '/login'}) // 刷新列表
                             }
                         })
