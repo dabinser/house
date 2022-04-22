@@ -7,7 +7,7 @@
                 <el-form label-width="180px" >
                   <el-form-item label="图片">
                     <el-upload
-                      :action="url+houseId"
+                      :action="url"
                       list-type="picture-card"
                       :on-preview="handlePictureCardPreview"
                       :on-remove="handleRemove"
@@ -140,8 +140,9 @@
                     type:(res.data.data ? 'success' :'error')
                   })
                   if (res.data.code=='0'){
-                    this.houseId=res.data.data
-                    console.log(this.houseId)
+                    this.url
+                    this.url=this.url+res.data.data
+                    console.log(this.url)
                     this.$refs.upload.submit()
                     console.log('+++++++')
                     this.fetchData() // 刷新列表
@@ -229,7 +230,7 @@
                 })
                 this.pojo.image = picture;
             },
-            handleChange(value) {
+          handleChange(value) {
                 console.log(value);
             },
             onSelected(data) {
