@@ -110,6 +110,9 @@
                 and r.is_rent = #{condition.is_rent}
             </if>
         </where>
+        <if test="param2.order !=null">
+            order by #{param2.order} desc
+        </if>
     </select>
     <select id="findById" resultMap="includeList">
         select * from rent

@@ -1,6 +1,7 @@
 package com.example.demo.ins.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.example.demo.User.entity.SysUser;
 import com.example.demo.User.service.IUserService;
 import com.example.demo.dto.SearchDto;
@@ -50,16 +51,17 @@ public class RentController {
 //        Basepage page = rentService.page(basepage);
         return Result.success(page);
     }
-    @PostMapping("/pageQuery")
-    public Result query(@RequestBody Basepage basepage){
+    @PostMapping("/pageQuery/{order}")
+    public Result query(@RequestBody Basepage basepage,@PathVariable("order") String order){
 //        QueryWrapper<Rent> rentQueryWrapper = new QueryWrapper<>();
 //       rentQueryWrapper.inSql("url","select url from documentfile where rent_id=#{id}");
 //        rentQueryWrapper.orderByDesc(basepage.getSort());
 //        Basepage page = rentService.page(basepage, rentQueryWrapper);
 //        return Result.success(page);
+        basepage.addOrder(OrderItem.desc(order));
         QueryWrapper<Rent> rentQueryWrapper = new QueryWrapper<>();
-        rentQueryWrapper.orderByDesc("pay");
-        Basepage order = rentService.order(basepage, rentQueryWrapper);
+        rentQueryWrapper.orderByDesc(order);
+        rentService.page(basepage,rentQueryWrapper);
         return Result.success(order);
     }
 
@@ -165,7 +167,10 @@ public class RentController {
             return pageRent;
         }
         else {
+            String sort = searchDto.getBasepage().getSort();
+            searchDto.getBasepage().addOrder(OrderItem.asc(sort));
             Basepage basepage1 = rentService.pagesCondition(searchDto.getBasepage(), searchDto.getCondition());
+
             return Result.success(basepage1);
         }
     }
