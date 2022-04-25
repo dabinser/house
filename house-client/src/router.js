@@ -17,14 +17,14 @@ import PersonalSolveList from './views/PersonalSolveList.vue'
 import ChatOnline from "./views/ChatOnline";
 import cheader from "./components/cheader";
 import cfooter from "./components/cfooter";
-import oldHouse from "./views/view/house/index"
 import info from "./views/view/house/info";
 import publish from "./views/view/publish/index"
-import centHouse from "./views/view/center/house"
 import Center from "./views/view/center/index"
 import agent from "./views/view/agent/index"
 import house from "./views/view/house/index"
 import chat from "./views/view/login/index1"
+import test from "./views/view/center/test";
+
 
 
 Vue.use(Router)
@@ -124,6 +124,7 @@ const router = new Router({
       name: 'login',
       component:Login
     },
+      ///
     {
       path: '/rent',
       name: 'rent',
@@ -135,9 +136,6 @@ const router = new Router({
       name: 'logon',
       component: ()=>import('./views/view/login/index')
     },
-    //导航头部
-
-
 
     //-------------------------------------------
     //发布房源
@@ -161,34 +159,26 @@ const router = new Router({
     //-------------------------------------------
     //经纪人
     {
-      path: '/agent/',
-      name: 'index3',
-      component: ()=>import('./views/view/agent/index'),
-      hidden: true
-    },
-
-    //-------------------------------------------f
-    //个人中心
-    {
-      path: '/centerIndex',
-      name: 'index1',
-      component: ()=>import('./views/view/center/index'),
-      hidden: true
-    },
-    {
-      path: '/centerHouse',
-      name: 'index2',
-      component: Center,
-      children: [
-        { path: 'house', name: 'house', component: centHouse}
-      ]
-    },
-
-    {
       path:'/agent',
       name: 'agent',
       component:agent
     },
+    //-------------------------------------------f
+    //个人中心
+    {
+      path: '/center',
+      name: 'index1',
+      component: Center,
+
+    },
+    {
+      path:'/test',
+      name:'test',
+      component:test
+    },
+
+
+
     {
       path:'/chat',
       name:'cc',

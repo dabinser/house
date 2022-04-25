@@ -1,5 +1,6 @@
 package com.example.demo.ins.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.example.demo.ins.entity.Enum.*;
 import io.swagger.annotations.ApiModel;
@@ -55,6 +56,7 @@ public class Rent implements Serializable {
 
     @ApiModelProperty("联系电话")
     private String phone;
+    @TableField(exist = true)
     @ApiModelProperty("户型")
     private String apartmentType;
     @ApiModelProperty("出租方式")
@@ -67,6 +69,7 @@ public class Rent implements Serializable {
     private Orientation orientation;
     @ApiModelProperty("用户id")
     private Integer sysUserId;
+    @TableField(exist = true)
     @ApiModelProperty("图片url")
     private ArrayList<String> list;
 
@@ -175,6 +178,30 @@ public class Rent implements Serializable {
 
     public void setIs_rent(Status is_rent) {
         this.is_rent = is_rent;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Integer getSysUserId() {
+        return sysUserId;
+    }
+
+    public void setSysUserId(Integer sysUserId) {
+        this.sysUserId = sysUserId;
+    }
+
+    public ArrayList<String> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<String> list) {
+        this.list = list;
     }
 
     @Override

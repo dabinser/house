@@ -21,33 +21,33 @@
       </div>
     </div>
 
-    <div style="width: 60%;margin: 0 auto;padding: 20px">
-      <el-row class="crow">
-        <label class="label-fade-enter">售价</label>
-        <el-checkbox label="200万以下" true-label="1" false-label="0"></el-checkbox>
-        <el-checkbox label="200-250" true-label="1" false-label="0"></el-checkbox>
-        <el-checkbox label="250-300" true-label="1" false-label="0"></el-checkbox>
-        <el-checkbox label="300-400" true-label="1" false-label="0"></el-checkbox>
-        <el-checkbox label="400-500" true-label="1" false-label="0"></el-checkbox>
-      </el-row>
-      <el-row class="crow">
-        <label class="label-fade-enter">房型</label>
-        <el-checkbox label="一室" true-label="1" false-label="0"></el-checkbox>
-        <el-checkbox label="二室" true-label="1" false-label="0"></el-checkbox>
-        <el-checkbox label="三室" true-label="1" false-label="0"></el-checkbox>
-        <el-checkbox label="四室" true-label="1" false-label="0"></el-checkbox>
-        <el-checkbox label="五室及以上" true-label="1" false-label="0"></el-checkbox>
-      </el-row>
-      <el-row class="crow">
-        <label class="label-fade-enter">面积</label>
-        <el-checkbox label="50㎡以下" true-label="1" false-label="0"></el-checkbox>
-        <el-checkbox label="50㎡-70㎡" true-label="1" false-label="0"></el-checkbox>
-        <el-checkbox label="70㎡-90㎡" true-label="1" false-label="0"></el-checkbox>
-        <el-checkbox label="90㎡-110㎡" true-label="1" false-label="0"></el-checkbox>
-        <el-checkbox label="110㎡-130㎡" true-label="1" false-label="0"></el-checkbox>
-        <el-checkbox label="130㎡-150㎡" true-label="1" false-label="0"></el-checkbox>
-        <el-checkbox label="150㎡以上" true-label="1" false-label="0"></el-checkbox>
-      </el-row>
+    <div style="width: 60%;margin: 0 auto;padding: 20px"  >
+      <el-checkbox-group v-model="searchMap">
+        <el-row class="crow"  v-model="searchMap.price">
+          <label class="label-fade-enter">售价</label>
+          <el-checkbox label="200万以下" true-label="1" false-label="0"></el-checkbox>
+          <el-checkbox label="200-250" true-label="1" false-label="0"></el-checkbox>
+          <el-checkbox label="250-300" true-label="1" false-label="0"></el-checkbox>
+          <el-checkbox label="300-400" true-label="1" false-label="0"></el-checkbox>
+          <el-checkbox label="400-500" true-label="1" false-label="0"></el-checkbox>
+        </el-row>
+        <el-row class="crow">
+          <label class="label-fade-enter">房型</label>
+          <el-checkbox label="一室" true-label="1" false-label="0"></el-checkbox>
+          <el-checkbox label="二室" true-label="1" false-label="0"></el-checkbox>
+          <el-checkbox label="三室" true-label="1" false-label="0"></el-checkbox>
+          <el-checkbox label="四室" true-label="1" false-label="0"></el-checkbox>
+          <el-checkbox label="五室及以上" true-label="1" false-label="0"></el-checkbox>
+        </el-row>
+        <el-row class="crow">
+          <label class="label-fade-enter">面积</label>
+          <el-checkbox label="50㎡以下" true-label="1" false-label="0"></el-checkbox>
+          <el-checkbox label="50㎡-70㎡" true-label="1" false-label="0"></el-checkbox>
+          <el-checkbox label="70㎡-90㎡" true-label="1" false-label="0"></el-checkbox>
+          <el-checkbox label="90㎡-110㎡" true-label="1" false-label="0"></el-checkbox>
+          <el-checkbox label="110㎡以上" true-label="1" false-label="0"></el-checkbox>
+        </el-row>
+      </el-checkbox-group>
     </div>
     <div style="width: 60%;margin: 0 auto;padding: 20px">
       <el-menu
@@ -118,7 +118,7 @@
 import cheader from "@/components/cheader";
 import cfooter from "@/components/cfooter";
 import oldhouseApi from "../../../api/oldhouse";
-import ScrollTop from "@/components/scrollTop";
+
 export default {
   name: "index",
   components: {
@@ -160,7 +160,9 @@ export default {
         if(this.$route.params.content){
           this.searchMap = {
               "house_title":this.$route.params.content
+
           }
+          console.log(this.searchMap)
         }else{
 
         }
@@ -209,6 +211,7 @@ export default {
               "house_title":this.searchContent
           }
           this.fetchData()
+        console.log(this.searchMap)
       }
   }
 };

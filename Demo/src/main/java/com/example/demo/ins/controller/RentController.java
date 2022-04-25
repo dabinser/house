@@ -1,10 +1,12 @@
 package com.example.demo.ins.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.example.demo.User.entity.SysUser;
 import com.example.demo.User.service.IUserService;
 import com.example.demo.dto.SearchDto;
 import com.example.demo.ins.entity.Collection;
+import com.example.demo.ins.entity.Enum.Status;
 import com.example.demo.ins.entity.Rent;
 import com.example.demo.ins.service.ICollectionService;
 import com.example.demo.ins.service.IRentService;
@@ -49,16 +51,17 @@ public class RentController {
 //        Basepage page = rentService.page(basepage);
         return Result.success(page);
     }
-    @PostMapping("/pageQuery")
-    public Result query(@RequestBody Basepage basepage){
+    @PostMapping("/pageQuery/{order}")
+    public Result query(@RequestBody Basepage basepage,@PathVariable("order") String order){
 //        QueryWrapper<Rent> rentQueryWrapper = new QueryWrapper<>();
 //       rentQueryWrapper.inSql("url","select url from documentfile where rent_id=#{id}");
 //        rentQueryWrapper.orderByDesc(basepage.getSort());
 //        Basepage page = rentService.page(basepage, rentQueryWrapper);
 //        return Result.success(page);
+        basepage.addOrder(OrderItem.desc(order));
         QueryWrapper<Rent> rentQueryWrapper = new QueryWrapper<>();
-        rentQueryWrapper.orderByDesc("pay");
-        Basepage order = rentService.order(basepage, rentQueryWrapper);
+        rentQueryWrapper.orderByDesc(order);
+        rentService.page(basepage,rentQueryWrapper);
         return Result.success(order);
     }
 
@@ -73,9 +76,11 @@ public class RentController {
         if (null!=rent) {
             SysUser user = userService.getOne(new QueryWrapper<SysUser>().eq("user_name", principal.getName()));
             rent.setSysUserId(user.getId());
-
-            boolean save = rentService.save(rent);
-            return Result.success(save);
+            rent.setVname(principal.getName());
+            rent.setRcode("666");
+            rent.setIs_rent(Status.No_Rent);
+            rentService.Save(rent);
+            return Result.success(rent.getId());
         }
         else return Result.error(CodeMsg.DATA_ERROR);
     }
@@ -162,7 +167,10 @@ public class RentController {
             return pageRent;
         }
         else {
+            String sort = searchDto.getBasepage().getSort();
+            searchDto.getBasepage().addOrder(OrderItem.asc(sort));
             Basepage basepage1 = rentService.pagesCondition(searchDto.getBasepage(), searchDto.getCondition());
+
             return Result.success(basepage1);
         }
     }
@@ -170,7 +178,7 @@ public class RentController {
     public Result findAttention(Principal principal) {
         if (null != principal) {
             SysUser user = userService.getOne(new QueryWrapper<SysUser>().eq("user_name", principal.getName()));
-            List<Collection> list = collectionService.list(new QueryWrapper<Collection>().eq("user_id", user.getId()).select("ren_id"));
+            List<Collection> list = collectionService.list(new QueryWrapper<Collection>().eq("user_id", user.getId()));
             ArrayList<Integer> arrayList = new ArrayList<>();
             for (Collection collection : list) {
                 arrayList.add(collection.getRentId());

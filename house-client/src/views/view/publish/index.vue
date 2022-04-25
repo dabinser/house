@@ -4,19 +4,20 @@
       <div style="width: 50%;margin:  0 auto;padding-top: 30px">
             <el-row style="padding-top: 20px" :gutter="40">
               <el-col :span="24">
-                <el-form label-width="180px" >
+                <el-form label-width="180px" ref="form" >
                   <el-form-item label="图片">
                     <el-upload
-                      action="api/document/batch/1"
+                      :action="url"
                       list-type="picture-card"
                       :on-preview="handlePictureCardPreview"
                       :on-remove="handleRemove"
                       :on-success="handleUploadSuccess"
                       :limit="limitImageCount"
                       :on-exceed="handleExceed"
-
-                      :auto-upload="true"
+                      :auto-upload="false"
+                      :before-upload="beforeUpload"
                       :multiple="true"
+                       ref="upload"
 
                       :file-list="fileList"
                     >
@@ -25,10 +26,6 @@
                     <el-dialog :visible.sync="dialogVisible">
                       <img width="100%" :src="dialogImageUrl" alt="">
                     </el-dialog>
-                  </el-form-item>
-                  <el-form-item label="房源所在省份">
-                    <v-distpicker province="广东省" city="广州市" area="海珠区" @selected="onSelected"></v-distpicker>
-
                   </el-form-item>
                   <el-form-item label="详细地址">
                     <el-input v-model="pojo.area"></el-input>
@@ -43,10 +40,13 @@
                     <el-input v-model="pojo.orientation"></el-input>
                   </el-form-item>
                   <el-form-item label="房屋类型">
-                    <el-input v-model="pojo.type"></el-input>
+                    <el-input v-model="pojo.content"></el-input>
                   </el-form-item>
                   <el-form-item label="委托人">
                     <el-input v-model="pojo.contacts"></el-input>
+                  </el-form-item>
+                  <el-form-item label="联系电话" :rules="phoneRules.phone">
+                    <el-input v-model="pojo.phone" ></el-input>
                   </el-form-item>
 
                   <el-form-item label="房屋面积">
@@ -69,7 +69,7 @@
                     <el-input v-model="pojo.tenancy"></el-input>
                   </el-form-item>
                   <el-form-item label="房源标题">
-                    <el-input v-model="pojo.house_title"></el-input>
+                    <el-input v-model="pojo.title"></el-input>
                   </el-form-item>
 
                 </el-form>
@@ -88,6 +88,8 @@
     import cheader from "@/components/cheader";
     import cfooter from "@/components/cfooter";
     import resourceApi from "@/api/resource";
+    import house from "../../../api/house";
+
     export default {
         name: "index",
         components :{
@@ -95,26 +97,33 @@
             cfooter
         },
         data() {
-            return{
-
-                  name: '',
-                  region: '',
-                  date1: '',
-                  date2: '',
-                  delivery: false,
-                  type: [],
-                  resource: '',
-                  desc: '',
-                  code:'',
-                  pojo: {}, // 编辑表单绑定的实体对象
-                  cityList: [], // 城市列表
-                  dialogImageUrl: '',
-                  dialogVisible: false,
-                  uploadPicture: [],
-                  fileList:[],
-                  limitImageCount:6,
-                  id: '' // 当前用户编辑的ID
+            return {
+              url: '',
+              houseId: '',
+              name: '',
+              region: '',
+              date1: '',
+              date2: '',
+              delivery: false,
+              type: [],
+              resource: '',
+              desc: '',
+              code: '',
+              pojo: {}, // 编辑表单绑定的实体对象
+              cityList: [], // 城市列表
+              dialogImageUrl: '',
+              dialogVisible: false,
+              uploadPicture: [],
+              fileList: [],
+              limitImageCount: 6,
+              id: '',// 当前用户编辑的ID
+              phoneRules: {
+                phone: [
+                  {required: true, message: '请输入手机号', trigger: 'blur'},
+                  {min: 11, max: 11, message: '请输入长度为11位的手机号', trigger: 'blur'}
+                ],
               }
+            }
 
         },
         methods: {
@@ -122,32 +131,35 @@
                 console.log('submit!');
             },
             handleSave() {
-                ;
-                if (this.pojo.id != null) {
+                house.addHouse(this.pojo).then(res=>{
 
-                    for (var i = 0; i < this.uploadPicture.length; i++) {
-                        this.pojo.image.push(this.uploadPicture[i]);
-                    }
-                } else {
-                    this.pojo.image = [];
-                    for (var i = 0; i < this.uploadPicture.length; i++) {
-                        this.pojo.image.push(this.uploadPicture[i]);
-                    }
-                }
-                var im = JSON.stringify(this.pojo.image);
-                this.pojo.image = im
-                resourceApi.update(this.id, this.pojo).then(response => {
-                    this.$message({
-                        message: response.data.msg,
-                        type: (response.data.data ? 'success' : 'error')
-                    })
-                    if (response.data.data) { // 如果成功
+                  this.$message({
+                    message: res.data.msg,
+                    type:(res.data.data ? 'success' :'error')
+                  })
+                  if (res.data.code=='0'){
+                    this.houseId=res.data.data
+                    console.log(this.houseId)
+                    console.log(this.url)
+                    this.$refs.upload.submit()
+                    console.log('+++++++')
+                    // 刷新列表
+                    this.fileList = [];
+                  }
 
-                      console.log('+++++++')
-                        this.fetchData() // 刷新列表
-                        this.fileList = [];
-                    }
                 })
+                // resourceApi.update(this.id, this.pojo).then(response => {
+                //     this.$message({
+                //         message: response.data.msg,
+                //         type: (response.data.data ? 'success' : 'error')
+                //     })
+                //     if (response.data.data) { // 如果成功
+                //         this.$refs.upload.submit()
+                //         console.log('+++++++')
+                //         this.fetchData() // 刷新列表
+                //         this.fileList = [];
+                //     }
+                // })
                 this.dialogFormVisible = false // 关闭窗口
             },
             handleRemove(file, fileList) {
@@ -160,10 +172,12 @@
             },
             handleUploadSuccess(response, file, fileList) {
                 var total = 0;
+                this.$refs.form.resetFields()
+                this.pojo={};
                 console.log(this.pojo)
-              console.log(fileList);
-              console.log('++++++++')
-              console.log(file);
+                console.log(fileList);
+                console.log('++++++++')
+                console.log(file);
                 if (this.pojo.image != null ) {
                     total =  fileList.length+this.pojo.image.length;
 
@@ -187,7 +201,7 @@
                     this.uploadPicture = [];
                     for (var i = 0; i < fileList.length; i++) {
                         console.log(fileList.length)
-                        this.uploadPicture.push("api/document/batch/1"+fileList[i].response.src);
+                        this.uploadPicture.push(this.url+fileList[i].response.src);
                     }
                 }
             },
@@ -203,6 +217,15 @@
                     }
                 });
             },
+          beforeUpload(){
+            return new Promise((resolve, reject) => {
+                // 拼接上传url
+                this.url = `api/document/batch/`+this.houseId;
+                // dom上传地址更新完成后，触发上传
+                this.$nextTick(() => resolve());
+            });
+
+          },
 
             deleteImage(src, index) {
                 var picture = this.pojo.image;
@@ -216,7 +239,7 @@
                 })
                 this.pojo.image = picture;
             },
-            handleChange(value) {
+          handleChange(value) {
                 console.log(value);
             },
             onSelected(data) {

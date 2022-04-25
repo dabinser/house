@@ -32,9 +32,6 @@ public class Condition implements Serializable {
     @ApiModelProperty("page")
     private Basepage basepage;
 
-    public Condition() {
-    }
-
     @Override
     public String toString() {
         return "Condition{" +
@@ -47,7 +44,22 @@ public class Condition implements Serializable {
                 ", elevator=" + elevator +
                 ", is_rent=" + is_rent +
                 ", basepage=" + basepage +
+                ", order='" + order + '\'' +
                 '}';
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
+
+    @ApiModelProperty("排序")
+    private String order;
+
+    public Condition() {
     }
 
     public Basepage getBasepage() {

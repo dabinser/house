@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -30,6 +31,27 @@ public class Documentfile implements Serializable {
     @ApiModelProperty("外键")
     private Integer rentId;
 
+    @ApiModelProperty("上传时间")
+    private Date date;
+
+    @Override
+    public String toString() {
+        return "Documentfile{" +
+                "id=" + id +
+                ", url='" + url + '\'' +
+                ", rentId=" + rentId +
+                ", date=" + date +
+                '}';
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -52,12 +74,4 @@ public class Documentfile implements Serializable {
         this.rentId = rentId;
     }
 
-    @Override
-    public String toString() {
-        return "Documentfile{" +
-            "id=" + id +
-            ", url=" + url +
-            ", rentId=" + rentId +
-        "}";
-    }
 }

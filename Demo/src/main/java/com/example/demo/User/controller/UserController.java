@@ -20,14 +20,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
 import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * <p>
@@ -51,17 +48,32 @@ public class UserController {
     @Autowired
     private UUIDUtil uuidUtil;
     @PostMapping("/addition")
-    public Result addUser(@RequestBody SysUser user,Principal principal){
+    public Result addUser(@RequestBody SysUser user,Principal principal,String roleId){
         if (userService.count(new QueryWrapper<SysUser>().eq("user_name", user.getUserName()))>0){
             return Result.error("用户名重复");
         }
         else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setCreateTime(new Date());
-            user.setCreateUser(principal.getName());
-            user.setUserId(uuidUtil.getUUID());
-            return Result.success(userService.save(user));
+            String uuid = uuidUtil.getUUID();
+            user.setUserId(uuid);
+            UserRole userRole = new UserRole();
+            userRole.setUserId(uuid);
+            userRole.setCreateTime(new Date());
+            if (null==principal){
+                user.setCreateUser("owner");
+                userRole.setRoleId("100003");
+
+            }
+            else{
+                user.setCreateUser(principal.getName());
+                userRole.setRoleId("100001");
+            }
+            userService.save(user);
+            userRoleService.save(userRole);
+            return Result.success(CodeMsg.SUCCESS);
         }
+
     }
     @PostMapping("/modify")
     public Result modify(@RequestBody ModifyPasswordDto user, Principal principal){

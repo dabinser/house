@@ -25,6 +25,7 @@ import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -92,6 +93,7 @@ public Result handleFileUpload(HttpServletRequest request,@PathVariable("id") In
     MultipartFile file = null;
     BufferedOutputStream stream = null;
     ArrayList<Documentfile> documentFiles = new ArrayList<>();
+    Date date = new Date();
     for (int i = 0; i < files.size(); i++) {
         file = files.get(i);
         if(!file.isEmpty()){
@@ -105,6 +107,7 @@ public Result handleFileUpload(HttpServletRequest request,@PathVariable("id") In
                 Documentfile documentFile = new Documentfile();
                 documentFile.setRentId(RentId);
                 documentFile.setUrl(fileNameUnique);
+                documentFile.setDate(date);
                 documentFiles.add(documentFile);
                 stream = new BufferedOutputStream(new FileOutputStream
                         (new File(filePath,fileNameUnique)));//设置文件路径以及名字

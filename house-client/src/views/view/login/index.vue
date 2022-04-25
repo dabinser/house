@@ -1,13 +1,14 @@
 <template>
   <div>
     <div style="height: 40px;padding-left: 100px;border-bottom: 3px #00ae66 solid;">
-      <h2 style="color: #00ae66;cursor: pointer" @click="indexShow">万径房产</h2>
+      <h2 style="color: #00ae66;cursor: pointer;margin: 0 auto;position: relative;top: 10px" @click="indexShow">房屋租赁</h2>
     </div>
     <div class="bg">
-      <div style="width: 320px;margin: 0 auto;background: #fff;padding: 40px">
+      <div style="width: 320px;margin: 0 auto;background: #fff;padding: 40px;position: relative;top: -100px">
         <el-row v-show="loginShow">
           <el-row>
-            <h2 style="color: #000">账号密码登录</h2>
+            <h2 style="color: #000 ;margin: 0 auto;position: relative;left: 40%">账号登录</h2>
+            <br>
           </el-row>
           <el-form autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm">
             <el-form-item label="" prop="username">
@@ -16,6 +17,11 @@
             <el-form-item label="" prop="password">
               <el-input type="password" v-model="loginForm.password" @keyup.enter.native="handleLogin"
                         placeholder="请输入密码"></el-input>
+            </el-form-item>
+            <el-form-item label="" prop="code">
+              <el-input type="text" v-model="loginForm.code" placeholder="请输入验证码" style="width: 200px"></el-input>
+              <el-image :src="url" style="width: 100px;height: 35px;margin: 0 auto;padding: 5px;position: relative;float: right"
+                        @click="refresh" ref="captcha" title="看不清点我"></el-image>
             </el-form-item>
             <el-form-item>
               <el-button type="success" :loading="loading" @click.native.prevent="handleLogin" class="cbtn-bg">立即登录
@@ -27,12 +33,12 @@
             <span style="float: right;cursor: pointer" @click="forget">忘记密码</span>
           </el-row>
           <el-row style="text-align: center;color: #999999;font-size: 12px;line-height: 50px">
-            <span style="cursor: pointer">我已阅读并接受 《万径用户服务协议》及 《万径隐私政策》</span>
+            <span style="cursor: pointer">我已阅读并接受 《用户服务协议》及 《隐私政策》</span>
           </el-row>
         </el-row>
         <el-row v-show="!loginShow">
           <el-row>
-            <h2 style="color: #000">欢迎注册</h2>
+            <h2 style="color: #000;margin: 5px auto;padding: 10px;position: relative;left: 40%">欢迎注册</h2>
           </el-row>
           <el-form autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm">
             <el-form-item label="" prop="username">
@@ -52,7 +58,7 @@
             <span style="float: right;cursor: pointer" @click="forget">忘记密码</span>
           </el-row>
           <el-row style="text-align: center;color: #999999;font-size: 12px;line-height: 50px">
-            <span style="cursor: pointer">我已阅读并接受 《万径用户服务协议》及 《万径隐私政策》</span>
+            <span style="cursor: pointer">我已阅读并接受 《用户服务协议》及 《隐私政策》</span>
           </el-row>
         </el-row>
       </div>
@@ -64,7 +70,10 @@
 <script>
     import cheader from "@/components/cheader";
     import cfooter from "@/components/cfooter";
-   import userApi from "@/api/user";
+    import userApi from "@/api/user";
+
+    import {setUser} from "../../../utils/auth";
+    import jwt_decode from "jwt-decode";
 
     export default {
         name: "login",
@@ -74,19 +83,25 @@
         },
         data() {
             return {
+                url:'/api/kaptcha',
                 loginForm: {
                     username: '',
                     password: '',
-                    usertype: '用户'
+                    usertype: '用户',
+                    code:''
                 },
                 loginRules: {
-                    username: [
+                    userName: [
                         {required: true, message: '请输入手机号', trigger: 'blur'},
                         {min: 11, max: 11, message: '请输入长度为11位的手机号', trigger: 'blur'}
                     ],
                     password: [
                         {required: true, message: '请输入密码', trigger: 'blur'},
                         {min: 6, max: 12, message: '长度在 6 到 12 位的密码', trigger: 'blur'}
+                    ],
+                    code:[
+                        {required: true,message: '请输入验证码', trigger:'blur'},
+                        {min: 4, max: 4,message: '验证码长度为4位',trigger: 'blur'}
                     ]
                 },
                 loading: false,
@@ -94,16 +109,57 @@
             };
         },
         methods: {
+            isEmpty(value) {
+              return (
+                  value === undefined ||
+                  value === null ||
+                  (typeof value === "object" && Object.keys(value).length === 0) ||
+                  (typeof value === "string" && value.trim().length === 0)
+              );
+            },
             handleLogin() {
                 this.$refs.loginForm.validate(valid => {
                     if (valid) {
+                      console.log('验证成功')
                         this.loading = true;
-                        this.$store.dispatch('Login', this.loginForm).then(() => {
-                            this.loading = true;
+                        let pojo = {username:this.loginForm.username,password:this.loginForm.password}
+                        let formdata=new FormData
+                        formdata.append("username",this.loginForm.username)
+                        formdata.append("password",this.loginForm.password)
+                        userApi.login(formdata).then(res =>{
+                          if (res.data.code=='0'){
+                            console.log('登录')
+                            this.loading=true;
+                            console.log('+++++++')
                             location.reload()
-                        }).catch(() => {
-                            this.loading = false
+                            let systemRole = res.data.data.role
+                            let id = res.data.data.id
+                            let name = res.data.data.userName
+                            let token = res.headers.token
+                            //将用户信息存入cookie中
+                            setUser(systemRole,name,id,token)
+
+                            const decode = jwt_decode(token);
+
+                            // 存储数据
+                            this.$store.dispatch("setIsAutnenticated", !this.isEmpty(decode));
+                            this.$store.dispatch("setUser", decode);
+
+                            this.$message({
+                              message:"登录成功",
+                              type:"success"
+                            });
+                            this.$router.push("/rent")
+                          }
+                        }).catch(()=>{
+                          this.loading=false
                         })
+                        // this.$store.dispatch('Login', this.loginForm).then(() => {
+                        //     this.loading = true;
+                        //     location.reload()
+                        // }).catch(() => {
+                        //     this.loading = false
+                        // })
                     } else {
                         console.log('error submit!!');
                         return false
@@ -114,12 +170,16 @@
                 this.$refs.loginForm.validate(valid => {
                     if (valid) {
                         this.loading = true;
-                        userApi.save(this.loginForm).then(response => {
+                        let user={
+                          userName:this.loginForm.username,
+                          password:this.loginForm.password
+                        }
+                        userApi.addUser(user).then(response => {
                             this.$message({
-                                message: response.message,
-                                type: (response.flag ? 'success' : 'error')
+                                message: response.data.msg,
+                                type: (!response.data.code ? 'success' : 'error')
                             });
-                            if (response.flag) { // 如果成功
+                            if (response.data.code=='0') { // 如果成功
                                 this.$router.push({path: '/login'}) // 刷新列表
                             }
                         })
@@ -129,6 +189,10 @@
                     }
                 })
             },
+          refresh: function (event) {
+            let num=Math.ceil(Math.random() * 10);
+            this.$refs.captcha.src = this.url+'?'+num
+          },
             resetForm(formName) {
                 this.$refs[formName].resetFields();
             },
@@ -144,7 +208,7 @@
                 alert("忘记密码");
             },
             indexShow() {
-                this.$router.push({path: '/'});
+                this.$router.push({path: '/rent'});
             }
         }
     }
