@@ -4,7 +4,7 @@
       <div style="width: 50%;margin:  0 auto;padding-top: 30px">
             <el-row style="padding-top: 20px" :gutter="40">
               <el-col :span="24">
-                <el-form label-width="180px" >
+                <el-form label-width="180px" ref="form" >
                   <el-form-item label="图片">
                     <el-upload
                       :action="url"
@@ -15,8 +15,10 @@
                       :limit="limitImageCount"
                       :on-exceed="handleExceed"
                       :auto-upload="false"
+                      :before-upload="beforeUpload"
                       :multiple="true"
                        ref="upload"
+
                       :file-list="fileList"
                     >
                       <i class="el-icon-plus"></i>
@@ -24,10 +26,6 @@
                     <el-dialog :visible.sync="dialogVisible">
                       <img width="100%" :src="dialogImageUrl" alt="">
                     </el-dialog>
-                  </el-form-item>
-                  <el-form-item label="房源所在省份">
-                    <v-distpicker province="广东省" city="广州市" area="海珠区" @selected="onSelected"></v-distpicker>
-
                   </el-form-item>
                   <el-form-item label="详细地址">
                     <el-input v-model="pojo.area"></el-input>
@@ -100,7 +98,7 @@
         },
         data() {
             return {
-              url: 'api/document/batch/',
+              url: '',
               houseId: '',
               name: '',
               region: '',
@@ -140,12 +138,12 @@
                     type:(res.data.data ? 'success' :'error')
                   })
                   if (res.data.code=='0'){
-                    this.url
-                    this.url=this.url+res.data.data
+                    this.houseId=res.data.data
+                    console.log(this.houseId)
                     console.log(this.url)
                     this.$refs.upload.submit()
                     console.log('+++++++')
-                    this.fetchData() // 刷新列表
+                    // 刷新列表
                     this.fileList = [];
                   }
 
@@ -174,6 +172,8 @@
             },
             handleUploadSuccess(response, file, fileList) {
                 var total = 0;
+                this.$refs.form.resetFields()
+                this.pojo={};
                 console.log(this.pojo)
                 console.log(fileList);
                 console.log('++++++++')
@@ -201,7 +201,7 @@
                     this.uploadPicture = [];
                     for (var i = 0; i < fileList.length; i++) {
                         console.log(fileList.length)
-                        this.uploadPicture.push("api/document/batch/1"+fileList[i].response.src);
+                        this.uploadPicture.push(this.url+fileList[i].response.src);
                     }
                 }
             },
@@ -217,6 +217,15 @@
                     }
                 });
             },
+          beforeUpload(){
+            return new Promise((resolve, reject) => {
+                // 拼接上传url
+                this.url = `api/document/batch/`+this.houseId;
+                // dom上传地址更新完成后，触发上传
+                this.$nextTick(() => resolve());
+            });
+
+          },
 
             deleteImage(src, index) {
                 var picture = this.pojo.image;
