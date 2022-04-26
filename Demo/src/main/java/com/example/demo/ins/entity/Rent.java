@@ -9,6 +9,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * <p>
@@ -72,8 +73,41 @@ public class Rent implements Serializable {
     @TableField(exist = true)
     @ApiModelProperty("图片url")
     private ArrayList<String> list;
+    @ApiModelProperty("创建时间")
+    private Date date;
 
+    @Override
+    public String toString() {
+        return "Rent{" +
+                "id=" + id +
+                ", rcode='" + rcode + '\'' +
+                ", vname='" + vname + '\'' +
+                ", title='" + title + '\'' +
+                ", area='" + area + '\'' +
+                ", community='" + community + '\'' +
+                ", pay=" + pay +
+                ", is_rent=" + is_rent +
+                ", content='" + content + '\'' +
+                ", contacts='" + contacts + '\'' +
+                ", phone='" + phone + '\'' +
+                ", apartmentType='" + apartmentType + '\'' +
+                ", mode=" + mode +
+                ", storey=" + storey +
+                ", elevator=" + elevator +
+                ", orientation=" + orientation +
+                ", sysUserId=" + sysUserId +
+                ", list=" + list +
+                ", date=" + date +
+                '}';
+    }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public String getRcode() {
         return rcode;
@@ -202,30 +236,6 @@ public class Rent implements Serializable {
 
     public void setList(ArrayList<String> list) {
         this.list = list;
-    }
-
-    @Override
-    public String toString() {
-        return "Rent{" +
-                "id=" + id +
-                ", rcode='" + rcode + '\'' +
-                ", vname='" + vname + '\'' +
-                ", title='" + title + '\'' +
-                ", area='" + area + '\'' +
-                ", community='" + community + '\'' +
-                ", pay=" + pay +
-                ", is_rent=" + is_rent +
-                ", content='" + content + '\'' +
-                ", contacts='" + contacts + '\'' +
-                ", phone='" + phone + '\'' +
-                ", apartmentType='" + apartmentType + '\'' +
-                ", mode=" + mode +
-                ", storey=" + storey +
-                ", elevator=" + elevator +
-                ", orientation=" + orientation +
-                ", sysUserId=" + sysUserId +
-                ", list=" + list +
-                '}';
     }
 
     public String getApartmentType() {
