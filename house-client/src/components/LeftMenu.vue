@@ -78,10 +78,10 @@ export default {
                     children: [{ path: 'solvelist',name: '故障处理'}]
                 },
                 {
-                    icon:'el-icon-chat-line-round',
-                    name: '在线联系',
+                    icon:'el-icon-document-checked',
+                    name: '房屋审批',
                     path: 'chat',
-                    children: [{path: 'chatOnline',name: '聊天'}]
+                    children: [{path: 'chatOnline',name: '审批校验'}]
                 },
                 {
                     icon: 'el-icon-view',

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.NotNull;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -78,6 +79,7 @@ public class RentController {
             rent.setSysUserId(user.getId());
             rent.setVname(principal.getName());
             rent.setRcode("666");
+            rent.setDate(new Date());
             rent.setIs_rent(Status.No_Rent);
             rentService.Save(rent);
             return Result.success(rent.getId());

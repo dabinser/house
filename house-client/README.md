@@ -29,3 +29,6 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 "# house" 
 "# house" 
+### config
+
+set NODE_OPTIONS=--openssl-legacy-provider
