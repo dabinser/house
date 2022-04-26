@@ -22,32 +22,36 @@
     </div>
 
     <div style="width: 60%;margin: 0 auto;padding: 20px"  >
-      <el-checkbox-group v-model="searchMap">
-        <el-row class="crow"  v-model="searchMap.price">
-          <label class="label-fade-enter">售价</label>
-          <el-checkbox label="200万以下" true-label="1" false-label="0"></el-checkbox>
-          <el-checkbox label="200-250" true-label="1" false-label="0"></el-checkbox>
-          <el-checkbox label="250-300" true-label="1" false-label="0"></el-checkbox>
-          <el-checkbox label="300-400" true-label="1" false-label="0"></el-checkbox>
-          <el-checkbox label="400-500" true-label="1" false-label="0"></el-checkbox>
+        <el-row class="crow"  >
+          <el-checkbox-group v-model="price">
+            <label class="label-fade-enter">价格</label>
+            <el-checkbox label="200"  >200以下</el-checkbox>
+            <el-checkbox label="400"  >200-400</el-checkbox>
+            <el-checkbox label="600"  >400-600</el-checkbox>
+            <el-checkbox label="800"  >600-800</el-checkbox>
+            <el-checkbox label="801"  >800以上</el-checkbox>
+          </el-checkbox-group>
         </el-row>
         <el-row class="crow">
+          <el-checkbox-group v-model="bedroom">
           <label class="label-fade-enter">房型</label>
-          <el-checkbox label="一室" true-label="1" false-label="0"></el-checkbox>
-          <el-checkbox label="二室" true-label="1" false-label="0"></el-checkbox>
-          <el-checkbox label="三室" true-label="1" false-label="0"></el-checkbox>
-          <el-checkbox label="四室" true-label="1" false-label="0"></el-checkbox>
-          <el-checkbox label="五室及以上" true-label="1" false-label="0"></el-checkbox>
+          <el-checkbox label="1" >一室</el-checkbox>
+          <el-checkbox label="2" >二室</el-checkbox>
+          <el-checkbox label="3" >三室</el-checkbox>
+          <el-checkbox label="4" >四室</el-checkbox>
+          <el-checkbox label="5" >五室及以上</el-checkbox>
+          </el-checkbox-group>
         </el-row>
         <el-row class="crow">
+          <el-checkbox-group v-model="area">
           <label class="label-fade-enter">面积</label>
-          <el-checkbox label="50㎡以下" true-label="1" false-label="0"></el-checkbox>
-          <el-checkbox label="50㎡-70㎡" true-label="1" false-label="0"></el-checkbox>
-          <el-checkbox label="70㎡-90㎡" true-label="1" false-label="0"></el-checkbox>
-          <el-checkbox label="90㎡-110㎡" true-label="1" false-label="0"></el-checkbox>
-          <el-checkbox label="110㎡以上" true-label="1" false-label="0"></el-checkbox>
+          <el-checkbox label="50" >50㎡以下</el-checkbox>
+          <el-checkbox label="70" >50㎡-70㎡</el-checkbox>
+          <el-checkbox label="90" >70㎡-90㎡</el-checkbox>
+          <el-checkbox label="110" >90㎡-110㎡</el-checkbox>
+          <el-checkbox label="111" >110㎡以上</el-checkbox>
+          </el-checkbox-group>
         </el-row>
-      </el-checkbox-group>
     </div>
     <div style="width: 60%;margin: 0 auto;padding: 20px">
       <el-menu
@@ -58,7 +62,6 @@
       >
         <el-menu-item index="1">默认排序</el-menu-item>
         <el-menu-item index="2">最新发布</el-menu-item>
-        <el-menu-item index="3">房屋总价</el-menu-item>
         <el-menu-item index="4">房屋单价</el-menu-item>
         <el-menu-item index="5">房屋面积</el-menu-item>
       </el-menu>
@@ -68,7 +71,7 @@
           <el-row
             :gutter="20"
             style="height: 200px;padding-top:20px;cursor:pointer;border-bottom: 1px #DCDFE6 solid"
-            v-for="item in list"
+            v-for="item in house"
             :key="item.id"
           @click.native="info(item.id)">
             <el-col :span="4" style="height: 100%;">
@@ -133,6 +136,11 @@ export default {
       activeIndex: "1",
       searchContent: "",
       list: [],
+      price:[],
+      num:[],
+      area:[],
+      bedroom:[],
+      condition:{},
       total: 0, // 总记录数
       currentPage: 1, // 当前页
       pageSize: 10, // 每页大小
@@ -150,30 +158,48 @@ export default {
         slowWay: 'easeIn',
         // 回到顶部后回调方法
         callback: this.onScollTop
-      }
+      },
+      keyword:'',
+      soft:''
     };
+  },
+  computed:{
+    house() {
+      const arr =this.list
+
+      if (this.soft==4) {
+          arr.sort((a, b) => {
+          return  b.pay - a.pay
+        })
+      }
+      if (this.soft==1){
+        arr.sort((a,b)=>{
+          return b.date -a.date
+        })
+      }
+      return arr
+    }
   },
   created() {
       this.fetchData();
   },
     mounted() {
-        if(this.$route.params.content){
-          this.searchMap = {
-              "house_title":this.$route.params.content
-
-          }
-          console.log(this.searchMap)
-        }else{
-
-        }
+        // if(this.$route.params.content){
+        //   this.searchMap = {
+        //       "house_title":this.$route.params.content
+        //
+        //   }
+        //   console.log(this.searchMap)
+        // }else{
+        //
+        // }
     },
   methods: {
 
     handleSelect(key, keyPath) {
       alert(keyPath);
-      if (key==1){
-
-      }
+      this.soft=keyPath
+      console.log(this.soft)
     },
 
     // 翻页后滚动条回到页面顶端
@@ -193,7 +219,7 @@ export default {
           current:this.currentPage,
           size:this.pageSize,
         },
-        condition:this.searchMap
+        condition:this.condition
       }
       oldhouseApi
         .search(pojo)
@@ -207,12 +233,21 @@ export default {
         this.$router.push('/info/'+id)
     },
       searchHouse(){
-          this.searchMap = {
-              "house_title":this.searchContent
+        for (let i = 0; i <this.price.length ; i++) {
+          this.num.push(parseInt(this.price[i]))
+        }
+
+        let max=Math.max(...this.num)
+        let min=Math.min(...this.num)
+        this.condition={
+            address: this.searchContent,
+            minPrice:min,
+            maxPrice:max,
           }
-          this.fetchData()
-        console.log(this.searchMap)
-      }
+        this.fetchData()
+        }
+
+
   }
 };
 </script>

@@ -25,11 +25,11 @@
             <el-table v-if="tableData.length > 0" :data="tableData" style="width: 100%" max-height="450" border >
                 <el-table-column type="index" label="序号" align="center" width="80">
                 </el-table-column>
-                <el-table-column prop="name" label="姓名" align="center" width="150">
+                <el-table-column prop="name" label="姓名" align="center" width="100">
                 </el-table-column>
-                <el-table-column prop="address" label="地址" align="center" width="400">
+                <el-table-column prop="address" label="地址" align="center" width="300">
                 </el-table-column>
-                <el-table-column prop="price" label="金额" align="center" width="100">
+                <el-table-column prop="price" label="金额" align="center" width="80">
                 </el-table-column>
                 <el-table-column prop="date" label="应缴纳日期" align="center" width="200" :formatter="dateFormat">
                 </el-table-column>

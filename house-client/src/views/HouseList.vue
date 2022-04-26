@@ -20,15 +20,15 @@
         </div>
         <div class="table_container">
             <el-table v-if="tableData.length > 0" :data="tableData" style="width: 100%" max-height="450" border >
-                <el-table-column type="index" label="序号" align="center" width="150">
+                <el-table-column type="index" label="序号" align="center" width="80">
                 </el-table-column>
-                <el-table-column prop="area" label="地址" align="center" width="400">
+                <el-table-column prop="area" label="地址" align="center" width="300">
                 </el-table-column>
                 <el-table-column prop="pay" label="价格" align="center" width="200">
                 </el-table-column>
                 <el-table-column prop="is_rent" label="状态" align="center" width="200">
                 </el-table-column>
-                <el-table-column prop="vname" label="租客" align="center" width="200">
+                <el-table-column prop="vname" label="房东" align="center" width="200">
                 </el-table-column>
                 <el-table-column label="操作" prop="operation" align="center">
                     <template slot-scope="scope">
@@ -192,17 +192,23 @@ export default {
             this.Data={
                 id:row.id,
                 address:row.address,
-                price:row.pay,
-                status:row.status,
-                detail:row.detail,
+                pay:row.pay,
+                is_rent:row.status,
+                content:row.detail,
                 userlist_Id:row.userlist_Id,
                 userlist_Name:row.userlist_Name==null?"无":row.userlist_Name,
             };
+            houseApi.updateHouse(this.Data).then(res=>{
+                if (res.data.data){
+                  this.dialog2={
+                    show:true,
+                    title:"修改房屋出租信息"
+                  };
+                }
+            })
 
-            this.dialog2={
-                show:true,
-                title:"修改房屋出租信息"
-            };
+
+
         },
         handleDelete(index,row){
             this.$confirm('确认删除?', '提示', {
