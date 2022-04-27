@@ -75,60 +75,72 @@ export default {
             );
         },
         doLogin(formName){
-            let pojo = {username:this.loginUser.account,password:this.loginUser.password}
-            let formdata=new FormData
-            formdata.append("username",this.loginUser.account)
-            formdata.append("password",this.loginUser.password)
-            userApi.login(formdata).then(res =>{
+          this.$refs.loginForm.validate(valid=>{
+            if (valid){
+              let pojo = {username:this.loginUser.account,password:this.loginUser.password}
+              let formdata=new FormData
+              formdata.append("username",this.loginUser.account)
+              formdata.append("password",this.loginUser.password)
+              userApi.login(formdata).then(res =>{
                 //登录成功之后的处理
                 if(res.data.code == '0'){
-                    let systemRole = res.data.data.role
-                    let id = res.data.data.id
-                    let name = res.data.data.userName
-                    let token = res.headers.token
+                  let systemRole = res.data.data.role
+                  let id = res.data.data.id
+                  let name = res.data.data.userName
+                  let token = res.headers.token
 
 
 
-                    //将用户信息存入cookie中
-                    setUser(systemRole,name,id,token)
+                  //将用户信息存入cookie中
+                  setUser(systemRole,name,id,token)
 
-                    const decode = jwt_decode(token);
+                  const decode = jwt_decode(token);
 
-                    // 存储数据
-                    this.$store.dispatch("setIsAutnenticated", !this.isEmpty(decode));
-                    this.$store.dispatch("setUser", decode);
+                  // 存储数据
+                  this.$store.dispatch("setIsAutnenticated", !this.isEmpty(decode));
+                  this.$store.dispatch("setUser", decode);
 
-                    this.$message({
-                        message:"登录成功",
-                        type:"success"
-                    });
-                    this.$router.push("/index")
+                  this.$message({
+                    message:"登录成功",
+                    type:"success"
+                  });
+                  this.$router.push("/index")
 
-                    scheduleApi.getScheduleInSevenDays().then(res =>{
-                        if(res.data.flag){
-                            if(res.data.data.length != 0){
-                                for(var i = 0;i < res.data.data.length;i++){
-                                    this.notify(res.data.data[i].content)
-                                }
-                            }
-
-                        }else{
-                            this.$message({
-                            message: '获取公告失败',
-                            type: 'warning'
-                            });
+                  scheduleApi.getScheduleInSevenDays().then(res =>{
+                    if(res.data.flag){
+                      if(res.data.data.length != 0){
+                        for(var i = 0;i < res.data.data.length;i++){
+                          this.notify(res.data.data[i].content)
                         }
-                    })
+                      }
 
-                }else{
-                    this.$message({
-                        message: "账号或密码错误",
-                        type: 'error'
-                    })
-                    this.loginUser.account=''
-                    this.loginUser.password=''
+                    }else{
+                      this.$message({
+                        message: '获取公告失败',
+                        type: 'warning'
+                      });
+                    }
+                  })
+
                 }
-            })
+                else{
+                  this.$message({
+                    message: "账号或密码错误",
+                    type: 'error'
+                  })
+                  this.loginUser.account=''
+                  this.loginUser.password=''
+                }
+              })
+            }
+            else {
+              this.$message({
+                message: "请正确填写",
+                type: 'warning'
+              })
+            }
+          })
+
         },
     }
 }

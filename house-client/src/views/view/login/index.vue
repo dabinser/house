@@ -161,7 +161,11 @@
                         //     this.loading = false
                         // })
                     } else {
-                        console.log('error submit!!');
+                        console.log('error submit!!')
+                        this.$message({
+                          message: "请正确填写",
+                          type: 'warning'
+                        })
                         return false
                     }
                 })
