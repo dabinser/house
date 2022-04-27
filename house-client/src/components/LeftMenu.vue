@@ -67,9 +67,13 @@ export default {
                 },
                  {
                     icon: 'el-icon-goods',
-                    name: '租金管理',
+                    name: '租赁信息管理',
                     path: 'paid',
-                    children: [{ path: 'paidlist',name: '租金操作'}]
+                    children: [
+                        { path: 'paidlist',name: '租金操作'},
+                        {path: 'contract',name: '合同查看'}
+
+                    ]
                 },
                 {
                     icon: 'el-icon-printer',

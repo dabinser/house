@@ -33,7 +33,7 @@ export default{
     },
     deleteHouse(id){
         return request({
-            url:`/${api_name}/deletehouse?houseId=`+id,
+            url:`/${api_name}/`+id,
             method:'delete',
         })
     },

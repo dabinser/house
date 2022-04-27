@@ -39,6 +39,8 @@ public class webmvcconfige extends WebSecurityConfigurerAdapter  {
     private IUserRoleService userRoleService;
     @Autowired
     private IRoleService roleService;
+    @Autowired
+    private MyAuthenticationFailureHandler myAuthenticationFailureHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -67,6 +69,7 @@ public class webmvcconfige extends WebSecurityConfigurerAdapter  {
                     response.getWriter().println(JSON.toJSON(details));
                     response.setHeader("Token",token);
                 })
+                .failureHandler(myAuthenticationFailureHandler)
                 .and()
                 .authorizeRequests()
                 .and()

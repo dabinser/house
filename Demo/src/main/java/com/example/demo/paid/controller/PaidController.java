@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -43,6 +45,15 @@ public class PaidController {
     @PostMapping("/addPaid")
     public Result addPaid(@RequestBody @NotNull Paid paid){
         return Result.success(paidService.save(paid));
+    }
+    @GetMapping("/{id}")
+    public Result findById(@PathVariable("id") @NotNull String id){
+        QueryWrapper<Paid> paidQueryWrapper = new QueryWrapper<>();
+        paidQueryWrapper.eq("house_id",id);
+        paidQueryWrapper.select("id","name");
+        List<Map<String, Object>> maps = paidService.listMaps(paidQueryWrapper);
+
+        return Result.success(maps);
     }
 
 

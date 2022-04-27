@@ -34,6 +34,12 @@ export default{
             method:'delete',
         })
     },
+    findById(id){
+        return request({
+            url:`/${api_name}/`+id,
+            method:'get',
+        })
+    }
 
 }
 

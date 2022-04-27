@@ -30,7 +30,7 @@
                 </el-table-column>
                 <el-table-column prop="vname" label="房东" align="center" width="200">
                 </el-table-column>
-                <el-table-column label="操作" prop="operation" align="center">
+                <el-table-column label="操作" prop="show" align="center">
                     <template slot-scope="scope">
                         <el-button
                         size="small"
@@ -41,6 +41,7 @@
                         size="small"
                         type="danger"
                         icon="el-icon-delete"
+                        :disabled="scope.row.show"
                         @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
@@ -65,7 +66,7 @@
 
         </div>
         <HouseAddDialog :dialog1="dialog1" @update="getProfile"></HouseAddDialog>
-        <HouseEditDialog :dialog2="dialog2" @update="getProfile" :formData="Data"></HouseEditDialog>
+        <HouseEditDialog :dialog2="dialog2" @update="getProfile" :formData="Data" ></HouseEditDialog>
     </div>
 
 </template>
@@ -118,18 +119,27 @@ export default {
             ]
         };
     },
+    computed:{
+
+    },
     created () {
         this.getProfile();
         window.mydata=this;
     },
     methods: {
+      is_forbidden(a){
+        if (a==='已出租'){
+          return true
+        }
+        else return false
+      },
         getProfile(){
             this.search_data.search_status = "全部"
           //sort=null, sortOrder=ASC, pageSize=10, pageNum=1
             let pojo = {pageSize:10, pageNum:1}
             houseApi.getAllHouseList(pojo).then(res =>{
                 this.allTableData=res.data.data;
-                console.log(this.allTableData);
+
                     // 设置分页数据
                     this.setPaginations();
                 // else{
@@ -191,21 +201,19 @@ export default {
             this.Data=''
             this.Data={
                 id:row.id,
-                address:row.address,
+                address:row.area,
                 pay:row.pay,
-                is_rent:row.status,
-                content:row.detail,
+                is_rent:row.is_rent,
+                content:row.content,
+                show:row.show,
                 userlist_Id:row.userlist_Id,
                 userlist_Name:row.userlist_Name==null?"无":row.userlist_Name,
             };
-            houseApi.updateHouse(this.Data).then(res=>{
-                if (res.data.data){
-                  this.dialog2={
-                    show:true,
-                    title:"修改房屋出租信息"
-                  };
-                }
-            })
+            this.dialog2={
+              show: true,
+              title: "修改房屋出租信息"
+            }
+
 
 
 
@@ -216,8 +224,8 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
                 }).then(() => {
-                    houseApi.deleteHouse(row.houseId).then(res =>{
-                        if(res.data.flag == true){
+                    houseApi.deleteHouse(row.id).then(res =>{
+                        if(res.data.code == '0'){
                             this.$message({
                             message: '删除成功',
                             type: 'success'
@@ -255,8 +263,13 @@ export default {
             this.paginations.total = this.allTableData.total;
             // 设置默认分页数据
             this.tableData = this.allTableData.records.filter((item, index) => {
+                if (item.is_rent=='已出租'){
+                  item.show=true
+                }
+                else item.show=false
                 return index < this.paginations.page_size;
             });
+          console.log(this.tableData)
         }
     }
 }

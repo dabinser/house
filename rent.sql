@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50734
 File Encoding         : 65001
 
-Date: 2022-04-26 17:48:13
+Date: 2022-04-27 17:55:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -101,9 +101,9 @@ CREATE TABLE `paid` (
 -- ----------------------------
 -- Records of paid
 -- ----------------------------
-INSERT INTO `paid` VALUES ('30', '深圳市盐田区沙头角856号4楼', '1300.00', '2019-04-01', null, '何小琳', '31', '1', '17');
-INSERT INTO `paid` VALUES ('31', '深圳市盐田区大梅沙66号1楼', '900.00', '2019-04-01', null, '王大锤', '32', '1', '20');
-INSERT INTO `paid` VALUES ('32', '深圳市盐田区大梅沙66号3楼', '800.00', '2019-04-01', null, '周晓二', '29', '1', '21');
+INSERT INTO `paid` VALUES ('30', '深圳市盐田区沙头角856号4楼', '1300.00', '2019-04-01', null, '何小琳', '31', '1', '1');
+INSERT INTO `paid` VALUES ('31', '深圳市盐田区大梅沙66号1楼', '900.00', '2019-04-01', null, '王大锤', '32', '1', '1');
+INSERT INTO `paid` VALUES ('32', '深圳市盐田区大梅沙66号3楼', '800.00', '2019-04-01', null, '周晓二', '29', '1', '1');
 INSERT INTO `paid` VALUES ('33', '重庆', '1000.00', '2022-03-21', null, '李四', null, '1', null);
 INSERT INTO `paid` VALUES ('34', '重庆渝中', '1000.00', '2022-03-30', null, '李四', null, '1', null);
 INSERT INTO `paid` VALUES ('35', '重庆渝北', '1000.00', '2022-03-21', null, '李四', null, '1', null);
@@ -146,7 +146,6 @@ CREATE TABLE `rent` (
 -- ----------------------------
 INSERT INTO `rent` VALUES ('1', '7T7P9iZ9sk', 'Zhang Lan', 'Prof.', '重庆市渝中区', 'SDEmETGvBh', '227.95', 'mT3mLtpUim', 'hXPnWrFMky', '90-2682-7622', '0', '1', '0', '0', '0', '1', null, '0');
 INSERT INTO `rent` VALUES ('2', 'eVfQJEaNF6', 'Kathleen Reyes', 'Mr.', 'XoYi7oJvGr', 'vBtTCXqyRB', '974.49', 'PXBrO7nvlX', '2LYpQOZ7hI', '20-368-9823', '0', '1', '0', '0', '0', '1', null, '0');
-INSERT INTO `rent` VALUES ('3', 'oDc3aL8h5k', 'Aoki Mai', 'Prof.', 'tPPyfpw5NZ', 'N6Za5CCnZh', '169.48', 'OSrwjt2SVL', 'mftZWKcLkn', '312-838-4239', '0', '1', '0', '0', '0', '0', null, '0');
 INSERT INTO `rent` VALUES ('4', 'WIvyN1nioU', 'Jiang Xiaoming', 'Ms.', 'VBGpgQ9WKr', '9vZORUwmrz', '479.58', 'Um8h78mK71', 'df7RwXGpQI', '52-797-2153', '0', '1', '0', '0', '0', '0', null, '0');
 INSERT INTO `rent` VALUES ('5', 'HcUvkSQVha', 'Rosa Simpson', 'Prof.', '2NRFeZxHoV', '0eCZWxaPdV', '189.99', 'xFZLo9GFWK', '7FDz7USUSP', '189-3698-2865', '0', '1', '0', '0', '0', '0', null, '0');
 INSERT INTO `rent` VALUES ('6', 'CPmQgpqJgd', 'Yamashita Hazuki', 'Mrs.', 'gv1Yj1vGby', 'FuOlUVu3nO', '301.03', '0tFfkTn4nK', 'ClOjQxP8Ub', '(121) 983 0203', '0', '1', '0', '0', '0', '0', null, '0');
