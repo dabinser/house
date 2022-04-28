@@ -23,7 +23,7 @@ import Center from "./views/view/center/index"
 import agent from "./views/view/agent/index"
 import house from "./views/view/house/index"
 import chat from "./views/view/login/index1"
-import test from "./views/view/center/test";
+
 
 
 
@@ -171,11 +171,7 @@ const router = new Router({
       component: Center,
 
     },
-    {
-      path:'/test',
-      name:'test',
-      component:test
-    },
+
 
 
 

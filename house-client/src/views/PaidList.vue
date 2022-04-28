@@ -35,6 +35,7 @@
                 </el-table-column>
                 <el-table-column prop="paydate" label="实际缴纳日期" align="center" width="200" :formatter="dateFormat">
                 </el-table-column>
+                <el-table-column prop="period" label="租赁时长" align="center" width="80"></el-table-column>
                 <el-table-column prop="status" label="状态" align="center" width="150">
                 </el-table-column>
                 <el-table-column label="操作" prop="operation" align="center">

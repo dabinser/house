@@ -60,7 +60,7 @@ export default {
         };
         return {         
             format_status_list:[
-                "已缴","未缴"
+                "已缴纳","未缴纳"
             ],
             form_rules:{
                 price:[
