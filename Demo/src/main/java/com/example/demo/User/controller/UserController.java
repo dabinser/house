@@ -9,7 +9,11 @@ import com.example.demo.User.service.IRoleService;
 import com.example.demo.User.service.IUserRoleService;
 import com.example.demo.User.service.IUserService;
 import com.example.demo.dto.ModifyPasswordDto;
+import com.example.demo.dto.UserConditionDto;
 import com.example.demo.dto.UserDto;
+import com.example.demo.tool.Baseseach.Basepage;
+import com.example.demo.tool.UUID.UUIDUtil;
+import com.example.demo.tool.result.CodeMsg;
 import com.example.demo.tool.result.Result;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.NotNull;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,16 +45,35 @@ public class UserController {
     private IRoleService roleService;
     @Autowired
     private IUserRoleService userRoleService;
-
+    @Autowired
+    private UUIDUtil uuidUtil;
     @PostMapping("/addition")
-    public Result addUser(@RequestBody SysUser user){
+    public Result addUser(@RequestBody SysUser user,Principal principal,String roleId){
         if (userService.count(new QueryWrapper<SysUser>().eq("user_name", user.getUserName()))>0){
             return Result.error("用户名重复");
         }
         else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            return Result.success(userService.save(user));
+            user.setCreateTime(new Date());
+            String uuid = uuidUtil.getUUID();
+            user.setUserId(uuid);
+            UserRole userRole = new UserRole();
+            userRole.setUserId(uuid);
+            userRole.setCreateTime(new Date());
+            if (null==principal){
+                user.setCreateUser("owner");
+                userRole.setRoleId("100003");
+
+            }
+            else{
+                user.setCreateUser(principal.getName());
+                userRole.setRoleId("100001");
+            }
+            userService.save(user);
+            userRoleService.save(userRole);
+            return Result.success(CodeMsg.SUCCESS);
         }
+
     }
     @PostMapping("/modify")
     public Result modify(@RequestBody ModifyPasswordDto user, Principal principal){
@@ -82,6 +106,20 @@ public class UserController {
         userDetail.setRole(role);
         BeanUtils.copyProperties(user,userDetail);
         return Result.success(userDetail);
+    }
+    @PostMapping("/condition")
+    public Result getUserByCondition(@RequestBody UserConditionDto userConditionDto){
+        Basepage basepage = userConditionDto.getBasepage();
+        if (null==userConditionDto.getUser()){
+            Basepage page = userService.page(basepage);
+            return Result.success(page);
+        }
+        SysUser user = userConditionDto.getUser();
+        QueryWrapper<SysUser> sysUserQueryWrapper = new QueryWrapper<>();
+        sysUserQueryWrapper.like("user_name", user.getUserName());
+        Basepage page = userService.page(basepage, sysUserQueryWrapper);
+        return Result.success(page);
+
     }
 
 }

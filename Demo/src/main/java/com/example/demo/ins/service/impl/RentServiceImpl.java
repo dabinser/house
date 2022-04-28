@@ -1,4 +1,5 @@
 package com.example.demo.ins.service.impl;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.dto.Condition;
@@ -32,7 +33,6 @@ public class RentServiceImpl extends ServiceImpl<RentMapper, Rent> implements IR
     @Override
     public <E extends IPage<Rent>> E pages(E page) {
         IPage<Rent> rentIPage = rentMapper.selectPageVo(page, 1);
-
         return (E) rentIPage;
     }
     public <E extends IPage<Rent>> E pagesCondition(E page, Condition condition) {
@@ -40,6 +40,21 @@ public class RentServiceImpl extends ServiceImpl<RentMapper, Rent> implements IR
 
         return (E) rentIPage;
     }
+
+
+    @Override
+    public Rent findById(int id) {
+        Rent rent = rentMapper.findById(id);
+        return rent;
+    }
+
+    @Override
+    public <E extends IPage<Rent>> E order(E page, Wrapper<Rent> queryWrapper) {
+        IPage<Rent> rentIPage = rentMapper.pageOrder(page, queryWrapper);
+
+        return (E) rentIPage;
+    }
+
 
 
 /*    public <E extends IPage<Rent>> E Conditionpage(E page, QueryWrapper<Rent> queryWrapper) {

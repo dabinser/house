@@ -20,6 +20,7 @@
         <result column="orientation" property="orientation" />
         <result column="elevator" property="elevator" />
         <result column="is_rent" property="is_rent"/>
+        <result column="date" property="date"></result>
         <collection property="list" ofType="string" javaType="java.util.ArrayList" column="id" select="file">
             <result column="url"></result>
         </collection>
@@ -41,19 +42,43 @@
         <result column="storey" property="storey" />
         <result column="orientation" property="orientation"  jdbcType="VARCHAR"/>
         <result column="elevator" property="elevator" />
+        <result column="date" property="date"></result>
         <collection property="list" ofType="string" javaType="java.util.ArrayList" column="id"   select="file">
 
         </collection>
+
 <!--        <association property="list" >-->
 <!--            <result column="url" jdbcType="VARCHAR"></result>-->
 <!--        </association>-->
     </resultMap>
-    <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        insert into rent
-        values #{rent}
+    <resultMap id="ResultMapNotList" type="com.example.demo.ins.entity.Rent">
+        <id column="id" property="id" />
+        <result column="rcode" property="rcode" />
+        <result column="vname" property="vname" />
+        <result column="title" property="title" />
+        <result column="area" property="area" />
+        <result column="community" property="community" />
+        <result column="pay" property="pay" />
+        <result column="content" property="content" />
+        <result column="contacts" property="contacts" />
+        <result column="phone" property="phone" />
+        <result column="sys_user_id" property="sysUserId" />
+        <result column="mode" property="mode" />
+        <result column="storey" property="storey" />
+        <result column="orientation" property="orientation" />
+        <result column="elevator" property="elevator" />
+        <result column="is_rent" property="is_rent"/>
+        <result column="date" property="date"></result>
+    </resultMap>
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.example.demo.ins.entity.Rent">
+        insert into rent(rcode, vname, title, area, community, pay, content, contacts, phone, sys_user_id, mode, storey, orientation, elevator)
+        values (#{rcode},#{vname},#{title},#{area},#{community},#{pay},#{content},#{contacts},#{phone},#{sysUserId},#{mode},#{storey},#{orientation},#{elevator})
     </insert>
     <select id="selectPageVo" resultType="com.example.demo.ins.entity.Rent" resultMap="includeList">
         select * from rent
+        <if test="param1.sort !=null and param1.sort!=''">
+            order by #{param1.sort} desc
+        </if>
     </select>
     <select id="file" resultType="string">
         select url from documentfile
@@ -88,6 +113,16 @@
                 and r.is_rent = #{condition.is_rent}
             </if>
         </where>
+        <if test="param2.order !=null">
+            order by #{param2.order} desc
+        </if>
+    </select>
+    <select id="findById" resultMap="includeList">
+        select * from rent
+        where rent.id=#{id}
+    </select>
+    <select id="pageOrder" resultType="com.example.demo.ins.entity.Rent" resultMap="includeList">
+        SELECT * FROM rent
     </select>
 
 </mapper>

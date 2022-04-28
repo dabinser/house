@@ -1,6 +1,7 @@
 package com.example.demo.ins.mapper;
 
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.demo.dto.Condition;
@@ -22,8 +23,9 @@ public interface RentMapper extends BaseMapper<Rent> {
     int save(Rent rent);
     IPage<Rent> selectPageVo(IPage<?> page, Integer state);
     IPage<Rent> selectPageCondition( IPage<?> page,Condition condition);
+    // 条件分页查询
+    IPage<Rent> pageOrder(IPage<Rent> page, Wrapper<Rent> queryWrapper);
 
 
-
-
+    Rent findById(int id);
 }

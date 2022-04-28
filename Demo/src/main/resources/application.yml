@@ -1,24 +1,23 @@
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   redis:
     database: 1
     host: 127.0.0.1
     port: 6379
   datasource:
-    url: jdbc:mysql://localhost:3306/Rent
+    url: jdbc:mysql://localhost:3306/rent
     username: root
     password: root
     driverClassName: com.mysql.cj.jdbc.Driver
+
 
   servlet:
     multipart:
       enabled: true
       max-file-size: 20MB
       max-request-size: 20MB
-
-  mvc:
-    hiddenmethod:
-      filter:
-        enabled: true
   thymeleaf:
     cache: true
   security:
@@ -35,11 +34,24 @@ scp:
   username: sehrsscfileadmin
   password: turwob-tyfpyN-0qyzdy
   targetPath: /home/sehrsscfileadmin/file/
-file: C:\Users\jeffjliu\Documents\worke\test\
+#file: C:\Users\jeffjliu\Documents\worke\test\
+file: C:\Users\fly\Pictures\Saved Pictures\
 contractFile: C:\Users\jeffjliu\Documents\worke\test\doc
 mybatis-plus:
   type-enums-package: com.example.demo.dto.*
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+swagger:
+  base-package: 'com/example/demo/ins/controller'
+  base-path: '/**'
+  title: '注解方式的Swagger'
+  description: '这是注解方式的Swagger'
+  version: '2.0'
+  license-url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+  license: 'The Apache License'
+  contact:
+    name: '大飞哥'
+    url: ''
+    email: '2973296064@qq.com'
 

@@ -1,24 +1,25 @@
 package com.example.demo.ins.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.example.demo.User.entity.SysUser;
 import com.example.demo.User.service.IUserService;
 import com.example.demo.dto.SearchDto;
 import com.example.demo.ins.entity.Collection;
+import com.example.demo.ins.entity.Enum.Status;
 import com.example.demo.ins.entity.Rent;
 import com.example.demo.ins.service.ICollectionService;
 import com.example.demo.ins.service.IRentService;
 import com.example.demo.tool.Baseseach.Basepage;
 import com.example.demo.tool.result.CodeMsg;
 import com.example.demo.tool.result.Result;
-import com.sun.istack.internal.NotNull;
-import io.swagger.annotations.ApiModelProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,7 +43,7 @@ public class RentController {
 
     @GetMapping("/{Id}")
     public Result get(@PathVariable int Id){
-        Rent rent = rentService.getById(Id);
+        Rent rent = rentService.findById(Id);
         return Result.success(rent);
     }
     @PostMapping("/page")
@@ -51,6 +52,19 @@ public class RentController {
 //        Basepage page = rentService.page(basepage);
         return Result.success(page);
     }
+    @PostMapping("/pageQuery/{order}")
+    public Result query(@RequestBody Basepage basepage,@PathVariable("order") String order){
+//        QueryWrapper<Rent> rentQueryWrapper = new QueryWrapper<>();
+//       rentQueryWrapper.inSql("url","select url from documentfile where rent_id=#{id}");
+//        rentQueryWrapper.orderByDesc(basepage.getSort());
+//        Basepage page = rentService.page(basepage, rentQueryWrapper);
+//        return Result.success(page);
+        basepage.addOrder(OrderItem.desc(order));
+        QueryWrapper<Rent> rentQueryWrapper = new QueryWrapper<>();
+        rentQueryWrapper.orderByDesc(order);
+        rentService.page(basepage,rentQueryWrapper);
+        return Result.success(order);
+    }
 
     /**
      * 新增租赁信息
@@ -58,16 +72,19 @@ public class RentController {
      * @param principal
      * @return
      */
-    @PostMapping("/add")
-    @ApiModelProperty
-    public Result add(@RequestBody @NotNull Rent rent, Principal principal, HttpServletRequest httpServletRequest){
+    @PostMapping("/addHouse")
+    public Result add(@RequestBody @NotNull Rent rent, Principal principal){
         if (null!=rent) {
             SysUser user = userService.getOne(new QueryWrapper<SysUser>().eq("user_name", principal.getName()));
             rent.setSysUserId(user.getId());
-            Integer RentId = rentService.Save(rent);
-            return Result.success(RentId);
+            rent.setVname(principal.getName());
+            rent.setRcode("666");
+            rent.setDate(new Date());
+            rent.setIs_rent(Status.No_Rent);
+            rentService.Save(rent);
+            return Result.success(rent.getId());
         }
-        else return Result.error("信息不完善");
+        else return Result.error(CodeMsg.DATA_ERROR);
     }
 
     /**
@@ -77,9 +94,8 @@ public class RentController {
      */
     @PostMapping
     public Result amend(@RequestBody Rent rent){
-        rentService.updateById(rent);
-        Rent  amendRent= rentService.getById(rent.getId());
-        return Result.success(amendRent);
+        boolean b = rentService.updateById(rent);
+        return Result.success(b);
     }
     @DeleteMapping("/{Id}")
     public  Result delet(@PathVariable int Id){
@@ -111,8 +127,7 @@ public class RentController {
 
     /**
      * 条件分页查询
-     * @param condition
-     * @param basepage
+     * @param searchDto
      * @return
      */
     @PostMapping("/ConditionQuery")
@@ -149,14 +164,23 @@ public class RentController {
             Basepage page = rentService.pages(basepage);
             return Result.success(page);
         }*/
-        Basepage basepage1 = rentService.pagesCondition(searchDto.getBasepage(), searchDto.getCondition());
-        return Result.success(basepage1);
+        if (null==searchDto.getCondition()){
+            Result pageRent = this.getPageRent(searchDto.getBasepage());
+            return pageRent;
+        }
+        else {
+            String sort = searchDto.getBasepage().getSort();
+            searchDto.getBasepage().addOrder(OrderItem.asc(sort));
+            Basepage basepage1 = rentService.pagesCondition(searchDto.getBasepage(), searchDto.getCondition());
+
+            return Result.success(basepage1);
+        }
     }
     @GetMapping("/Collection")
     public Result findAttention(Principal principal) {
         if (null != principal) {
             SysUser user = userService.getOne(new QueryWrapper<SysUser>().eq("user_name", principal.getName()));
-            List<Collection> list = collectionService.list(new QueryWrapper<Collection>().eq("user_id", user.getId()).select("ren_id"));
+            List<Collection> list = collectionService.list(new QueryWrapper<Collection>().eq("user_id", user.getId()));
             ArrayList<Integer> arrayList = new ArrayList<>();
             for (Collection collection : list) {
                 arrayList.add(collection.getRentId());

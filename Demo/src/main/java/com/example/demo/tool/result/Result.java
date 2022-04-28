@@ -14,8 +14,7 @@ public class Result<T> {
     public static <T> Result<T> success(T data){
             return new Result<T>(data);
         }
-
-        public static <T> Result<T> error(CodeMsg codeMsg){
+    public static <T> Result<T> error(CodeMsg codeMsg){
             return new  Result<T>(codeMsg);
         }
     public static Result error(String message){

@@ -3,10 +3,11 @@ package com.example.demo.User.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -36,13 +37,13 @@ public class UserRole implements Serializable {
     private String createUser;
 
     @ApiModelProperty("创建时间")
-    private LocalDateTime createTime;
+    private Date createTime;
 
     @ApiModelProperty("修改人")
     private String updateUser;
 
     @ApiModelProperty("修改时间")
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
     @ApiModelProperty("是否删除（0：正常/1：删除）")
     private Boolean isDeleted;
@@ -75,13 +76,7 @@ public class UserRole implements Serializable {
     public void setCreateUser(String createUser) {
         this.createUser = createUser;
     }
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
 
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
     public String getUpdateUser() {
         return updateUser;
     }
@@ -89,13 +84,23 @@ public class UserRole implements Serializable {
     public void setUpdateUser(String updateUser) {
         this.updateUser = updateUser;
     }
-    public LocalDateTime getUpdateTime() {
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(LocalDateTime updateTime) {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
     public Boolean getIsDeleted() {
         return isDeleted;
     }

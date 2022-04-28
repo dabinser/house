@@ -4,7 +4,6 @@ import com.example.demo.User.service.IUserService;
 import com.example.demo.file.Temp.Template;
 import com.example.demo.ins.entity.Rent;
 import com.example.demo.tool.result.Result;
-import com.sun.istack.internal.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotNull;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

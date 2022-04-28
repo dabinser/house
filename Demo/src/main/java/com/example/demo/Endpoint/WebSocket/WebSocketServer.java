@@ -2,7 +2,8 @@ package com.example.demo.Endpoint.WebSocket;
 
 import com.example.demo.Endpoint.RedisConfig.SubscribeListener;
 import com.example.demo.ApplicationContextProvider;
-import com.sun.org.apache.xml.internal.security.utils.Constants;
+
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
@@ -73,7 +74,7 @@ public class WebSocketServer {
         subscribeListener.setSession(session);
         //设置订阅topic
         redisMessageListenerContainer.addMessageListener(
-                subscribeListener, new ChannelTopic(Constants._TAG_KEYNAME + loginName));
+                subscribeListener, new ChannelTopic( loginName));
 
     }
 

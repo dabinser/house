@@ -3,6 +3,7 @@ package com.example.demo.paid.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.example.demo.ins.entity.Enum.Status;
+import com.example.demo.paid.entity.Enum.paidStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -39,15 +40,37 @@ public class Paid implements Serializable {
 
     @ApiModelProperty("租客")
     private String name;
+    @ApiModelProperty("租赁时长")
+    private String period;
 
-    @ApiModelProperty("出租人")
-    private Integer owner;
+    @Override
+    public String toString() {
+        return "Paid{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                ", price=" + price +
+                ", date=" + date +
+                ", paydate=" + paydate +
+                ", name='" + name + '\'' +
+                ", period='" + period + '\'' +
+                ", status=" + status +
+                ", houseId=" + houseId +
+                '}';
+    }
 
-    @ApiModelProperty("状态")
-    private Status status;
+
+
+    @ApiModelProperty("是否缴纳")
+    private paidStatus status;
 
     private Integer houseId;
+    public String getPeriod() {
+        return period;
+    }
 
+    public void setPeriod(String period) {
+        this.period = period;
+    }
     public Integer getId() {
         return id;
     }
@@ -90,34 +113,13 @@ public class Paid implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    public Integer getOwner() {
-        return owner;
-    }
 
-    public void setOwner(Integer owner) {
-        this.owner = owner;
-    }
 
-    @Override
-    public String toString() {
-        return "Paid{" +
-                "id=" + id +
-                ", address='" + address + '\'' +
-                ", price=" + price +
-                ", date=" + date +
-                ", paydate=" + paydate +
-                ", name='" + name + '\'' +
-                ", owner=" + owner +
-                ", status=" + status +
-                ", houseId=" + houseId +
-                '}';
-    }
-
-    public Status getStatus() {
+    public paidStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(paidStatus status) {
         this.status = status;
     }
 
