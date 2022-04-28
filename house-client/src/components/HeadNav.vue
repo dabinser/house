@@ -13,7 +13,7 @@
                   <span class="username">
                       <el-dropdown trigger="click" @command="setDialogInfo">
                             <span class="el-dropdown-link">{{user.name}}
-                                <i class="el-icon-caret-bottom el-icon--right"></i>
+                                <i class="el-icon-user-solid"></i>
                             </span>
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item command="info">个人信息</el-dropdown-item>
