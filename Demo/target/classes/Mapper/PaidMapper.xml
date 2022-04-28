@@ -10,7 +10,7 @@
         <result column="date" property="date" />
         <result column="paydate" property="paydate" />
         <result column="name" property="name" />
-        <result column="owner" property="owner" />
+        <result column="period" property="period" />
         <result column="status" property="status" />
         <result column="house_id" property="houseId" />
     </resultMap>
