@@ -24,7 +24,7 @@
                 </el-table-column>
                 <el-table-column prop="name" label="姓名" align="center" width="150">
                 </el-table-column>
-                <el-table-column prop="address" label="地址" align="center" width="350">
+                <el-table-column prop="address" label="地址" align="center" width="200">
                 </el-table-column>
                 <el-table-column prop="date" label="申报日期" align="center" width="200" :formatter="dateFormat">
                 </el-table-column>
@@ -32,7 +32,7 @@
                 </el-table-column>
                 <el-table-column prop="status" label="状态" align="center" width="100">
                 </el-table-column>
-                
+
                 <el-table-column label="操作" prop="operation" align="center" >
                     <template slot-scope="scope">
                         <el-button
@@ -69,7 +69,7 @@
         </div>
         <SolveEditDialog :dialog2="dialog2" @update="getProfile" :formData="Data"></SolveEditDialog>
     </div>
-        
+
 </template>
 
 <script>
@@ -96,7 +96,7 @@ export default {
                 page_sizes: [5, 10, 15, 20], //每页显示多少条
                 layout: "total, sizes, prev, pager, next, jumper" // 翻页属性
             },
-            
+
            tableData:[],
            allTableData: [],
            dialog2:{
@@ -163,9 +163,9 @@ export default {
                 }
                 }
             }
-            
-            
-            
+
+
+
             solveApi.getSolveListByCondition(pojo).then(res =>{
                 if(res.data.code == '0'){
                     this.$message({
@@ -218,13 +218,13 @@ export default {
                         });
                     }
                 })
-            })  
+            })
         },
         handleCurrentChange(page) {
             // 当前页
             this.paginations.page_index=page;
             this.getProfile();
-            
+
         },
         handleSizeChange(page_size) {
             // 切换size
@@ -241,13 +241,13 @@ export default {
                 return index < this.paginations.page_size;
             });
         },
-        dateFormat:function(row, column) { 
-            var date = row[column.property]; 
-            if (date == undefined) { 
-            return ""; 
-            } 
-            return this.$moment(date).format("YYYY年MM月DD日"); 
-        } 
+        dateFormat:function(row, column) {
+            var date = row[column.property];
+            if (date == undefined) {
+            return "";
+            }
+            return this.$moment(date).format("YYYY年MM月DD日");
+        }
     }
 }
 </script>

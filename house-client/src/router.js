@@ -23,6 +23,7 @@ import Center from "./views/view/center/index"
 import agent from "./views/view/agent/index"
 import house from "./views/view/house/index"
 import chat from "./views/view/login/index1"
+import Verify from "./views/Verify";
 
 
 
@@ -98,6 +99,11 @@ const router = new Router({
           path: '/chatOnline',
           name: 'chat',
           component:ChatOnline
+        },
+        {
+          path: '/verify',
+          name: 'verify',
+          component: Verify
         },
       ]
     },

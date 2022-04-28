@@ -71,7 +71,7 @@ export default {
                     path: 'paid',
                     children: [
                         { path: 'paidlist',name: '租金操作'},
-                        {path: 'contract',name: '合同查看'}
+                        { path: 'verify',name: '合同查看'}
 
                     ]
                 },
@@ -114,12 +114,7 @@ export default {
                     path: 'paid',
                     children: [{ path: 'personalPaidList',name: '租金查看'}]
                 },
-                {
-                  icon: 'el-icon-chat-line-square',
-                  name: '在线联系',
-                  path: 'chat',
-                  children: [{path: 'chatOnline',name: '在线联系'}]
-                },
+
                 {
                     icon: 'el-icon-printer',
                     name: '故障管理',

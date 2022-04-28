@@ -1,10 +1,11 @@
 import request from '@/utils/request'
 const api_name = 'paid'
 export default{
-    getAllPaidList(){
+    getAllPaidList(pojo){
         return request({
-            url:`/${api_name}`,
-            method:'get'
+            url:`/${api_name}/find`,
+            method:'post',
+            data: pojo
         })
     },
     getPaidListByCondition(pojo){

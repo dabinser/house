@@ -1,7 +1,7 @@
 <template>
     <div class="dialog2">
-        <el-dialog 
-            :title="dialog2.title" 
+        <el-dialog
+            :title="dialog2.title"
             :visible.sync="dialog2.show"
             :close-on-click-modal='false'
             :close-on-press-escape='false'
@@ -24,7 +24,7 @@
                         </el-date-picker>
                     </el-form-item>
                      <el-form-item label="实际日期：" prop="paydate">
-                        <el-date-picker v-model="formData.paydate" type="date">
+                        <el-date-picker v-model="formData.payDate" type="date">
                         </el-date-picker>
                     </el-form-item>
                     <el-form-item label="状态：" prop="status">
@@ -58,7 +58,7 @@ export default {
                 callback();
             }
         };
-        return {         
+        return {
             format_status_list:[
                 "已缴纳","未缴纳"
             ],
@@ -76,7 +76,7 @@ export default {
                 paydate:[
                     { required: true, message: '请选择日期', trigger: 'change' }
                 ],
-            } 
+            }
         }
     },
     created () {
@@ -85,10 +85,10 @@ export default {
     methods: {
         getInfo(){
         },
-        closeDialog(done){ 
+        closeDialog(done){
             if (this.$refs['form'] !== undefined) {
                         this.$refs['form'].resetFields();
-                    } 
+                    }
             done();
         },
         onSubmit(form){
@@ -98,10 +98,10 @@ export default {
                         id:this.formData.id,
                         price:this.formData.price,
                         date:this.formData.date,
-                        status:this.formData.status, 
-                        payDate:this.formData.paydate, 
+                        status:this.formData.status,
+                        payDate:this.formData.paydate,
                     }
-                    
+
                     paidApi.updatePaid(pojo).then(res =>{
                         //修改成功之后的处理
                         if(res.data.flag){
@@ -116,13 +116,13 @@ export default {
                             message: "修改失败",
                             type: "warning"
                             });
-                            
-                        }
-                    
-                    });
-                    
 
-                    
+                        }
+
+                    });
+
+
+
                 }
             });
         }

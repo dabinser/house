@@ -14,12 +14,10 @@
             </el-form>
         </div>
         <div class="table_container">
-            <el-table v-if="tableData.length > 0" :data="tableData" style="width: 100%" max-height="450" border >
+            <el-table v-if="tableData.length > 0" :data="tableData" style="width: 100%" max-height="200" border >
                 <el-table-column type="index" label="序号" align="center" width="130">
                 </el-table-column>
                 <el-table-column prop="userName" label="姓名" align="center" width="180">
-                </el-table-column>
-                <el-table-column prop="idCard" label="身份证" align="center" width="400">
                 </el-table-column>
                 <el-table-column prop="phone" label="电话号码" align="center" width="300">
                 </el-table-column>
