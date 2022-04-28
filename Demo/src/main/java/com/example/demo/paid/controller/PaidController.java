@@ -6,6 +6,7 @@ import com.example.demo.dto.paidCondition;
 import com.example.demo.paid.entity.Paid;
 import com.example.demo.paid.service.IPaidService;
 import com.example.demo.tool.Baseseach.Basepage;
+import com.example.demo.tool.result.CodeMsg;
 import com.example.demo.tool.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,15 +28,23 @@ import java.util.Map;
 public class PaidController {
     @Autowired
     private IPaidService paidService;
-    @GetMapping
-    public Result findAll(Basepage basepage){
+    @PostMapping("/find")
+    public Result findAll(@RequestBody Basepage basepage){
         Basepage page = paidService.page(basepage);
         return Result.success(page);
     }
     @PostMapping
     public Result condition(@RequestBody @NotNull paidCondition paidCondition){
-        Basepage page = paidService.page(paidCondition.getBasepage(), new QueryWrapper<Paid>().eq("status",paidCondition.getStatus()));
-        return Result.success(page);
+        if (null!=paidCondition.getStatus()){
+            Basepage page = paidService.page(paidCondition.getBasepage(), new QueryWrapper<Paid>().eq("status",paidCondition.getStatus()));
+            return Result.success(page);
+        }
+        else {
+            Basepage page = paidService.page(paidCondition.getBasepage());
+            return Result.success(page);
+        }
+
+
 
     }
     @DeleteMapping("/{id}")
@@ -54,6 +63,11 @@ public class PaidController {
         List<Map<String, Object>> maps = paidService.listMaps(paidQueryWrapper);
 
         return Result.success(maps);
+    }
+    @PostMapping("/updata")
+    public  Result updata(@RequestBody Paid paid){
+        paidService.updateById(paid);
+        return Result.success(CodeMsg.SUCCESS);
     }
 
 

@@ -2,7 +2,7 @@ package com.example.demo.paid.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.example.demo.ins.entity.Enum.Status;
+
 import com.example.demo.paid.entity.Enum.paidStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

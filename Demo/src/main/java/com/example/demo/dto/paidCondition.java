@@ -5,7 +5,7 @@ package com.example.demo.dto;/**
  * @Description:
  */
 
-import com.example.demo.ins.entity.Enum.Status;
+import com.example.demo.paid.entity.Enum.paidStatus;
 import com.example.demo.tool.Baseseach.Basepage;
 
 import java.io.Serializable;
@@ -17,7 +17,7 @@ import java.io.Serializable;
  **/
 public class paidCondition implements Serializable {
     private Basepage basepage;
-    private Status status;
+    private paidStatus status;
 
     @Override
     public String toString() {
@@ -35,11 +35,11 @@ public class paidCondition implements Serializable {
         this.basepage = basepage;
     }
 
-    public Status getStatus() {
+    public paidStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(paidStatus status) {
         this.status = status;
     }
 }
