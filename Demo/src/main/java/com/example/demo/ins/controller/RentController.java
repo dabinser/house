@@ -194,6 +194,15 @@ public class RentController {
 
     }
 
+    @PostMapping("/getExamine")
+    public Result examine(@RequestBody Basepage basepage){
+        QueryWrapper<Rent> rentQueryWrapper = new QueryWrapper<>();
+        rentQueryWrapper.eq("is_show",0);
+        Basepage page = rentService.page(basepage, rentQueryWrapper);
+        return Result.success(page);
+
+    }
+
 
 
 

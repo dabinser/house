@@ -3,13 +3,11 @@ package com.example.demo.file.controller;
 import com.example.demo.User.service.IUserService;
 import com.example.demo.file.Temp.Template;
 import com.example.demo.ins.entity.Rent;
+import com.example.demo.paid.service.IPaidService;
 import com.example.demo.tool.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
@@ -34,6 +32,8 @@ public class ContractController {
     private IUserService userService;
     @Value("${file}")
     private String file;
+    @Autowired
+    private IPaidService paidService;
     @PostMapping
     public Result downLoad(@RequestBody @NotNull Rent rent, Principal principal, HttpServletResponse httpServletResponse){
         HashMap<String, String> Data = new HashMap<>();
@@ -45,7 +45,11 @@ public class ContractController {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Data.put("beginData",simpleDateFormat.format(date) );
         Data.put("price",rent.getPay().toString());
-        template.createPDFContract(Data,new ArrayList<>(),file,"test.html");
+        template.createPDFContract(Data,new ArrayList<>(),file,"test.html",httpServletResponse);
         return Result.success("ok");
+    }
+    @GetMapping("/{id}")
+    public Result load(@PathVariable("id") String id){
+        return  null;
     }
 }

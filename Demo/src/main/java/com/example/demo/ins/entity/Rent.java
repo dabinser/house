@@ -57,7 +57,7 @@ public class Rent implements Serializable {
 
     @ApiModelProperty("联系电话")
     private String phone;
-    @TableField(exist = true)
+    @TableField(exist = false)
     @ApiModelProperty("户型")
     private String apartmentType;
     @ApiModelProperty("出租方式")
@@ -70,7 +70,7 @@ public class Rent implements Serializable {
     private Orientation orientation;
     @ApiModelProperty("用户id")
     private Integer sysUserId;
-    @TableField(exist = true)
+    @TableField(exist = false)
     @ApiModelProperty("图片url")
     private ArrayList<String> list;
     @ApiModelProperty("创建时间")

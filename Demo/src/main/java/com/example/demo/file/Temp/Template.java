@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,7 +36,7 @@ public class Template {
     private String contractUrl;
 
     public void createPDFContract(Map<String,String> dataMap, ArrayList<String[]> contractMsg, String templateRootUrl,
-                                  String templateName)
+                                  String templateName, HttpServletResponse httpServletResponse)
     {
         //创建相应的流资源
         OutputStream os = null;
@@ -130,6 +131,7 @@ public class Template {
             renderer.layout();
 //生成pdf合同
             renderer.createPDF(os);
+
 //关闭流资源
             os.flush();
             os.close();
