@@ -27,12 +27,12 @@
       <el-button type="primary" @click="exp" class="ml-5">导出 <i class="el-icon-top"></i></el-button> -->
     </div>
 
-    <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'"  @selection-change="handleSelectionChange">
+    <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'"  @selection-change="handleSelectionChange" height="500" size="small" :row-style="{height: '45px'}" max-height="450px" >
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="80" sortable></el-table-column>
       <el-table-column prop="area" label="地址"></el-table-column>
       <el-table-column prop="vname" label="所属人"></el-table-column>
-      <el-table-column label="图片"><template slot-scope="scope"><el-image style="width: 100px; height: 100px" :src="scope.row.img" :preview-src-list="[scope.row.img]"></el-image></template></el-table-column>
+<!--      <el-table-column label="图片"><template slot-scope="scope"><el-image style="width: 100px; height: 100px" :src="scope.row.img" :preview-src-list="[scope.row.img]"></el-image></template></el-table-column>-->
       <el-table-column prop="date" label="上传时间"></el-table-column>
       <el-table-column label="审核" v-if="user.role === 'ROLE_ADMIN'" width="240">
         <template v-slot="scope">
@@ -107,7 +107,7 @@ export default {
       tableData: [],
       total: 0,
       pageNum: 1,
-      pageSize: 10,
+      pageSize: 5,
       name: "",
       form: {},
       dialogFormVisible: false,
