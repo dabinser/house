@@ -14,7 +14,7 @@ import PersonalPaidList from './views/PersonalPaidList.vue'
 import PersonalHouseList from './views/PersonalHouseList.vue'
 import PersonalScheduleList from './views/PersonalScheduleList.vue'
 import PersonalSolveList from './views/PersonalSolveList.vue'
-import ChatOnline from "./views/ChatOnline";
+import ChatOnline from "./views/Examine";
 import cheader from "./components/cheader";
 import cfooter from "./components/cfooter";
 import info from "./views/view/house/info";
@@ -24,6 +24,8 @@ import agent from "./views/view/agent/index"
 import house from "./views/view/house/index"
 import chat from "./views/view/login/index1"
 import Verify from "./views/Verify";
+import Contract from "./views/Contract";
+import Examine from "./views/Examine";
 
 
 
@@ -96,15 +98,20 @@ const router = new Router({
           name: 'personalSolveList',
           component: PersonalSolveList
         },{
-          path: '/chatOnline',
-          name: 'chat',
-          component:ChatOnline
+          path: '/examine',
+          name: 'examine',
+          component: Examine
         },
         {
           path: '/verify',
           name: 'verify',
           component: Verify
         },
+        {
+          path: '/contract',
+          name: 'contract',
+          component: Contract
+        }
       ]
     },
     {

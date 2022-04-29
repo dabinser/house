@@ -71,7 +71,6 @@ export default {
                     path: 'paid',
                     children: [
                         { path: 'paidlist',name: '租金操作'},
-                        { path: 'verify',name: '合同查看'}
 
                     ]
                 },
@@ -85,7 +84,7 @@ export default {
                     icon:'el-icon-document-checked',
                     name: '房屋审批',
                     path: 'chat',
-                    children: [{path: 'chatOnline',name: '审批校验'}]
+                    children: [{path: 'examine',name: '审批校验'}]
                 },
                 {
                     icon: 'el-icon-view',

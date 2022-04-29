@@ -43,6 +43,13 @@ export default{
             method:'get'
         })
 
+    },
+    getExamine(pojo){
+        return request({
+            url:`/${api_name}/getExamine`,
+            method:'post',
+            data:pojo
+        })
     }
 
 }
