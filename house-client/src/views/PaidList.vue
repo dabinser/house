@@ -53,12 +53,6 @@
                 icon="el-icon-delete"
                 @click="handleDelete(scope.$index, scope.row)">删除
             </el-button>
-            <el-button
-                size="small"
-                type="info"
-                icon="el-icon-document"
-                @click="handleEdit(scope.$index, scope.row)">查看合同
-            </el-button>
           </template>
         </el-table-column>
       </el-table>

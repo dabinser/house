@@ -27,20 +27,20 @@
       <el-button type="primary" @click="exp" class="ml-5">导出 <i class="el-icon-top"></i></el-button> -->
     </div>
 
-    <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'"  @selection-change="handleSelectionChange" height="500" size="small" :row-style="{height: '45px'}" max-height="450px" >
+    <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'"  @selection-change="handleSelectionChange" height="500"  max-height="450px" >
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="80" sortable></el-table-column>
-      <el-table-column prop="area" label="地址"></el-table-column>
-      <el-table-column prop="vname" label="所属人"></el-table-column>
+      <el-table-column prop="area" label="地址" width="200"></el-table-column>
+      <el-table-column prop="vname" label="所属人" width="150"></el-table-column>
 <!--      <el-table-column label="图片"><template slot-scope="scope"><el-image style="width: 100px; height: 100px" :src="scope.row.img" :preview-src-list="[scope.row.img]"></el-image></template></el-table-column>-->
-      <el-table-column prop="date" label="上传时间"></el-table-column>
-      <el-table-column label="审核" v-if="user.role === 'ROLE_ADMIN'" width="240">
+      <el-table-column prop="date" label="上传时间" :formatter="dateFormat" width="150"></el-table-column>
+      <el-table-column label="审核" v-if="user.systemRole === 'admin'" width="300" align="center">
         <template v-slot="scope">
-          <el-button type="success" @click="changeState(scope.row, '审核通过')" :disabled="scope.row.state !== '待审核'">审核通过</el-button>
-          <el-button type="danger" @click="changeState(scope.row, '审核不通过')" :disabled="scope.row.state !== '待审核'">审核不通过</el-button>
+          <el-button type="success" @click="changeState(scope.row.id, 1)" :disabled="scope.row.is_show !== 0">审核通过</el-button>
+          <el-button type="danger" @click="changeState(scope.row.id, 0)" :disabled="scope.row.is_show !== 0">审核不通过</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="操作"  width="180" align="center">
+      <el-table-column label="操作"  width="250" align="center">
         <template slot-scope="scope" v-if="scope.row.user === user.username || user.role === 'ROLE_ADMIN'">
           <el-button type="success" @click="handleEdit(scope.row)">编辑 <i class="el-icon-edit"></i></el-button>
           <el-popconfirm
@@ -100,6 +100,8 @@
 
 <script>
 import house from "../api/house";
+import {getUser} from "../utils/auth";
+
 export default {
   name: "Examine",
   data() {
@@ -112,17 +114,28 @@ export default {
       form: {},
       dialogFormVisible: false,
       multipleSelection: [],
-      user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
+      user: {}
     }
   },
   created() {
     this.load()
+    this.user=getUser()
+    console.log(this.user.systemRole)
+
   },
   methods: {
-    changeState(row, state) {
-      this.form = JSON.parse(JSON.stringify(row))
-      this.form.state = state;
-      this.save();
+    changeState(id, state) {
+      house.changeState(id,state).then(res =>{
+        if (res.data.code=='0'){
+          this.$message.success("状态改变成功")
+        }
+        else {
+          this.$message.warning("更改失败")
+        }
+      })
+      this.save(pojo)
+
+
     },
     load() {
       let pojo={
@@ -137,17 +150,7 @@ export default {
         }
       })
     },
-    save() {
-      this.request.post("/goods", this.form).then(res => {
-        if (res.code === '200') {
-          this.$message.success("保存成功")
-          this.dialogFormVisible = false
-          this.load()
-        } else {
-          this.$message.error("保存失败")
-        }
-      })
-    },
+
     handleAdd() {
       this.dialogFormVisible = true
       this.form = {}
@@ -230,7 +233,16 @@ export default {
     handleExcelImportSuccess() {
       this.$message.success("导入成功")
       this.load()
+    },
+
+    dateFormat: function (row, column) {
+      var date = row[column.property];
+      if (date == undefined) {
+        return "";
+      }
+      return this.$moment(date).format("YYYY年MM月DD日");
     }
+
   }
 }
 </script>

@@ -50,6 +50,12 @@ export default{
             method:'post',
             data:pojo
         })
+    },
+    changeState(id, state) {
+        return request({
+            url:`/${api_name}/changeState/`+id/+state,
+            method:'post',
+        })
     }
 
 }

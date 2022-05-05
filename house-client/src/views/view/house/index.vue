@@ -98,7 +98,6 @@
             <el-col :span="4" style="height: 100%;">
               <span style="color:red;font-weight: bold;font-size: 24px;display-inside: ruby">{{item.pay}} 元/月</span>
               <br />
-              <span style="line-height: 30px">：暂无</span>
             </el-col>
           </el-row>
         </el-col>
@@ -197,7 +196,7 @@ export default {
   methods: {
 
     handleSelect(key, keyPath) {
-      alert(keyPath);
+      // alert(keyPath);
       this.soft=keyPath
       console.log(this.soft)
     },

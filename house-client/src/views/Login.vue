@@ -84,7 +84,7 @@ export default {
               userApi.login(formdata).then(res =>{
                 //登录成功之后的处理
                 if(res.data.code == '0'){
-                  let systemRole = res.data.data.role
+                  let systemRole = res.data.data.role[1]
                   let id = res.data.data.id
                   let name = res.data.data.userName
                   let token = res.headers.token

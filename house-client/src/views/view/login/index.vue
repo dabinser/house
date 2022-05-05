@@ -120,7 +120,7 @@
             handleLogin() {
                 this.$refs.loginForm.validate(valid => {
                     if (valid) {
-                      console.log('验证成功')
+                        console.log('验证成功')
                         this.loading = true;
                         let pojo = {username:this.loginForm.username,password:this.loginForm.password}
                         let formdata=new FormData
@@ -129,9 +129,9 @@
                         userApi.login(formdata).then(res =>{
                           if (res.data.code=='0'){
                             console.log('登录')
-                            this.loading=true;
+
                             console.log('+++++++')
-                            location.reload()
+
                             let systemRole = res.data.data.role
                             let id = res.data.data.id
                             let name = res.data.data.userName
@@ -149,18 +149,25 @@
                               message:"登录成功",
                               type:"success"
                             });
+                            this.loading=false
                             this.$router.push("/rent")
                           }
-                        }).catch(()=>{
-                          this.loading=false
+                          else {
+                            this.loading=false
+                            this.$message({
+                              message: "用户名或密码出错",
+                              type: 'warning'
+                            })
+                          }
                         })
                         // this.$store.dispatch('Login', this.loginForm).then(() => {
                         //     this.loading = true;
                         //     location.reload()
                         // }).catch(() => {
-                        //     this.loading = false
+                            this.loading = false
                         // })
                     } else {
+                        this.loading=false
                         console.log('error submit!!')
                         this.$message({
                           message: "请正确填写",
@@ -169,6 +176,7 @@
                         return false
                     }
                 })
+
             },
             handleRegis() {
                 this.$refs.loginForm.validate(valid => {
@@ -184,7 +192,7 @@
                                 type: (!response.data.code ? 'success' : 'error')
                             });
                             if (response.data.code=='0') { // 如果成功
-                                this.$router.push({path: '/login'}) // 刷新列表
+                                this.$router.push({path: '/'}) // 刷新列表
                             }
                         })
                     } else {
