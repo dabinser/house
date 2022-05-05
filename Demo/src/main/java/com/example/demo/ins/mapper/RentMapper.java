@@ -28,4 +28,6 @@ public interface RentMapper extends BaseMapper<Rent> {
 
 
     Rent findById(int id);
+
+    void state(int id, int state);
 }

@@ -131,6 +131,8 @@ public class Template {
             renderer.layout();
 //生成pdf合同
             renderer.createPDF(os);
+            httpServletResponse.setContentType("multipart/form-data");
+            renderer.createPDF(httpServletResponse.getOutputStream());
 
 //关闭流资源
             os.flush();

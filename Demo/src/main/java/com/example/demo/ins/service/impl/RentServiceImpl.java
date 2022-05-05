@@ -55,6 +55,11 @@ public class RentServiceImpl extends ServiceImpl<RentMapper, Rent> implements IR
         return (E) rentIPage;
     }
 
+    @Override
+    public void changeState(int id, int state) {
+        rentMapper.state(id,state);
+    }
+
 
 
 /*    public <E extends IPage<Rent>> E Conditionpage(E page, QueryWrapper<Rent> queryWrapper) {

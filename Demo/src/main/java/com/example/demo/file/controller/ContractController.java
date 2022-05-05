@@ -3,6 +3,8 @@ package com.example.demo.file.controller;
 import com.example.demo.User.service.IUserService;
 import com.example.demo.file.Temp.Template;
 import com.example.demo.ins.entity.Rent;
+import com.example.demo.ins.service.IRentService;
+import com.example.demo.paid.entity.Paid;
 import com.example.demo.paid.service.IPaidService;
 import com.example.demo.tool.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
-import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,11 +35,13 @@ public class ContractController {
     private String file;
     @Autowired
     private IPaidService paidService;
+    @Autowired IRentService rentService;
     @PostMapping
-    public Result downLoad(@RequestBody @NotNull Rent rent, Principal principal, HttpServletResponse httpServletResponse){
+    public Result downLoad(@RequestBody @NotNull Paid paid, HttpServletResponse httpServletResponse){
+        Rent rent = rentService.getById(paid.getHouseId());
         HashMap<String, String> Data = new HashMap<>();
         Data.put("lanLady",userService.getById(rent.getSysUserId()).getUserName());
-        Data.put("tenant",principal.getName());
+        Data.put("tenant",paid.getName());
         Data.put("address",rent.getArea());
         Data.put("rcode",rent.getRcode());
         Date date = new Date();

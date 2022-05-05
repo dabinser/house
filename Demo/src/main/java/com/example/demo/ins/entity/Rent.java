@@ -75,6 +75,8 @@ public class Rent implements Serializable {
     private ArrayList<String> list;
     @ApiModelProperty("创建时间")
     private Date date;
+    @ApiModelProperty("是否展示")
+    private int is_show;
 
     @Override
     public String toString() {
@@ -98,7 +100,16 @@ public class Rent implements Serializable {
                 ", sysUserId=" + sysUserId +
                 ", list=" + list +
                 ", date=" + date +
+                ", is_show=" + is_show +
                 '}';
+    }
+
+    public int getIs_show() {
+        return is_show;
+    }
+
+    public void setIs_show(int is_show) {
+        this.is_show = is_show;
     }
 
     public Date getDate() {

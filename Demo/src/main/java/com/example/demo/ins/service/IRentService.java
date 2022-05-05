@@ -19,5 +19,6 @@ public interface IRentService extends IService<Rent> {
     <E extends IPage<Rent>> E pagesCondition(E page, Condition condition);
     Rent findById(int id);
     <E extends IPage<Rent>> E order(E page, Wrapper<Rent> queryWrapper);
+    void changeState(int id, int state);
 
 }

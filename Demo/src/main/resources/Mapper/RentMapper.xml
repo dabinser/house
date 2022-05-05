@@ -74,6 +74,9 @@
         insert into rent(rcode, vname, title, area, community, pay, content, contacts, phone, sys_user_id, mode, storey, orientation, elevator)
         values (#{rcode},#{vname},#{title},#{area},#{community},#{pay},#{content},#{contacts},#{phone},#{sysUserId},#{mode},#{storey},#{orientation},#{elevator})
     </insert>
+    <update id="state">
+        update rent set is_show=#{param2} where id=#{param1}
+    </update>
     <select id="selectPageVo" resultType="com.example.demo.ins.entity.Rent" resultMap="includeList">
         select * from rent
         <if test="param1.sort !=null and param1.sort!=''">

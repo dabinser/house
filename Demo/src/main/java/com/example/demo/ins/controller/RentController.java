@@ -202,6 +202,12 @@ public class RentController {
         return Result.success(page);
 
     }
+    @PostMapping("/changeState/{id}/{state}")
+    public Result state(@PathVariable("state") int state,@PathVariable("id") int id){
+
+        rentService.changeState(id,state);
+        return Result.success(CodeMsg.SUCCESS);
+    }
 
 
 
