@@ -10,13 +10,13 @@
                 <el-row style="height: 80px ;width: 100%">
                   欢迎你：{{user.name}}
                 </el-row>
-<!--                <el-row>-->
-<!--                  <span @click="tab('house')" style="cursor: pointer">关注的房源</span>-->
-<!--                </el-row>-->
+                <el-row>
+                  <span @click="tab('house')" style="cursor: pointer">关注的房源</span>
+                </el-row>
               </el-col>
-<!--              <el-col span="20" >-->
-<!--                <router-view></router-view>-->
-<!--              </el-col>-->
+              <el-col span="20" >
+                <router-view></router-view>
+              </el-col>
             </el-row>
           </el-main>
         </el-container>

@@ -26,6 +26,7 @@ import chat from "./views/view/login/index1"
 import Verify from "./views/Verify";
 import Contract from "./views/Contract";
 import Examine from "./views/Examine";
+import test from "./views/view/center/test";
 
 
 
@@ -181,7 +182,7 @@ const router = new Router({
     {
       path: '/center',
       name: 'index1',
-      component: Center,
+      component: test,
 
     },
 

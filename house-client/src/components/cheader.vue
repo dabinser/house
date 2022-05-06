@@ -12,7 +12,7 @@
             <el-menu-item index="/logout" style="float: right">退出</el-menu-item>
             <el-submenu index="person" style="float: right">
               <template slot="title">个人中心</template>
-              <el-menu-item index="/cent/house">我的关注</el-menu-item>
+              <el-menu-item index="/center">我的关注</el-menu-item>
               <el-menu-item index="7-2">最近联系</el-menu-item>
             </el-submenu>
             <el-menu-item index="/logon" style="float: right" >登录注册</el-menu-item>

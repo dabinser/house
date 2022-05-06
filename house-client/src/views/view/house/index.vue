@@ -79,25 +79,25 @@
                 <el-image :src="url+item.list[0]" style="height: 100%; width: 150px; border-radius: 10px" aria-placeholder="img.png"></el-image>
               </el-row>
             </el-col>
-            <el-col :span="16">
+            <el-col :span="16" style="position: relative;left: 10px">
               <el-row class="crow" id="address">
                 <h2 style="font-family: HiraginoSansGB-W6 ;font-size: 20px;">{{item.area}}</h2>
               </el-row>
               <el-row class="crow">
-                <span>{{item.mode}} / </span>
+                <span>方式 {{item.mode}}  </span>
                 <span>{{item.apartmentType}}</span>
               </el-row>
 
-              <el-row class="crow" >
-                <span>{{item.community}}/ </span>
+              <el-row class="crow"  >
+                <span>小区 {{item.community}}/ </span>
                 <span>朝向 {{item.orientation}} / </span>
                 <span>电梯 {{item.elevator}} / </span>
                 <span>楼层 {{item.storey}} </span>
               </el-row>
             </el-col>
-            <el-col :span="4" style="height: 100%;">
+            <el-col :span="4" style="height: 30px; width: 200px;float: right;position: relative;top: -80px">
               <span style="color:red;font-weight: bold;font-size: 24px;display-inside: ruby">{{item.pay}} 元/月</span>
-              <br />
+              <br/>
             </el-col>
           </el-row>
         </el-col>
