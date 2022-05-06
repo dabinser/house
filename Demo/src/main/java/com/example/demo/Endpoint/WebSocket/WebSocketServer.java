@@ -103,7 +103,7 @@ public class WebSocketServer {
         //群发消息
         for (WebSocketServer item : webSocketSet) {
             try {
-                item.sendMessage(message);
+                item.sendMessage("欢迎咨询");
             } catch (IOException e) {
                 log.info("发送消息异常：msg = {}", e);
                 continue;
