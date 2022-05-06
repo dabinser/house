@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.demo.ins.entity.Collection;
 import com.example.demo.ins.service.ICollectionService;
 import com.example.demo.ins.service.IRentService;
+import com.example.demo.tool.result.CodeMsg;
 import com.example.demo.tool.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -51,9 +52,15 @@ public class CollectionController {
         return Result.success(listRent);
 
     }
-    @GetMapping
+    @PostMapping("/charge")
     public Result isCollect(@RequestBody Collection collection){
-        return  null;
+        QueryWrapper<Collection> collectionQueryWrapper = new QueryWrapper<>();
+        collectionQueryWrapper.eq("user_id", collection.getUserId()).eq("rent_id", collection.getRentId());
+        long count = collectionService.count(collectionQueryWrapper);
+        if (count!=0){
+            return  Result.success(CodeMsg.SUCCESS);
+        }
+        else return Result.success(0);
     }
 
 }
