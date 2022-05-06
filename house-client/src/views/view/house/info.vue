@@ -40,7 +40,7 @@
                     <!--                      <el-image :src="url+item" style="width: 100%;height: 100%"></el-image>-->
                     <!--                    </el-col>-->
                     <el-image :src="url+item" v-for="(item,key) in imgList" :key="key" @click="currbanner(key)"
-                              fit="fill" :preview-src-list="URL" z-index="200px"
+                              fit="fill" :preview-src-list="URL"
                               style="width: 40px ;height: 60px;line-height: 28px;padding: 5px"></el-image>
                     <div class="clear"></div>
                   </div>
@@ -242,6 +242,7 @@ import oldHouseApi from "@/api/oldhouse";
 // import informationApi from "@/api/information";
 import requestApi from "@/api/request";
 import {getUser} from "../../../utils/auth";
+import houseApi from "@/api/house"
 
 export default {
   name: "info",
@@ -274,6 +275,7 @@ export default {
       request: {
         house_id: ""
       },
+      vo:{},
 
       loginRules: {
         bname: [
@@ -306,6 +308,19 @@ export default {
     // console.log(this.URL)
     //  this.getUrl(this.imgList)
     console.log('++++++++' + this.URL)
+    this.vo={
+      userId:getUser().id,
+      rentId:this.$route.params.id
+    }
+    console.log(this.vo)
+    houseApi.isCollection(this.vo).then(res =>{
+      if (res.data.data.code=='200'){
+        this.isCollection=true;
+      }
+    })
+
+
+
   },
   mounted() {
     console.log(this.$route.params.id + '++++++++++++++');
@@ -473,14 +488,11 @@ export default {
 
     },
     onCollection(){
+      console.log("111111111111111111")
       if(this.isCollection){
         //取消收藏
-        let params = {};
-        let f_special_document_id = localStorage.getItem("f_special_document_id");
-        params.f_special_document={
-          f_special_document_id:f_special_document_id,
-        };
-        delSort(params).then(response => {
+
+        houseApi.deleteCollection(this.vo).then(response => {
           if (response.data.httpStatus === 200) {
             this.$notify({
               title: "成功",
@@ -490,7 +502,6 @@ export default {
             });
             this.key = 0; //使用key值区分两种状态的样式
             this.isCollection = false; //待收藏状态
-            this.blogData.f_collection_sum -= 1; 收藏数减一
           } else {
             this.$notify.error({
               title: "错误",
@@ -501,14 +512,8 @@ export default {
         });
       }else{
         //新增收藏
-        let params = {};
-        let f_special_document_id = localStorage.getItem("f_special_document_id");
-        let f_special_document_name = localStorage.getItem("f_special_document_name");
-        params.f_special_document={
-          f_special_document_id:f_special_document_id,
-          f_special_document_name:f_special_document_name,
-        }
-        addSort(params).then(response => {
+
+        houseApi.saveCollection(this.vo).then(response => {
           if (response.data.httpStatus === 200) {
             this.$notify({
               title: "成功",

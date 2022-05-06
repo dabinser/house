@@ -44,6 +44,27 @@ export default{
         })
 
     },
+    isCollection(pojo){
+        return request({
+            url:`/collection/charge`,
+            method:'post',
+            data:pojo
+        })
+    },
+    deleteCollection(pojo){
+        return request({
+            url:`/collection`,
+            method:'delete',
+            data: pojo
+        })
+    },
+    saveCollection(pojo){
+        return request({
+            url:`/collection`,
+            method:'post',
+            data:pojo
+        })
+    },
     getExamine(pojo){
         return request({
             url:`/${api_name}/getExamine`,
