@@ -9,11 +9,11 @@
 
 <script>
 import pdf from 'vue-pdf'
-import Image from "./image";
+
 export default {
 name: "Contract",
   components:{
-    Image,
+
     pdf
   },
   data(){
