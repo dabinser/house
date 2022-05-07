@@ -9,16 +9,17 @@
     <div style="width: 60%;margin: 0 auto;">
       <el-container>
         <el-main>
-
+          <div style="width: 50px;height: 10px;">
+            <span class="iconfont" style="">
+                  <i v-if="!isCollection" class="el-icon-star-off" :key="0" @click.stop="onCollection" style="width: 50px"></i>
+                  <i v-else class="el-icon-star-on" style="color: #00ae66" :key="1" @click.stop="onCollection"></i>
+            </span>
+          </div>
+          <br>
           <el-row>
             <h1>{{ pojo.title }}</h1>
           </el-row>
-          <li class="like" v-model="id" style=" float: right;list-style-type: none">
-              <span class="iconfont" style="width: 50px">
-                  <i v-if="!isCollection" class="el-icon-star-off" :key="0" @click="onCollection" style="width: 50px"></i>
-                  <i v-else class="el-icon-star-on" :key="1" @click="onCollection"></i>
-              </span>
-          </li>
+
           <el-row>
             <span style="color:#606266;line-height: 30px;">房源维护时间：{{ pojo.date|formatDate }} </span><br>
             <span style="color:#606266">房源编号：{{ pojo.rcode }} </span>
@@ -258,7 +259,8 @@ export default {
       imgList: [],
       pojo: {},
       id:'',
-      isCollection:true,
+      key:1,
+      isCollection:false,
       agent: {'ppppp': 789},
       agents: [],
       activeIndex: '/oldHouse/info',
@@ -488,12 +490,16 @@ export default {
 
     },
     onCollection(){
-      console.log("111111111111111111")
+
       if(this.isCollection){
         //取消收藏
-
+        let params = {};
+        let f_special_document_id = localStorage.getItem("f_special_document_id");
+        params.f_special_document={
+          f_special_document_id:f_special_document_id,
+        };
         houseApi.deleteCollection(this.vo).then(response => {
-          if (response.data.httpStatus === 200) {
+          if (response.data.code == '0') {
             this.$notify({
               title: "成功",
               message: "取消收藏",
@@ -512,9 +518,16 @@ export default {
         });
       }else{
         //新增收藏
-
+        let params = {};
+        let f_special_document_id = localStorage.getItem("f_special_document_id");
+        let f_special_document_name = localStorage.getItem("f_special_document_name");
+        params.f_special_document={
+          f_special_document_id:f_special_document_id,
+          f_special_document_name:f_special_document_name,
+        }
+        console.log("++++++++++++")
         houseApi.saveCollection(this.vo).then(response => {
-          if (response.data.httpStatus === 200) {
+          if (response.data.code === 0) {
             this.$notify({
               title: "成功",
               message: "收藏成功",
@@ -523,7 +536,6 @@ export default {
             });
             this.key = 1;
             this.isCollection = true;
-            this.blogData.f_collection_sum += 1;
           } else {
             this.$notify.error({
               title: "错误",
@@ -572,5 +584,8 @@ span {
 
 .head {
   background-image: url("../../../assets/img/bg-app.jpg");
+}
+.el-icon-star-on{
+
 }
 </style>

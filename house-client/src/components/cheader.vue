@@ -28,6 +28,8 @@
 
 <script>
 
+    import {removeUser} from "../utils/auth";
+
     export default {
         name: "oldheader",
         data() {
@@ -44,11 +46,26 @@
         },
         methods: {
             handleSelect(key, keyPath) {
-                this.activeIndex = key;
-                console.log(key,keyPath);
-                this.$router.push({path: key})
+                if (key=='/logout'){
+                  console.log(key);
+                  this.logout()
+                }
+                else {
+                  this.activeIndex = key;
+                  console.log(key);
+                  this.$router.push({path: key})
+                }
+
 
             },
+            logout(){
+              //清除用户信息
+              removeUser();
+              //设置vue store
+              this.$store.dispatch('clearCurrentState');
+              //跳转
+              this.$router.push('/rent');
+            }
 
         }
     }

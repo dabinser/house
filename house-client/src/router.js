@@ -20,9 +20,7 @@ import cfooter from "./components/cfooter";
 import info from "./views/view/house/info";
 import publish from "./views/view/publish/index"
 import Center from "./views/view/center/index"
-import agent from "./views/view/agent/index"
 import house from "./views/view/house/index"
-import chat from "./views/view/login/index1"
 import Verify from "./views/Verify";
 import Contract from "./views/Contract";
 import Examine from "./views/Examine";
@@ -116,6 +114,11 @@ const router = new Router({
       ]
     },
     {
+      path: '/ins',
+      name:'ins',
+
+    },
+    {
       path: '/cheader',
       name: 'cheader',
       component: cheader,
@@ -165,18 +168,13 @@ const router = new Router({
     //-------------------------------------------
     //二手房
     {
-      path: '/info/:id',
+      path: '/rent/:id',
       name: 'info',
       component: info,
 
     },
     //-------------------------------------------
     //经纪人
-    {
-      path:'/agent',
-      name: 'agent',
-      component:agent
-    },
     //-------------------------------------------f
     //个人中心
     {
@@ -184,15 +182,6 @@ const router = new Router({
       name: 'index1',
       component: test,
 
-    },
-
-
-
-
-    {
-      path:'/chat',
-      name:'cc',
-      component: chat
     },
 
 
