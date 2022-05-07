@@ -23,3 +23,20 @@ The following guides illustrate how to use some features concretely:
 ### 远程
 username: i28krqet
 password: 9288329114e9
+
+### 数据库导出
+SELECT
+COLUMN_NAME 列名,
+COLUMN_TYPE 数据类型,
+DATA_TYPE 字段类型,
+CHARACTER_MAXIMUM_LENGTH 长度,
+IS_NULLABLE 是否为空,
+COLUMN_DEFAULT 默认值,
+COLUMN_COMMENT 备注
+FROM
+INFORMATION_SCHEMA.COLUMNS
+where
+-- developerclub为数据库名称，到时候只需要修改成你要导出表结构的数据库即可
+table_schema ='rent'
+AND
+table_name  = 'sys_permission';

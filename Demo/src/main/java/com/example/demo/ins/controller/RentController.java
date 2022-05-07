@@ -48,6 +48,7 @@ public class RentController {
     }
     @PostMapping("/page")
     public Result getPageRent( @RequestBody Basepage basepage){
+        basepage.addOrder(OrderItem.asc(basepage.getSort()));
         Basepage page = rentService.pages(basepage);
 //        Basepage page = rentService.page(basepage);
         return Result.success(page);
